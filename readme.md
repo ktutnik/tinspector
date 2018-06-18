@@ -1,6 +1,9 @@
 # My Own Reflect
 A dead simple module parser that can be hosted in your own code.
 
+[![Build Status](https://travis-ci.org/ktutnik/my-own-reflect.svg?branch=master)](https://travis-ci.org/ktutnik/my-own-reflect)
+[![Coverage Status](https://coveralls.io/repos/github/ktutnik/my-own-reflect/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/my-own-reflect?branch=master)
+
 ## Motivation
 My Own Reflect is a module parser library, it parse all exported functions and classes inside a module into Abstract Syntax Tree. 
 
