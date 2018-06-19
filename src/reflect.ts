@@ -1,4 +1,6 @@
-//version 1.0.0
+//version   1.0.0
+//github    https://github.com/ktutnik/my-own-reflect
+
 
 import * as Path from "path"
 

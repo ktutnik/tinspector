@@ -3,7 +3,7 @@ import * as Utils from "util"
 
 describe("Reflect", () => {
     test("Should reflect module properly", async () => {
-        const result = await reflect("./mocks")
+        const result = await reflect("./reflect.mocks")
         expect(result).toEqual({
             type: 'Object',
             name: 'module',
