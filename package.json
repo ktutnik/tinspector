@@ -6,7 +6,11 @@
     "postinstall": "tsc",
     "test": "jest --coverage --collectCoverageFrom=src/**/*.js"
   },
-  "keywords": ["Reflection", "Reflect", "Metadata"],
+  "keywords": [
+    "Reflection",
+    "Reflect",
+    "Metadata"
+  ],
   "author": "Ketut Sandiarsa",
   "license": "MIT",
   "devDependencies": {
@@ -24,5 +28,8 @@
       "text",
       "lcov"
     ]
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.12"
   }
 }

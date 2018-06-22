@@ -60,3 +60,60 @@ The result will be like below:
 ```
 
 The parameter of the `reflect` method is the path of the module that will be parsed, it is respect the JavaScript import naming such as absolute `"./module"`, `"/path/of/module"`, relative `"../../module"` or global `"module"`
+
+My Own Reflect can handle TypeScript style decorator properly
+
+```typescript
+import {decorateClass, decorateMethod, decorateParameter} from "./reflect"
+
+@decorateClass({ url: "/animal" })
+export class AnimalClass {
+    @decorateMethod({ url: "/get" })
+    myMethod(@decorateParameter({ required: true }) firstPar: string, @decorateParameter({ required: false }) secondPar: string) { }
+    myOtherMethod(@decorateParameter({ required: true }) par1: string, par2: string) { }
+}
+```
+
+The reflection result is like below:
+
+```javascript
+{
+    type: 'Class',
+    name: 'AnimalClass',
+    methods:
+        [{
+            type: 'Function',
+            name: 'myMethod',
+            parameters:
+                [{
+                    type: 'Parameter',
+                    name: 'firstPar',
+                    decorators:
+                        [{ required: true }]
+                },
+                {
+                    type: 'Parameter',
+                    name: 'secondPar',
+                    decorators:
+                        [{ required: false }]
+                }],
+            decorators:
+                [{ url: '/get' }]
+        },
+        {
+            type: 'Function',
+            name: 'myOtherMethod',
+            parameters:
+                [{
+                    type: 'Parameter',
+                    name: 'par1',
+                    decorators:
+                        [{ required: true }]
+                },
+                { type: 'Parameter', name: 'par2', decorators: [] }],
+            decorators: []
+        }],
+    decorators:
+        [{ url: '/animal' }]
+}
+```
