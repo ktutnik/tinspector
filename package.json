@@ -3,6 +3,7 @@
   "description": "TypeScript type inspector",
   "main": "lib/index.js",
   "scripts": {
+    "postinstall": "tsc",
     "test": "jest"
   },
   "keywords": [

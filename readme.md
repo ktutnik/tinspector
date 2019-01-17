@@ -1,8 +1,8 @@
 # tinspector
 TypeScript type inspector
 
-[![Build Status](https://travis-ci.org/ktutnik/my-own-reflect.svg?branch=master)](https://travis-ci.org/ktutnik/my-own-reflect)
-[![Coverage Status](https://coveralls.io/repos/github/ktutnik/my-own-reflect/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/my-own-reflect?branch=master)
+[![Build Status](https://travis-ci.org/ktutnik/tinspector.svg?branch=master)](https://travis-ci.org/ktutnik/tinspector)
+[![Coverage Status](https://coveralls.io/repos/github/ktutnik/tinspector/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/tinspector?branch=master)
 
 ## Description
 tinspector is a type inspector library used to extract metadata of a JavaScript type (Function, Class, Module)
