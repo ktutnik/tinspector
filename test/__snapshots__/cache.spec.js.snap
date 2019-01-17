@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cache Function Should differentiate class with scope 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "name": "first",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "method",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "par",
+          "type": undefined,
+        },
+      ],
+      "returnType": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "properties": Array [],
+  "type": MyClass,
+}
+`;
+
+exports[`Cache Function Should differentiate class with scope 2`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "name": "second",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "method",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "par",
+          "type": undefined,
+        },
+      ],
+      "returnType": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "properties": Array [],
+  "type": MyClass,
+}
+`;

@@ -1,10 +1,9 @@
 {
-  "name": "my-own-reflect",
-  "description": "A dead simple module parser that can be hosted in your own code.",
-  "main": "index.js",
+  "name": "tinspector",
+  "description": "TypeScript type inspector",
+  "main": "lib/index.js",
   "scripts": {
-    "postinstall": "tsc",
-    "test": "jest --coverage --collectCoverageFrom=src/**/*.js"
+    "test": "jest"
   },
   "keywords": [
     "Reflection",
@@ -13,23 +12,22 @@
   ],
   "author": "Ketut Sandiarsa",
   "license": "MIT",
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
   "devDependencies": {
-    "@types/jest": "^23.1.0",
-    "@types/node": "^10.3.3",
-    "coveralls": "^3.0.1",
-    "jest": "^23.1.0",
-    "tslib": "^1.9.2",
-    "typescript": "^2.9.2"
+    "@types/jest": "^23.3.12",
+    "@types/node": "^10.12.18",
+    "coveralls": "^3.0.2",
+    "jest": "^23.6.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.2.2"
   },
   "jest": {
-    "coverageDirectory": "./coverage",
-    "coverageReporters": [
-      "json",
-      "text",
-      "lcov"
+    "collectCoverage": true,
+    "collectCoverageFrom": ["src/**/*.js"],
+    "snapshotSerializers": [
+      "./scripts/function-snapshot-serializer.js"
     ]
-  },
-  "dependencies": {
-    "reflect-metadata": "^0.1.12"
   }
 }

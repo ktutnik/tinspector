@@ -1,0 +1,377 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inheritance Should get base class getter 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": get childProp,
+      "kind": "Property",
+      "name": "childProp",
+      "set": undefined,
+      "type": undefined,
+    },
+    Object {
+      "decorators": Array [],
+      "get": get parentProp,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": undefined,
+    },
+  ],
+  "type": ChildClass,
+}
+`;
+
+exports[`Inheritance Should get base class getter with decorator 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": get childProp,
+      "kind": "Property",
+      "name": "childProp",
+      "set": undefined,
+      "type": undefined,
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "get": get parentProp,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Object,
+    },
+  ],
+  "type": ChildClass,
+}
+`;
+
+exports[`Inheritance Should get base class method 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [],
+      "returnType": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+}
+`;
+
+exports[`Inheritance Should get base class method with decorator 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "type": String,
+        },
+      ],
+      "returnType": String,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+}
+`;
+
+exports[`Inheritance Should get base class properties 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Object,
+    },
+  ],
+  "type": ChildClass,
+}
+`;
+
+exports[`Inheritance Should inspect domain with inheritance using constructor property 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "name",
+        "type": String,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "discontinue",
+        "type": Boolean,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "price",
+        "type": Number,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "type",
+        "type": String,
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+    },
+    Object {
+      "type": "ParameterProperties",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "Item",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "name",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "discontinue",
+      "set": undefined,
+      "type": Boolean,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "price",
+      "set": undefined,
+      "type": Number,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "type",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "id",
+      "set": undefined,
+      "type": Object,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "createdAt",
+      "set": undefined,
+      "type": Object,
+    },
+  ],
+  "type": Item,
+}
+`;
+
+exports[`Inheritance Should inspect domain with inheritance using property 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "name",
+        "type": String,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "discontinue",
+        "type": Boolean,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "price",
+        "type": Number,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "type",
+        "type": String,
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+    },
+    Object {
+      "type": "ParameterProperties",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "Item",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "id",
+      "set": undefined,
+      "type": Object,
+    },
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "createdAt",
+      "set": undefined,
+      "type": Object,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "name",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "discontinue",
+      "set": undefined,
+      "type": Boolean,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "price",
+      "set": undefined,
+      "type": Number,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "type",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "id",
+      "set": undefined,
+      "type": Object,
+    },
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "createdAt",
+      "set": undefined,
+      "type": Object,
+    },
+  ],
+  "type": Item,
+}
+`;

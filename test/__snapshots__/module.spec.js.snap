@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Module Introspection Should inspect class 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "method",
+      "parameters": Array [],
+      "returnType": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "properties": Array [],
+  "type": MyClass,
+}
+`;
+
+exports[`Module Introspection Should inspect class inside namespace 1`] = `
+Object {
+  "kind": "Object",
+  "members": Array [
+    Object {
+      "constructor": Object {
+        "kind": "Constructor",
+        "name": "constructor",
+        "parameters": Array [],
+      },
+      "decorators": Array [],
+      "kind": "Class",
+      "methods": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Method",
+          "name": "method",
+          "parameters": Array [],
+          "returnType": undefined,
+        },
+      ],
+      "name": "MyClass",
+      "properties": Array [],
+      "type": MyClass,
+    },
+  ],
+  "name": "myNameSpace",
+}
+`;
+
+exports[`Module Introspection Should inspect function 1`] = `
+Object {
+  "kind": "Function",
+  "name": "myFunction",
+  "parameters": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Parameter",
+      "name": "id",
+      "type": undefined,
+    },
+    Object {
+      "decorators": Array [],
+      "kind": "Parameter",
+      "name": "name",
+      "type": undefined,
+    },
+  ],
+  "returnType": undefined,
+}
+`;
+
+exports[`Module Introspection Should inspect function inside namespace 1`] = `
+Object {
+  "kind": "Object",
+  "members": Array [
+    Object {
+      "kind": "Function",
+      "name": "myFunction",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "id",
+          "type": undefined,
+        },
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "name",
+          "type": undefined,
+        },
+      ],
+      "returnType": undefined,
+    },
+  ],
+  "name": "myNamespace",
+}
+`;
+
+exports[`Module Introspection Should inspect module with constant 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "method",
+      "parameters": Array [],
+      "returnType": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "properties": Array [],
+  "type": MyClass,
+}
+`;

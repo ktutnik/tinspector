@@ -1,119 +1,197 @@
-# My Own Reflect
-A dead simple module parser that can be hosted in your own code.
+# tinspector
+TypeScript type inspector
 
 [![Build Status](https://travis-ci.org/ktutnik/my-own-reflect.svg?branch=master)](https://travis-ci.org/ktutnik/my-own-reflect)
 [![Coverage Status](https://coveralls.io/repos/github/ktutnik/my-own-reflect/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/my-own-reflect?branch=master)
 
-## Motivation
-My Own Reflect is a module parser library, it parse all exported functions and classes inside a module into Abstract Syntax Tree. 
+## Description
+tinspector is a type inspector library used to extract metadata of a JavaScript type (Function, Class, Module)
 
-## How to Use It
-Example you have a file with classes like below:
+
+## Simple Reflect
 
 ```typescript
-//filename: src/mock.ts
-export function myFun(firstPar: string, secondPar: string) { }
-export function myOtherFun() { }
+import reflect from "tinspector"
 
-export class MyClass {
-    myMethod(firstPar: string, secondPar: string) { }
-    myOtherMethod(){}
+class MyAwesomeClass {
+    constructor(id:number, name:string){}
+    myAwesomeMethod(stringPar:string){}
 }
-```
-You can retrieve AST from above module using:
 
-```typescript
-//filename: src/index.ts
-import {reflect} from "./reflect"
-
-const result = reflect("./mock")
-```
-
-The result will be like below:
-
-```javascript
+const metadata = reflect(MyAwesomeClass)
+/*
+metadata: 
 {
-    type: 'Object',
-    name: 'module',
-    members: [{
-        type: 'Function',
-        name: 'myFun',
-        parameters:
-            [{ type: 'Parameter', name: 'firstPar' },
-            { type: 'Parameter', name: 'secondPar' }]
-    },
-    { type: 'Function', name: 'myOtherFun', parameters: [] },
-    {
-        type: 'Class',
-        name: 'MyClass',
-        methods:
-            [{
-                type: 'Function',
-                name: 'myMethod',
-                parameters:
-                    [{ type: 'Parameter', name: 'firstPar' },
-                    { type: 'Parameter', name: 'secondPar' }]
-            },
-            { type: 'Function', name: 'myOtherMethod', parameters: [] }]
+    kind: "Class",
+    name: "MyAwesomeClass",
+    ...
+    constructor: [{
+        kind: "Parameter",
+        name: "id",
+        ...
+    },{
+        kind: "Parameter",
+        name: "name",
+        ...
+    }]
+    methods: [{
+        kind: "Function",
+        name: "myAwesomeMethod",
+        ...
+        parameters: [{
+            kind: "Parameter",
+            name: "stringPar",
+            ...
+        }]
     }]
 }
+*/
 ```
 
-The parameter of the `reflect` method is the path of the module that will be parsed, it is respect the JavaScript import naming such as absolute `"./module"`, `"/path/of/module"`, relative `"../../module"` or global `"module"`
-
-My Own Reflect can handle TypeScript style decorator properly
+## Reflect With Type Information
+TypeScript provided design type information by using decorator. 
+To get a proper type information on function parameter and its return type 
+you can use noop decorator (decorator that does nothing).
+* To get type information of constructor parameter decorate the class
+* To get type information of method/property decorate the method/property itself
 
 ```typescript
-import {decorateClass, decorateMethod, decorateParameter} from "./reflect"
+import reflect, { decorate } from "tinspector"
 
-@decorateClass({ url: "/animal" })
-export class AnimalClass {
-    @decorateMethod({ url: "/get" })
-    myMethod(@decorateParameter({ required: true }) firstPar: string, @decorateParameter({ required: false }) secondPar: string) { }
-    myOtherMethod(@decorateParameter({ required: true }) par1: string, par2: string) { }
+@decorate({})
+class MyAwesomeClass {
+    constructor(id:number, name:string){}
+
+    @decorate({})
+    myAwesomeMethod(stringPar:string): number { return 1 }
+}
+
+const metadata = reflect(MyAwesomeClass)
+/*
+metadata: 
+{
+    kind: "Class",
+    name: "MyAwesomeClass",
+    ...
+    constructor: [{
+        kind: "Parameter",
+        name: "id",
+        type: Number, <--- type information
+        ...
+    },{
+        kind: "Parameter",
+        name: "name",
+        type: String, <--- type information
+        ...
+    }]
+    methods: [{
+        kind: "Function",
+        name: "myAwesomeMethod",
+        returnType: Number, <--- type information
+        ...
+        parameters: [{
+            kind: "Parameter",
+            name: "stringPar",
+            type: String, <--- type information
+            ...
+        }]
+    }]
+}
+*/
+```
+
+## Reflect With Decorator Information
+Use predefined decorator `decorate`, `decorateClass`, `decorateMethod`, `decorateProperty`, `decorateParameter` to add 
+decorator informaton that understand by `reflect`
+
+```typescript
+import reflect, { decorateMethod } from "tinspector"
+
+class MyAwesomeClass {
+    @decorateMethod({ type: "Cache", cache: '60s' })
+    myAwesomeMethod(stringPar:string){}
+}
+
+const metadata = reflect(MyAwesomeClass)
+/*
+metadata: 
+{
+    kind: "Class",
+    name: "MyAwesomeClass",
+    ...
+    methods: [{
+        kind: "Function",
+        name: "myAwesomeMethod",
+        decorators: [{ 
+            type: "Cache", 
+            cache: '60s' 
+        }] 
+        ...
+    }]
+}
+*/
+```
+
+## Reflect Parameter Properties
+TypeScript parameter properties information erased after transpile, so you need to tell tinspector 
+that you have parameter properties by decorate class using `@reflect.parameterProperties()`
+
+```typescript
+import reflect from "tinspector"
+
+@reflect.parameterProperties()
+class MyAwesomeClass {
+    constructor(public id:number, public name:string){}
+}
+
+const metadata = reflect(MyAwesomeClass)
+
+/*
+metadata: 
+{
+    kind: "Class",
+    name: "MyAwesomeClass",
+    ...
+    constructor: [{
+        kind: "Parameter",
+        name: "id",
+        type: Number,
+        ...
+    },{
+        kind: "Parameter",
+        name: "name",
+        type: String,
+        ...
+    }]
+    properties: [{
+        kind: "Parameter",
+        name: "id",
+        type: Number,
+        ...
+    },{
+        kind: "Parameter",
+        name: "name",
+        type: String,
+        ...
+    }]
+}
+*/
+```
+
+> `@reflect.parameterProperties()` assume that all of the class parameter is parameter property, 
+> to exclude parameter from transformed into property use `@reflect.private()`
+
+```typescript
+@reflect.parameterProperties()
+class MyAwesomeClass {
+    constructor(public id:number, public name:string, @reflect.private() nonProperty:string){}
 }
 ```
 
-The reflection result is like below:
+## Reflect With Inheritance
+To get the proper metadata information tinspector will traverse through parent classes.
 
-```javascript
-{
-    type: 'Class',
-    name: 'AnimalClass',
-    methods:
-        [{
-            type: 'Function',
-            name: 'myMethod',
-            parameters:
-                [{
-                    type: 'Parameter',
-                    name: 'firstPar',
-                    decorators:
-                        [{ required: true }]
-                },
-                {
-                    type: 'Parameter',
-                    name: 'secondPar',
-                    decorators:
-                        [{ required: false }]
-                }],
-            decorators:
-                [{ url: '/get' }]
-        },
-        {
-            type: 'Function',
-            name: 'myOtherMethod',
-            parameters:
-                [{
-                    type: 'Parameter',
-                    name: 'par1',
-                    decorators:
-                        [{ required: true }]
-                },
-                { type: 'Parameter', name: 'par2', decorators: [] }],
-            decorators: []
-        }],
-    decorators:
-        [{ url: '/animal' }]
-}
+```typescript
+
+
 ```

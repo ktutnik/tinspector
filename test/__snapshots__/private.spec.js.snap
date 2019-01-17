@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Private Decorator Should be able to ignore get set 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+}
+`;
+
+exports[`Private Decorator Should be able to ignore method 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+}
+`;
+
+exports[`Private Decorator Should be able to ignore parameter properties 1`] = `
+Object {
+  "constructor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "data",
+        "type": String,
+      },
+      Object {
+        "decorators": Array [
+          Object {
+            "kind": "Private",
+          },
+        ],
+        "kind": "Parameter",
+        "name": "id",
+        "type": String,
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "data",
+      "set": undefined,
+      "type": String,
+    },
+  ],
+  "type": DummyClass,
+}
+`;
