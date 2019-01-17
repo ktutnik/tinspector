@@ -1,4 +1,4 @@
-import { decorateClass, reflect, type } from "../src"
+import { decorateClass, reflect } from "../src"
 
 describe("Cache Function", () => {
 

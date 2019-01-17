@@ -1,4 +1,4 @@
-import { array, decorateClass, decorateMethod, reflect, type } from "../src"
+import { decorateClass, decorateMethod, reflect } from "../src"
 
 describe("Class Introspection", () => {
     it("Should inspect class properly", () => {
@@ -47,7 +47,7 @@ describe("Class Introspection", () => {
         class EmptyClass { }
         @decorateClass({})
         class DummyClass {
-            constructor(@array(EmptyClass) empty: EmptyClass[]) { }
+            constructor(@reflect.array(EmptyClass) empty: EmptyClass[]) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
@@ -57,7 +57,7 @@ describe("Class Introspection", () => {
         class EmptyClass { }
         class DummyClass {
             @decorateMethod({})
-            dummyMethod(@array(EmptyClass) empty: EmptyClass[]) { }
+            dummyMethod(@reflect.array(EmptyClass) empty: EmptyClass[]) { }
         }
         const meta = reflect(DummyClass)
         expect(meta.methods[0].parameters[0].type).toEqual([EmptyClass])
@@ -67,7 +67,7 @@ describe("Class Introspection", () => {
     it("Should able to override type with other type", () => {
         class OtherDummyClass { }
         class DummyClass {
-            method(@type(OtherDummyClass, "Readonly") dummy: Readonly<OtherDummyClass>) { }
+            method(@reflect.type(OtherDummyClass, "Readonly") dummy: Readonly<OtherDummyClass>) { }
         }
         const meta = reflect(DummyClass)
         expect(meta.methods[0].parameters[0].decorators[0].type).toEqual(OtherDummyClass)

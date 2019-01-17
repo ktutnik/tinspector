@@ -170,47 +170,6 @@ export function getDecorators(target: any): Decorator[] {
     return Reflect.getMetadata(DECORATOR_KEY, target) || []
 }
 
-/* ---------------------------------------------------------------- */
-/* ------------------------- DECORATORS --------------------------- */
-/* ---------------------------------------------------------------- */
-
-/**
- * Add type information for array element
- * @param type Data type of array element
- */
-export function array(type: Class) {
-    return decorate(<ArrayDecorator>{ kind: "Array", type: type }, ["Parameter", "Method", "Property"])
-}
-
-/**
- * Override type definition information. Useful to add type definition for some data type that is erased 
- * after transfile such as Partial<Type> or ReadOnly<Type>
- * 
- * If applied to parameter it will override the parameter type
- * 
- * If applied to property it will override the property type
- * 
- * if applied to method it will overrid the method return value
- * @param type The type overridden
- * @param info Additional information about type (readonly, partial etc)
- */
-export function type(type: Class, info?: string) {
-    return decorate(<TypeDecorator>{ kind: "Override", type: type, info }, ["Parameter", "Method", "Property"])
-}
-
-/**
- * Mark member as private
- */
-export function ignore() {
-    return decorate(<PrivateDecorator>{ kind: "Private" }, ["Parameter", "Method", "Property"])
-}
-
-/**
- * Mark all constructor parameters as properties
- */
-export function parameterProperties() {
-    return decorateClass({ type: "ParameterProperties" })
-}
 
 /* ---------------------------------------------------------------- */
 /* ------------------------- CACHE FUNCTIONS ---------------------- */
@@ -392,8 +351,16 @@ function traverse(fn: any, name: string): Reflection | undefined {
             return
     }
 }
-
+/**
+ * Reflect module
+ * @param path module name
+ */
 export function reflect(path: string): ObjectReflection
+
+/**
+ * Reflect class
+ * @param classType Class 
+ */
 export function reflect(classType: Class): ClassReflection
 export function reflect(option: string | Class) {
     const cache = getCache(option)
@@ -405,8 +372,48 @@ export function reflect(option: string | Class) {
         return setCache(option, reflectClassDeep(option))
     }
 }
-reflect.private = ignore
-reflect.type = type
-reflect.array = array
-reflect.parameterProperties = parameterProperties
+
+/* ---------------------------------------------------------------- */
+/* ------------------------- DECORATORS --------------------------- */
+/* ---------------------------------------------------------------- */
+
+/**
+ * Mark member as private
+ */
+reflect.private = function () {
+    return decorate(<PrivateDecorator>{ kind: "Private" }, ["Parameter", "Method", "Property"])
+}
+
+/**
+ * Override type definition information. Useful to add type definition for some data type that is erased 
+ * after transfile such as Partial<Type> or ReadOnly<Type>
+ * 
+ * If applied to parameter it will override the parameter type
+ * 
+ * If applied to property it will override the property type
+ * 
+ * if applied to method it will overrid the method return value
+ * @param type The type overridden
+ * @param info Additional information about type (readonly, partial etc)
+ */
+reflect.type = function (type: Class, info?: string) {
+    return decorate(<TypeDecorator>{ kind: "Override", type: type, info }, ["Parameter", "Method", "Property"])
+}
+
+/**
+ * Add type information for array element
+ * @param type Data type of array element
+ */
+reflect.array = function (type: Class) {
+    return decorate(<ArrayDecorator>{ kind: "Array", type: type }, ["Parameter", "Method", "Property"])
+}
+
+/**
+ * Mark all constructor parameters as properties
+ */
+reflect.parameterProperties = function () {
+    return decorateClass({ type: "ParameterProperties" })
+}
+
+
 export default reflect

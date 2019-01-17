@@ -1,6 +1,6 @@
 import { join } from "path"
 
-import { reflect, type } from "../src"
+import { reflect } from "../src"
 import { MyClass } from "./mocks/mock.class"
 import { myNameSpace } from "./mocks/mock.class-in-namespace"
 

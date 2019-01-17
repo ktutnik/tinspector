@@ -1,11 +1,9 @@
 import {
-    parameterProperties,
     decorate,
     decorateClass,
     decorateMethod,
     decorateParameter,
     decorateProperty,
-    ignore,
     reflect,
 } from "../src"
 
@@ -244,7 +242,7 @@ describe("Decorator", () => {
     })
 
     it("Should inspect constructor property", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DummyClass {
             constructor(public data: string) { }
         }
@@ -253,7 +251,7 @@ describe("Decorator", () => {
     })
 
     it("Should inspect constructor property with decorator", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DummyClass {
             constructor(@decorateProperty({}) public data: string) { }
         }
@@ -263,7 +261,7 @@ describe("Decorator", () => {
     })
 
     it("Should inspect constructor property with decorator multiple", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DummyClass {
             constructor(
                 @decorateProperty({ value: 1 })
@@ -276,7 +274,7 @@ describe("Decorator", () => {
     })
 
     it("Should inspect constructor property with decorator callback", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DummyClass {
             constructor(
                 @decorateProperty((target, name) => ({ target, name }))
@@ -288,9 +286,9 @@ describe("Decorator", () => {
     })
 
     it("Should not inspect private constructor property", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DummyClass {
-            constructor(public data: string, @ignore() myPrivateField: string) { }
+            constructor(public data: string, @reflect.private() myPrivateField: string) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()

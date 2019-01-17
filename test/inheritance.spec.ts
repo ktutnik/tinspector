@@ -1,4 +1,4 @@
-import { reflect, getDeepMembers, decorateProperty, DECORATOR_KEY, decorateMethod, parameterProperties } from "../src";
+import { reflect, getDeepMembers, decorateProperty, DECORATOR_KEY, decorateMethod } from "../src";
 
 describe("getDeepMember", () => {
 
@@ -79,14 +79,14 @@ describe("Inheritance", () => {
     })
 
     it("Should inspect domain with inheritance using constructor property", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DomainBase {
             constructor(
                 public id = 0,
                 public createdAt = new Date()
             ) { }
         }
-        @parameterProperties()
+        @reflect.parameterProperties()
         class Item extends DomainBase {
             constructor(
                 public name: string,
@@ -100,14 +100,14 @@ describe("Inheritance", () => {
     })
 
     it("Should inspect domain with inheritance using property", () => {
-        @parameterProperties()
+        @reflect.parameterProperties()
         class DomainBase {
             @decorateProperty({})
             id = 0
             @decorateProperty({})
             createdAt = new Date()
         }
-        @parameterProperties()
+        @reflect.parameterProperties()
         class Item extends DomainBase {
             constructor(
                 public name: string,
