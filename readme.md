@@ -218,9 +218,12 @@ class MyAwesomeClass {
 
 ```
 
-
 ## Ignore Member From Metadata Generated
 
 ## Reflect Array Element Type
 
 ## Reflect Generic Type
+
+## Custom Decorator 
+
+## Merge Decorators
