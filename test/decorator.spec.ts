@@ -5,6 +5,7 @@ import {
     decorateParameter,
     decorateProperty,
     reflect,
+    mergeDecorator,
 } from "../src"
 
 describe("Decorator", () => {
@@ -174,7 +175,6 @@ describe("Decorator", () => {
             dummyProp: string = "Hello"
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(String)
         expect(meta).toMatchSnapshot()
     })
 
@@ -194,7 +194,6 @@ describe("Decorator", () => {
             dummyProp: string = "Hello"
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(String)
         expect(meta).toMatchSnapshot()
     })
 
@@ -214,7 +213,6 @@ describe("Decorator", () => {
             set data(value: number) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(Number)
         expect(meta).toMatchSnapshot()
     })
 
@@ -226,7 +224,6 @@ describe("Decorator", () => {
             set data(value: number) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(Number)
         expect(meta).toMatchSnapshot()
     })
 
@@ -237,7 +234,6 @@ describe("Decorator", () => {
             set data(value: number) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(Number)
         expect(meta).toMatchSnapshot()
     })
 
@@ -256,7 +252,6 @@ describe("Decorator", () => {
             constructor(@decorateProperty({}) public data: string) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(String)
         expect(meta).toMatchSnapshot()
     })
 
@@ -269,7 +264,6 @@ describe("Decorator", () => {
                 public data: string) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(String)
         expect(meta).toMatchSnapshot()
     })
 
@@ -281,7 +275,6 @@ describe("Decorator", () => {
                 public data: string) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta.properties[0].type).toBe(String)
         expect(meta).toMatchSnapshot()
     })
 
@@ -289,6 +282,20 @@ describe("Decorator", () => {
         @reflect.parameterProperties()
         class DummyClass {
             constructor(public data: string, @reflect.ignore() myPrivateField: string) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should able to merge decorator", () => {
+        function cacheAndProps() {
+            return mergeDecorator(
+                decorateClass({ type: "Cache" }),
+                reflect.parameterProperties())
+        }
+        @cacheAndProps()
+        class DummyClass {
+            constructor(public data: string) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()

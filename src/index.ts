@@ -166,6 +166,12 @@ export function decorate(data: any, targetTypes: DecoratorTargetType[] = []) {
     }
 }
 
+export function mergeDecorator(...fn:Function[]){
+    return (...args:any[]) => {
+        fn.forEach(x => x(...args))
+    }
+}
+
 export function getDecorators(target: any): Decorator[] {
     return Reflect.getMetadata(DECORATOR_KEY, target) || []
 }
