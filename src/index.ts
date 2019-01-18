@@ -15,11 +15,11 @@ export interface PropertyReflection extends ReflectionBase { kind: "Property", d
 export interface MethodReflection extends ReflectionBase { kind: "Method", parameters: ParameterReflection[], returnType: any, decorators: any[] }
 export interface ConstructorReflection extends ReflectionBase { kind: "Constructor", parameters: ParameterReflection[] }
 export interface FunctionReflection extends ReflectionBase { kind: "Function", parameters: ParameterReflection[], returnType: any }
-export interface ClassReflection extends ReflectionBase { kind: "Class", constructor: ConstructorReflection, methods: MethodReflection[], properties: PropertyReflection[], decorators: any[], type: Class }
+export interface ClassReflection extends ReflectionBase { kind: "Class", ctor: ConstructorReflection, methods: MethodReflection[], properties: PropertyReflection[], decorators: any[], type: Class }
 export interface ObjectReflection extends ReflectionBase { kind: "Object", members: Reflection[] }
 export interface ArrayDecorator { kind: "Array", type: Class }
 export interface TypeDecorator { kind: "Override", type: Class, info?: string }
-export interface PrivateDecorator { kind: "Private" }
+export interface PrivateDecorator { kind: "Ignore" }
 interface CacheItem { key: string | Class, result: Reflection }
 
 export const DECORATOR_KEY = "plumier.key:DECORATOR"
@@ -229,10 +229,10 @@ function reDecorateProperty(decs: Decorator[], ref: PropertyReflection): Propert
 }
 
 function reDecorateClass(decs: Decorator[], reflection: ClassReflection): ClassReflection {
-    const notPrivate = (x: { decorators: any[] }) => !x.decorators.some((x: PrivateDecorator) => x.kind === "Private")
+    const notPrivate = (x: { decorators: any[] }) => !x.decorators.some((x: PrivateDecorator) => x.kind === "Ignore")
     const decorators = decs.filter(x => x.targetType == "Class" && x.target == reflection.name).map(x => ({ ...x.value }))
     const methods = reflection.methods.map(x => reDecorateMethod(decs, x))
-    const ctorParameters = reflection.constructor.parameters.map((x, i) => reDecorateParameter(decs, "constructor", i, x))
+    const ctorParameters = reflection.ctor.parameters.map((x, i) => reDecorateParameter(decs, "constructor", i, x))
     const properties = reflection.properties.map(x => reDecorateProperty(decs, x))
     let ctorProperties: PropertyReflection[] = []
     if (decorators.some(x => x.type === "ParameterProperties")) {
@@ -244,7 +244,7 @@ function reDecorateClass(decs: Decorator[], reflection: ClassReflection): ClassR
     }
     return <ClassReflection>{
         ...reflection, decorators,
-        constructor: {
+        ctor: {
             kind: "Constructor",
             parameters: ctorParameters,
             name: "constructor"
@@ -301,7 +301,7 @@ function reflectClass(fn: Class): ClassReflection {
     const decorators = getDecorators(fn)
     return reDecorateClass(decorators, {
         kind: "Class",
-        constructor: ctorParameters,
+        ctor: ctorParameters,
         name: fn.name,
         methods: members.filter((x): x is MethodReflection => x.kind === "Method"),
         properties: members.filter((x): x is PropertyReflection => x.kind === "Property"),
@@ -313,13 +313,13 @@ function reflectClass(fn: Class): ClassReflection {
 function reflectClassDeep(fn: Class): ClassReflection {
     const defaultRef: ClassReflection = {
         kind: "Class", type: Object, name: "Object",
-        constructor: {} as ConstructorReflection,
+        ctor: {} as ConstructorReflection,
         methods: [], properties: [], decorators: []
     }
     function merge(child: ClassReflection, parent: ClassReflection): ClassReflection {
         return {
             kind: "Class", type: child.type, name: child.name,
-            constructor: child.constructor,
+            ctor: child.ctor,
             //merge only methods, properties and decorators
             methods: child.methods.concat(parent.methods),
             properties: child.properties.concat(parent.properties),
@@ -378,10 +378,10 @@ export function reflect(option: string | Class) {
 /* ---------------------------------------------------------------- */
 
 /**
- * Mark member as private
+ * Ignore member from metadata generated
  */
-reflect.private = function () {
-    return decorate(<PrivateDecorator>{ kind: "Private" }, ["Parameter", "Method", "Property"])
+reflect.ignore = function () {
+    return decorate(<PrivateDecorator>{ kind: "Ignore" }, ["Parameter", "Method", "Property"])
 }
 
 /**

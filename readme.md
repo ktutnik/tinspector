@@ -5,7 +5,7 @@ TypeScript type inspector
 [![Coverage Status](https://coveralls.io/repos/github/ktutnik/tinspector/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/tinspector?branch=master)
 
 ## Description
-tinspector is a type inspector library used to extract metadata of a JavaScript type (Function, Class, Module)
+tinspector is a type inspector used to extract metadata from JavaScript (TypeScript generated) Function, Class, Module
 
 
 ## Simple Reflect
@@ -25,15 +25,19 @@ metadata:
     kind: "Class",
     name: "MyAwesomeClass",
     ...
-    constructor: [{
-        kind: "Parameter",
-        name: "id",
+    ctor: {
+        kind: "Contructor",
         ...
-    },{
-        kind: "Parameter",
-        name: "name",
-        ...
-    }]
+        parameters: [{
+            kind: "Parameter",
+            name: "id",
+            ...
+        },{
+            kind: "Parameter",
+            name: "name",
+            ...
+        }]
+    },
     methods: [{
         kind: "Function",
         name: "myAwesomeMethod",
@@ -73,17 +77,21 @@ metadata:
     kind: "Class",
     name: "MyAwesomeClass",
     ...
-    constructor: [{
-        kind: "Parameter",
-        name: "id",
-        type: Number, <--- type information
+    ctor: {
+        kind: "Contructor",
         ...
-    },{
-        kind: "Parameter",
-        name: "name",
-        type: String, <--- type information
-        ...
-    }]
+        parameters:[{
+            kind: "Parameter",
+            name: "id",
+            type: Number, <--- type information
+            ...
+        },{
+            kind: "Parameter",
+            name: "name",
+            type: String, <--- type information
+            ...
+        }]
+    },
     methods: [{
         kind: "Function",
         name: "myAwesomeMethod",
@@ -152,17 +160,21 @@ metadata:
     kind: "Class",
     name: "MyAwesomeClass",
     ...
-    constructor: [{
-        kind: "Parameter",
-        name: "id",
-        type: Number,
+    ctor: {
+        kind: "Contructor",
         ...
-    },{
-        kind: "Parameter",
-        name: "name",
-        type: String,
-        ...
-    }]
+        parameters:[{
+            kind: "Parameter",
+            name: "id",
+            type: Number,
+            ...
+        },{
+            kind: "Parameter",
+            name: "name",
+            type: String,
+            ...
+        }]
+    },
     properties: [{
         kind: "Parameter",
         name: "id",
@@ -179,19 +191,36 @@ metadata:
 ```
 
 > `@reflect.parameterProperties()` assume that all of the class parameter is parameter property, 
-> to exclude parameter from transformed into property use `@reflect.private()`
+> to exclude parameter from transformed into property use `@reflect.ignore()`
 
 ```typescript
 @reflect.parameterProperties()
 class MyAwesomeClass {
-    constructor(public id:number, public name:string, @reflect.private() nonProperty:string){}
+    constructor(public id:number, public name:string, @reflect.ignore() nonProperty:string){}
 }
 ```
 
 ## Reflect With Inheritance
-To get the proper metadata information tinspector will traverse through parent classes.
+tinspector will traverse through base classes property to get proper meta data.
 
 ```typescript
+class BaseClass {
+    @decorate({})
+    myAwesomeMethod(stringPar:string): number { return 1 }
+}
+class MyAwesomeClass {
+    @decorate({})
+    myAwesomeMethod(stringPar:string): number { return 1 }
+}
+
+
 
 
 ```
+
+
+## Ignore Member From Metadata Generated
+
+## Reflect Array Element Type
+
+## Reflect Generic Type

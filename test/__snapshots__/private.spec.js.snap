@@ -2,7 +2,7 @@
 
 exports[`Private Decorator Should be able to ignore get set 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -18,7 +18,7 @@ Object {
 
 exports[`Private Decorator Should be able to ignore method 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -34,7 +34,7 @@ Object {
 
 exports[`Private Decorator Should be able to ignore parameter properties 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -47,7 +47,7 @@ Object {
       Object {
         "decorators": Array [
           Object {
-            "kind": "Private",
+            "kind": "Ignore",
           },
         ],
         "kind": "Parameter",

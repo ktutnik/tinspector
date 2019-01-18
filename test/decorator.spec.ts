@@ -288,7 +288,7 @@ describe("Decorator", () => {
     it("Should not inspect private constructor property", () => {
         @reflect.parameterProperties()
         class DummyClass {
-            constructor(public data: string, @reflect.private() myPrivateField: string) { }
+            constructor(public data: string, @reflect.ignore() myPrivateField: string) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()

@@ -2,7 +2,7 @@
 
 exports[`Inheritance Should get base class getter 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -35,7 +35,7 @@ Object {
 
 exports[`Inheritance Should get base class getter with decorator 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -72,7 +72,7 @@ Object {
 
 exports[`Inheritance Should get base class method 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -96,7 +96,7 @@ Object {
 
 exports[`Inheritance Should get base class method with decorator 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -131,7 +131,7 @@ Object {
 
 exports[`Inheritance Should get base class properties 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -160,7 +160,7 @@ Object {
 
 exports[`Inheritance Should inspect domain with inheritance using constructor property 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -257,7 +257,7 @@ Object {
 
 exports[`Inheritance Should inspect domain with inheritance using property 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [

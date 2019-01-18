@@ -2,7 +2,7 @@
 
 exports[`Decorator Should able to decorate class multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -25,7 +25,7 @@ Object {
 
 exports[`Decorator Should able to decorate class using callback 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -45,7 +45,7 @@ Object {
 
 exports[`Decorator Should able to decorate constructor parameter 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -72,7 +72,7 @@ Object {
 
 exports[`Decorator Should able to decorate constructor parameter 2`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -101,7 +101,7 @@ Object {
 
 exports[`Decorator Should able to decorate constructor parameter multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -131,7 +131,7 @@ Object {
 
 exports[`Decorator Should able to decorate method multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -162,7 +162,7 @@ Object {
 
 exports[`Decorator Should able to decorate method multiple 2`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -193,7 +193,7 @@ Object {
 
 exports[`Decorator Should able to decorate method parameter 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -228,7 +228,7 @@ Object {
 
 exports[`Decorator Should able to decorate method parameter multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -266,7 +266,7 @@ Object {
 
 exports[`Decorator Should able to decorate method parameter with callback 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -303,7 +303,7 @@ Object {
 
 exports[`Decorator Should decorate class 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -323,7 +323,7 @@ Object {
 
 exports[`Decorator Should decorate class, properties and parameter 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -371,7 +371,7 @@ Object {
 
 exports[`Decorator Should decorate method 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -399,7 +399,7 @@ Object {
 
 exports[`Decorator Should decorate method 2`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -427,7 +427,7 @@ Object {
 
 exports[`Decorator Should decorate method with callback 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -456,7 +456,7 @@ Object {
 
 exports[`Decorator Should decorate method with callback 2`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -485,7 +485,7 @@ Object {
 
 exports[`Decorator Should inspect class with get set 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -510,7 +510,7 @@ Object {
 
 exports[`Decorator Should inspect class with get set with decorator 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -537,7 +537,7 @@ Object {
 
 exports[`Decorator Should inspect class with get set with decorator callback 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -567,7 +567,7 @@ Object {
 
 exports[`Decorator Should inspect class with get set with decorator multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -599,7 +599,7 @@ Object {
 
 exports[`Decorator Should inspect class with properties 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -626,7 +626,7 @@ Object {
 
 exports[`Decorator Should inspect class with properties multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -658,7 +658,7 @@ Object {
 
 exports[`Decorator Should inspect class with properties with callback 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -688,7 +688,7 @@ Object {
 
 exports[`Decorator Should inspect constructor property 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -724,7 +724,7 @@ Object {
 
 exports[`Decorator Should inspect constructor property with decorator 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -764,7 +764,7 @@ Object {
 
 exports[`Decorator Should inspect constructor property with decorator callback 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -810,7 +810,7 @@ Object {
 
 exports[`Decorator Should inspect constructor property with decorator multiple 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -860,7 +860,7 @@ Object {
 
 exports[`Decorator Should not inspect private constructor property 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [
@@ -873,7 +873,7 @@ Object {
       Object {
         "decorators": Array [
           Object {
-            "kind": "Private",
+            "kind": "Ignore",
           },
         ],
         "kind": "Parameter",

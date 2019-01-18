@@ -2,7 +2,7 @@
 
 exports[`Cache Function Should differentiate class with scope 1`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
@@ -37,7 +37,7 @@ Object {
 
 exports[`Cache Function Should differentiate class with scope 2`] = `
 Object {
-  "constructor": Object {
+  "ctor": Object {
     "kind": "Constructor",
     "name": "constructor",
     "parameters": Array [],
