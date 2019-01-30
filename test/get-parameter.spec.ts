@@ -1,14 +1,20 @@
 import { getConstructorParameters, getParameterNames, decorate } from "../src";
 
+function globalFunction(a: any, b: any) {
+
+}
+
 describe("Constructor parameter", () => {
     it("Should get constructor parameter name", () => {
         class DummyClass {
-            constructor (
-                par1:string,
-                par2:string,
-                par3:string,
-                par4:string
-            ){ }
+            constructor(
+                par1: string,
+                par2: string,
+                par3: string,
+                par4: string
+            ) {
+                globalFunction(par1, par2)
+            }
         }
         const result = getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
@@ -16,15 +22,17 @@ describe("Constructor parameter", () => {
 
     it("Should get constructor parameter name with comment", () => {
         class DummyClass {
-            constructor (
+            constructor(
                 /* this is comment */
-                par1:string,
+                par1: string,
                 /* this is comment () */
-                par2:string,
-                par3:string,
+                par2: string,
+                par3: string,
                 /* this is comment {} */
-                par4:string
-            ){ }
+                par4: string
+            ) {
+                globalFunction(par1, par2)
+            }
         }
         const result = getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
@@ -32,12 +40,14 @@ describe("Constructor parameter", () => {
 
     it("Should get constructor with default parameter", () => {
         class DummyClass {
-            constructor (
+            constructor(
                 par1 = "Halo",
                 par2 = 123,
                 par3 = new Date(),
                 par4 = false
-            ){ }
+            ) {
+                globalFunction(par1, par2)
+            }
         }
         const result = getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
@@ -45,7 +55,7 @@ describe("Constructor parameter", () => {
 
     it("Should reflect rest parameter", () => {
         class DummyClass {
-            constructor (...pars:any[]){ }
+            constructor(...pars: any[]) { }
         }
         const result = getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
@@ -64,18 +74,20 @@ describe("Constructor parameter", () => {
         expect(result).toMatchSnapshot()
     })
 
-    
+
 })
 
 describe("Method Parameters", () => {
     it("Should get method parameter name", () => {
         class DummyClass {
-            myMethod (
-                par1:string,
-                par2:string,
-                par3:string,
-                par4:string
-            ){ }
+            myMethod(
+                par1: string,
+                par2: string,
+                par3: string,
+                par4: string
+            ) {
+                globalFunction(par1, par2)
+            }
         }
         const result = getParameterNames(DummyClass.prototype["myMethod"])
         expect(result).toMatchSnapshot()
@@ -83,15 +95,17 @@ describe("Method Parameters", () => {
 
     it("Should get method parameter name with comment", () => {
         class DummyClass {
-            myMethod (
+            myMethod(
                 /* this is comment */
-                par1:string,
+                par1: string,
                 /* this is comment () */
-                par2:string,
-                par3:string,
+                par2: string,
+                par3: string,
                 /* this is comment {} */
-                par4:string
-            ){ }
+                par4: string
+            ) { 
+                globalFunction(par1, par2)
+            }
         }
         const result = getParameterNames(DummyClass.prototype["myMethod"])
         expect(result).toMatchSnapshot()
@@ -99,12 +113,14 @@ describe("Method Parameters", () => {
 
     it("Should get method parameter with default parameter", () => {
         class DummyClass {
-            myMethod (
+            myMethod(
                 par1 = "Halo",
                 par2 = 123,
                 par3 = new Date(),
                 par4 = false
-            ){ }
+            ) { 
+                globalFunction(par1, par2)
+            }
         }
         const result = getParameterNames(DummyClass.prototype["myMethod"])
         expect(result).toMatchSnapshot()
@@ -113,37 +129,43 @@ describe("Method Parameters", () => {
 
 describe("Function Parameters", () => {
     it("Should get function parameter name", () => {
-            function myFunction (
-                par1:string,
-                par2:string,
-                par3:string,
-                par4:string
-            ){ }
+        function myFunction(
+            par1: string,
+            par2: string,
+            par3: string,
+            par4: string
+        ) {
+            globalFunction(par1, par2)
+        }
         const result = getParameterNames(myFunction)
         expect(result).toMatchSnapshot()
     })
 
     it("Should get function parameter name with comment", () => {
-            function myFunction (
-                /* this is comment */
-                par1:string,
-                /* this is comment () */
-                par2:string,
-                par3:string,
-                /* this is comment {} */
-                par4:string
-            ){ }
+        function myFunction(
+            /* this is comment */
+            par1: string,
+            /* this is comment () */
+            par2: string,
+            par3: string,
+            /* this is comment {} */
+            par4: string
+        ) { 
+            globalFunction(par1, par2)
+        }
         const result = getParameterNames(myFunction)
         expect(result).toMatchSnapshot()
     })
 
     it("Should get function parameter with default parameter", () => {
-            function myFunction (
-                par1 = "Halo",
-                par2 = 123,
-                par3 = new Date(),
-                par4 = false
-            ){ }
+        function myFunction(
+            par1 = "Halo",
+            par2 = 123,
+            par3 = new Date(),
+            par4 = false
+        ) { 
+            globalFunction(par1, par2)
+        }
         const result = getParameterNames(myFunction)
         expect(result).toMatchSnapshot()
     })

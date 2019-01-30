@@ -47,10 +47,11 @@ function cleanUp(fn: string) {
 }
 
 export function getParameterNames(fn: Function) {
-    const code = cleanUp(fn.toString())
-    const result = code.slice(code.indexOf('(') + 1, code.indexOf(')'))
-        .match(/([^\s,]+)/g);
-    return result === null ? [] : result;
+    const regex = /\(\s*([^]*?)\)\s*\{/mg
+    const result = regex.exec(fn.toString())
+    if (!result) return []
+    const match = cleanUp(result[1])
+    return match.split(",").map(x => x.trim()).filter(x => !!x)
 }
 
 export function getConstructorParameters(fn: Class) {
@@ -327,12 +328,12 @@ function reflectClassRecursive(fn: Class): ClassReflection {
     }
     function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
         const seen: { [key: string]: boolean } = {}
-        const result:T[] = []
+        const result: T[] = []
         for (let i = 0; i < reflections.length; i++) {
             const element = reflections[i];
-            if(!seen[element.name]){
+            if (!seen[element.name]) {
                 result.push(element)
-                seen[element.name]=true
+                seen[element.name] = true
             }
         }
         return result;
