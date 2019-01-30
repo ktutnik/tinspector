@@ -41,7 +41,7 @@ function cleanUp(fn: string) {
         //strive lambda
         .replace(/=>.*$/mg, '')
         //strive default params
-        .replace(/=[^,)]+/mg, '');
+        .replace(/=[^,]+/mg, '');
 }
 
 export function getParameterNames(fn: Function) {
@@ -52,10 +52,11 @@ export function getParameterNames(fn: Function) {
 }
 
 export function getConstructorParameters(fn: Class) {
-    const match = cleanUp(fn.toString())
-    const regex = /constructor\s*[^\(]*\(\s*([^\)]*)\)/mg
-    const result = regex.exec(match)
-    return result ? result[1].split(",").map(x => x.trim()).filter(x => Boolean(x)) : []
+    const regex = /constructor\s*\(\s*([^]*?)\)\s*\{/mg
+    const result = regex.exec(fn.toString())
+    if (!result) return []
+    const match = cleanUp(result[1])
+    return match.split(",").map(x => x.trim()).filter(x => !!x)
 }
 
 function isConstructor(value: Function) {
@@ -107,7 +108,7 @@ export function decorateMethod(data: any) {
     return decorate(data, ["Method"])
 }
 
-export function decorateProperty(callback: ((target: Class, name: string) => object)): (target: any, name: string, index?: any) => void
+export function decorateProperty(callback: ((target: Class, name: string, index?: any) => object)): (target: any, name: string, index?: any) => void
 export function decorateProperty(data: {}): (target: any, name: string, index?: any) => void
 export function decorateProperty(data: any) {
     return decorate(data, ["Property", "Parameter"])
@@ -166,8 +167,8 @@ export function decorate(data: any, targetTypes: DecoratorTargetType[] = []) {
     }
 }
 
-export function mergeDecorator(...fn:Function[]){
-    return (...args:any[]) => {
+export function mergeDecorator(...fn: Function[]) {
+    return (...args: any[]) => {
         fn.forEach(x => x(...args))
     }
 }
@@ -316,19 +317,31 @@ function reflectClass(fn: Class): ClassReflection {
     })
 }
 
-function reflectClassDeep(fn: Class): ClassReflection {
+function reflectClassRecursive(fn: Class): ClassReflection {
     const defaultRef: ClassReflection = {
         kind: "Class", type: Object, name: "Object",
         ctor: {} as ConstructorReflection,
         methods: [], properties: [], decorators: []
+    }
+    function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
+        const seen: { [key: string]: boolean } = {}
+        const result:T[] = []
+        for (let i = 0; i < reflections.length; i++) {
+            const element = reflections[i];
+            if(!seen[element.name]){
+                result.push(element)
+                seen[element.name]=true
+            }
+        }
+        return result;
     }
     function merge(child: ClassReflection, parent: ClassReflection): ClassReflection {
         return {
             kind: "Class", type: child.type, name: child.name,
             ctor: child.ctor,
             //merge only methods, properties and decorators
-            methods: child.methods.concat(parent.methods),
-            properties: child.properties.concat(parent.properties),
+            methods: removeDuplicate(child.methods.concat(parent.methods)),
+            properties: removeDuplicate(child.properties.concat(parent.properties)),
             decorators: child.decorators.concat(parent.decorators),
         }
     }
@@ -350,7 +363,7 @@ function traverse(fn: any, name: string): Reflection | undefined {
         case "Function":
             return reflectFunction(fn)
         case "Class":
-            return reflectClassDeep(fn)
+            return reflectClassRecursive(fn)
         case "Object":
             return reflectObject(fn, name)
         default:
@@ -375,7 +388,7 @@ export function reflect(option: string | Class) {
         return setCache(option, reflectObject(require(option)))
     }
     else {
-        return setCache(option, reflectClassDeep(option))
+        return setCache(option, reflectClassRecursive(option))
     }
 }
 

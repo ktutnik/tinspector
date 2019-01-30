@@ -190,8 +190,20 @@ describe("Decorator", () => {
 
     it("Should inspect class with properties with callback", () => {
         class DummyClass {
-            @decorateProperty((target, name) => ({ target, name }))
+            @decorateProperty((target, name, index) => ({ target, name, index }))
             dummyProp: string = "Hello"
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should inspect class with properties with callback in constructor", () => {
+        @reflect.parameterProperties()
+        class DummyClass {
+            constructor(
+                @decorateProperty((target, name, index) => ({ target, name, index }))
+                dummyProp: string
+            ) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()

@@ -78,6 +78,7 @@ describe("Inheritance", () => {
         expect(meta).toMatchSnapshot()
     })
 
+
     it("Should inspect domain with inheritance using constructor property", () => {
         @reflect.parameterProperties()
         class DomainBase {
@@ -117,6 +118,33 @@ describe("Inheritance", () => {
             ) { super() }
         }
         const meta = reflect(Item)
+        expect(meta).toMatchSnapshot()
+    })
+
+
+    it("Overridden method should not duplicated", () => {
+        class BaseClass {
+            myMethod(a: string): string { return "" }
+        }
+        class ChildClass extends BaseClass {
+            myMethod(a: string): string { return "Hello" }
+        }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Overridden parameter property should not duplicated", () => {
+        @reflect.parameterProperties()
+        class BaseClass {
+            constructor(propOne:string, propTwo:string){}
+        }
+        @reflect.parameterProperties()
+        class ChildClass extends BaseClass {
+            constructor(propOne:string, propTwo:string){
+                super(propOne, propTwo)
+            }
+        }
+        const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
     })
 })

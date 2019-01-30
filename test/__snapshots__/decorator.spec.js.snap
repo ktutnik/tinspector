@@ -710,7 +710,56 @@ Object {
     Object {
       "decorators": Array [
         Object {
+          "index": undefined,
           "name": "dummyProp",
+          "target": DummyClass,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "dummyProp",
+      "set": undefined,
+      "type": String,
+    },
+  ],
+  "type": DummyClass,
+}
+`;
+
+exports[`Decorator Should inspect class with properties with callback in constructor 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [
+          Object {
+            "index": 0,
+            "name": "constructor",
+            "target": DummyClass,
+          },
+        ],
+        "kind": "Parameter",
+        "name": "dummyProp",
+        "type": String,
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "index": 0,
+          "name": "constructor",
           "target": DummyClass,
         },
       ],

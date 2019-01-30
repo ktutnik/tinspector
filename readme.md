@@ -218,7 +218,7 @@ class MyAwesomeClass {
 
 ```
 
-## Ignore Member From Metadata Generated
+<!-- ## Ignore Member From Metadata Generated
 
 ## Reflect Array Element Type
 
@@ -226,4 +226,7 @@ class MyAwesomeClass {
 
 ## Custom Decorator 
 
-## Merge Decorators
+## Merge Decorators -->
+
+## Not Supported
+Reflect 

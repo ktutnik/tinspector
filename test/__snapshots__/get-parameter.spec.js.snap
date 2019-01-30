@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Constructor parameter Should get constructor parameter name 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Constructor parameter Should get constructor parameter name with comment 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Constructor parameter Should get constructor with default parameter 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Constructor parameter Should return empty array when no constructor provided 1`] = `Array []`;
+
+exports[`Function Parameters Should get function parameter name 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Function Parameters Should get function parameter name with comment 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Function Parameters Should get function parameter with default parameter 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Method Parameters Should get method parameter name 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Method Parameters Should get method parameter name with comment 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;
+
+exports[`Method Parameters Should get method parameter with default parameter 1`] = `
+Array [
+  "par1",
+  "par2",
+  "par3",
+  "par4",
+]
+`;

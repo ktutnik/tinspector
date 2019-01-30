@@ -1,5 +1,89 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Inheritance Overridden method should not duplicated 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "type": undefined,
+        },
+      ],
+      "returnType": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+}
+`;
+
+exports[`Inheritance Overridden parameter property should not duplicated 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "propOne",
+        "type": String,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "propTwo",
+        "type": String,
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+    },
+    Object {
+      "type": "ParameterProperties",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "propOne",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "propTwo",
+      "set": undefined,
+      "type": String,
+    },
+  ],
+  "type": ChildClass,
+}
+`;
+
 exports[`Inheritance Should get base class getter 1`] = `
 Object {
   "ctor": Object {
@@ -350,26 +434,6 @@ Object {
       "name": "type",
       "set": undefined,
       "type": String,
-    },
-    Object {
-      "decorators": Array [
-        Object {},
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "id",
-      "set": undefined,
-      "type": Object,
-    },
-    Object {
-      "decorators": Array [
-        Object {},
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "createdAt",
-      "set": undefined,
-      "type": Object,
     },
   ],
   "type": Item,
