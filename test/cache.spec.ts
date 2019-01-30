@@ -1,5 +1,7 @@
 import { decorateClass, reflect } from "../src"
 
+
+
 describe("Cache Function", () => {
 
     it("Should cache call", () => {

@@ -208,12 +208,31 @@ class BaseClass {
     @decorate({})
     myAwesomeMethod(stringPar:string): number { return 1 }
 }
-class MyAwesomeClass {
+class MyAwesomeClass extends BaseClass{
     @decorate({})
-    myAwesomeMethod(stringPar:string): number { return 1 }
+    myOtherMethod(stringPar:string): number { return 1 }
 }
 
+const metadata = reflect(MyAwesomeClass)
 
+/*
+metadata: 
+{
+    kind: "Class",
+    name: "MyAwesomeClass",
+    ...
+    
+    methods: [{
+        kind: "Method",
+        name: "myAwesomeMethod",
+        ...
+    },{
+        kind: "Method",
+        name: "myOtherMethod",
+        ...
+    }]
+}
+*/
 
 
 ```
@@ -229,4 +248,4 @@ class MyAwesomeClass {
 ## Merge Decorators -->
 
 ## Not Supported
-Reflect 
+tinpector uses regex to extract parameter name on constructor, function and methods. 

@@ -38,6 +38,8 @@ function cleanUp(fn: string) {
     return fn
         //strive comments
         .replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg, '')
+        //strive rest parameter
+        .replace(/\.{3}/mg, '')
         //strive lambda
         .replace(/=>.*$/mg, '')
         //strive default params

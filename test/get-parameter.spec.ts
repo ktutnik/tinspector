@@ -43,6 +43,14 @@ describe("Constructor parameter", () => {
         expect(result).toMatchSnapshot()
     })
 
+    it("Should reflect rest parameter", () => {
+        class DummyClass {
+            constructor (...pars:any[]){ }
+        }
+        const result = getConstructorParameters(DummyClass)
+        expect(result).toMatchSnapshot()
+    })
+
     it("Should return empty array when no constructor provided", () => {
         class DummyClass {
             @decorate({})
@@ -55,6 +63,8 @@ describe("Constructor parameter", () => {
         const result = getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
+
+    
 })
 
 describe("Method Parameters", () => {

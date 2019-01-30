@@ -27,6 +27,12 @@ Array [
 ]
 `;
 
+exports[`Constructor parameter Should reflect rest parameter 1`] = `
+Array [
+  "pars",
+]
+`;
+
 exports[`Constructor parameter Should return empty array when no constructor provided 1`] = `Array []`;
 
 exports[`Function Parameters Should get function parameter name 1`] = `
