@@ -247,5 +247,7 @@ metadata:
 
 ## Merge Decorators -->
 
-## Not Supported
-tinpector uses regex to extract parameter name on constructor, function and methods. 
+## Caveat
+tinpector uses regex to extract parameter name on constructor, function and methods. Some ES6 parameter feature still not supported.
+* Destructuring parameter
+* Complex default parameter (not tested)
