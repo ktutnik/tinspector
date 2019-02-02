@@ -1,4 +1,5 @@
-import { reflect, getDeepMembers, decorateProperty, DECORATOR_KEY, decorateMethod } from "../src";
+import { reflect, getDeepMembers, decorateProperty, DECORATOR_KEY, decorateMethod, DESIGN_PARAMETER_TYPE } from "../src";
+import { inspect } from "util";
 
 describe("getDeepMember", () => {
 
@@ -136,14 +137,35 @@ describe("Inheritance", () => {
     it("Overridden parameter property should not duplicated", () => {
         @reflect.parameterProperties()
         class BaseClass {
-            constructor(propOne:string, propTwo:string){}
+            constructor(propOne: string, propTwo: string) { }
         }
         @reflect.parameterProperties()
         class ChildClass extends BaseClass {
-            constructor(propOne:string, propTwo:string){
+            constructor(propOne: string, propTwo: string) {
                 super(propOne, propTwo)
             }
         }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should populate property decorator properly on inheritance", () => {
+        @reflect.parameterProperties()
+        class BaseClass {
+            constructor(
+                @decorateProperty({ cache: 10 })
+                public propOne: string = "",
+                @decorateProperty({ cache: 20 })
+                public propTwo: string = ""
+            ) { }
+        }
+        @reflect.parameterProperties()
+        class ChildClass extends BaseClass {
+            constructor(public name: string, public date: Date) {
+                super()
+            }
+        }
+        
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
     })

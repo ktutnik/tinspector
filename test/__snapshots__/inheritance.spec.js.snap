@@ -384,26 +384,6 @@ Object {
   "name": "Item",
   "properties": Array [
     Object {
-      "decorators": Array [
-        Object {},
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "id",
-      "set": undefined,
-      "type": Object,
-    },
-    Object {
-      "decorators": Array [
-        Object {},
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "createdAt",
-      "set": undefined,
-      "type": Object,
-    },
-    Object {
       "decorators": Array [],
       "get": undefined,
       "kind": "Property",
@@ -435,7 +415,104 @@ Object {
       "set": undefined,
       "type": String,
     },
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "id",
+      "set": undefined,
+      "type": Object,
+    },
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "createdAt",
+      "set": undefined,
+      "type": Object,
+    },
   ],
   "type": Item,
+}
+`;
+
+exports[`Inheritance Should populate property decorator properly 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "name",
+        "type": String,
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "date",
+        "type": Date,
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+    },
+    Object {
+      "type": "ParameterProperties",
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "name",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "date",
+      "set": undefined,
+      "type": Date,
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "cache": 10,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "propOne",
+      "set": undefined,
+      "type": String,
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "cache": 20,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "propTwo",
+      "set": undefined,
+      "type": String,
+    },
+  ],
+  "type": ChildClass,
 }
 `;

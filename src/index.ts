@@ -94,7 +94,7 @@ export function getDeepMembers(fun: Function) {
 
 
 function addDecorator<T extends Decorator>(target: any, decorator: T) {
-    const decorators: Decorator[] = Reflect.getMetadata(DECORATOR_KEY, target) || []
+    const decorators: Decorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
     decorators.push(decorator)
     Reflect.defineMetadata(DECORATOR_KEY, decorators, target)
 }
@@ -177,7 +177,7 @@ export function mergeDecorator(...fn: Function[]) {
 }
 
 export function getDecorators(target: any): Decorator[] {
-    return Reflect.getMetadata(DECORATOR_KEY, target) || []
+    return Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
 }
 
 
@@ -274,8 +274,8 @@ function reflectFunction(fn: Function): FunctionReflection {
 }
 
 function reflectMethod(clazz: Class, method: Function): MethodReflection {
-    const parType: any[] = Reflect.getMetadata(DESIGN_PARAMETER_TYPE, clazz.prototype, method.name) || []
-    const returnType: any = Reflect.getMetadata(DESIGN_RETURN_TYPE, clazz.prototype, method.name)
+    const parType: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, clazz.prototype, method.name) || []
+    const returnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, clazz.prototype, method.name)
     const parameters = getParameterNames(method).map((x, i) => reflectParameter(x, parType[i]))
     return { kind: "Method", name: method.name, parameters, decorators: [], returnType }
 }
@@ -285,7 +285,7 @@ function reflectProperty(name: string, type: Class, get: any, set: any): Propert
 }
 
 function reflectMember(clazz: Class, name: string) {
-    const type: any = Reflect.getMetadata(DESIGN_TYPE, clazz.prototype, name)
+    const type: any = Reflect.getOwnMetadata(DESIGN_TYPE, clazz.prototype, name)
     const des = Reflect.getOwnPropertyDescriptor(clazz.prototype, name)
     if (des && typeof des.value === "function" && !des.get && !des.set) {
         return reflectMethod(clazz, clazz.prototype[name])
@@ -296,7 +296,7 @@ function reflectMember(clazz: Class, name: string) {
 }
 
 function reflectConstructor(fn: Class): ConstructorReflection {
-    const parTypes: any[] = Reflect.getMetadata(DESIGN_PARAMETER_TYPE, fn) || []
+    const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, fn) || []
     const params = getConstructorParameters(fn)
     return {
         kind: "Constructor",
