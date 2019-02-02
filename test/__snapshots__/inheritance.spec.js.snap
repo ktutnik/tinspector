@@ -440,7 +440,7 @@ Object {
 }
 `;
 
-exports[`Inheritance Should populate property decorator properly 1`] = `
+exports[`Inheritance Should populate property decorator properly on inheritance 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
