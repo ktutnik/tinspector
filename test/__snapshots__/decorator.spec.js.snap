@@ -20,6 +20,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -40,6 +41,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -58,6 +60,7 @@ Object {
         "kind": "Parameter",
         "name": "id",
         "type": Number,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -67,6 +70,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -87,6 +91,7 @@ Object {
         "kind": "Parameter",
         "name": "id",
         "type": Number,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -96,6 +101,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -117,6 +123,7 @@ Object {
         "kind": "Parameter",
         "name": "id",
         "type": Number,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -126,6 +133,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -152,11 +160,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -183,11 +193,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -215,14 +227,17 @@ Object {
           "kind": "Parameter",
           "name": "id",
           "type": Number,
+          "typeClassification": "Primitive",
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -253,14 +268,17 @@ Object {
           "kind": "Parameter",
           "name": "id",
           "type": Number,
+          "typeClassification": "Primitive",
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -290,14 +308,17 @@ Object {
           "kind": "Parameter",
           "name": "id",
           "type": Number,
+          "typeClassification": "Primitive",
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -312,6 +333,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -337,6 +359,7 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -357,6 +380,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -386,9 +410,11 @@ Object {
           "kind": "Parameter",
           "name": "par",
           "type": String,
+          "typeClassification": "Primitive",
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
@@ -402,9 +428,11 @@ Object {
       "name": "myProp",
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -428,11 +456,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -456,11 +486,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -485,11 +517,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -514,11 +548,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -541,9 +577,11 @@ Object {
       "name": "data",
       "set": set data,
       "type": undefined,
+      "typeClassification": undefined,
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -568,9 +606,11 @@ Object {
       "name": "data",
       "set": set data,
       "type": Number,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -598,9 +638,11 @@ Object {
       "name": "data",
       "set": set data,
       "type": Number,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -630,9 +672,11 @@ Object {
       "name": "data",
       "set": set data,
       "type": Number,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -657,9 +701,11 @@ Object {
       "name": "dummyProp",
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -689,9 +735,11 @@ Object {
       "name": "dummyProp",
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -720,9 +768,11 @@ Object {
       "name": "dummyProp",
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -743,6 +793,7 @@ Object {
         "kind": "Parameter",
         "name": "dummyProp",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -771,6 +822,7 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -785,6 +837,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -807,6 +860,7 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -823,6 +877,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -847,6 +902,7 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -866,6 +922,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -893,6 +950,7 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -914,6 +972,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -943,6 +1002,7 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -957,6 +1017,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [
@@ -967,6 +1028,7 @@ Object {
         "kind": "Parameter",
         "name": "myPrivateField",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -989,5 +1051,6 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
