@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-  - 7
   - 8
-  - 9
+  - 10
   - stable
 before_script: npm run build
 after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
