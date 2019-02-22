@@ -1,7 +1,7 @@
 # tinspector
 TypeScript type inspector
 
-[![Build Status](https://travis-ci.org/ktutnik/tinspector.svg?branch=master)](https://travis-ci.org/ktutnik/tinspector)
+[![Build Status](https://travis-ci.org/plumier/tinspector.svg?branch=master)](https://travis-ci.org/plumier/tinspector)
 [![Coverage Status](https://coveralls.io/repos/github/ktutnik/tinspector/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/tinspector?branch=master)
 
 ## Description
