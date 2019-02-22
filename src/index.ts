@@ -49,8 +49,7 @@ function cleanUp(fn: string) {
 export function getParameterNames(fn: Function) {
     const regex = /\(\s*([^]*?)\)\s*\{/mg
     const result = regex.exec(fn.toString())
-    if (!result) return []
-    const match = cleanUp(result[1])
+    const match = cleanUp(result![1])
     return match.split(",").map(x => x.trim()).filter(x => !!x)
 }
 
@@ -93,8 +92,7 @@ export function getDeepMembers(fun: Function) {
 }
 
 function isCustomClass(type: Function | Function[]) {
-    switch (Array.isArray(type) ? type[0] : type) {
-        case undefined:
+    switch (type) {
         case Boolean:
         case String:
         case Array:
