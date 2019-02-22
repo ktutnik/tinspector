@@ -2,7 +2,7 @@
 TypeScript type inspector
 
 [![Build Status](https://travis-ci.org/ktutnik/tinspector.svg?branch=master)](https://travis-ci.org/ktutnik/tinspector)
-[![Coverage Status](https://coveralls.io/repos/github/ktutnik/tinspector/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/tinspector?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ktutnik/tinspector/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/tinspector?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/plumier/tinspector.svg)](https://greenkeeper.io/)
 
 ## Description
 tinspector is a type inspector used to extract metadata from JavaScript (TypeScript generated) Function, Class, Module
