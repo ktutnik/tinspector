@@ -24,14 +24,17 @@ Object {
           "kind": "Parameter",
           "name": "par",
           "type": undefined,
+          "typeClassification": undefined,
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "MyClass",
   "properties": Array [],
   "type": MyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -59,13 +62,16 @@ Object {
           "kind": "Parameter",
           "name": "par",
           "type": undefined,
+          "typeClassification": undefined,
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "MyClass",
   "properties": Array [],
   "type": MyClass,
+  "typeClassification": "Class",
 }
 `;

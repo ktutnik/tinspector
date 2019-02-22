@@ -16,11 +16,13 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "MyClass",
   "properties": Array [],
   "type": MyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -43,11 +45,13 @@ Object {
           "name": "method",
           "parameters": Array [],
           "returnType": undefined,
+          "typeClassification": undefined,
         },
       ],
       "name": "MyClass",
       "properties": Array [],
       "type": MyClass,
+      "typeClassification": "Class",
     },
   ],
   "name": "myNameSpace",
@@ -120,10 +124,12 @@ Object {
       "name": "method",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "MyClass",
   "properties": Array [],
   "type": MyClass,
+  "typeClassification": "Class",
 }
 `;

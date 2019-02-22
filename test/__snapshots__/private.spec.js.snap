@@ -13,6 +13,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -29,6 +30,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -43,6 +45,7 @@ Object {
         "kind": "Parameter",
         "name": "data",
         "type": String,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [
@@ -53,6 +56,7 @@ Object {
         "kind": "Parameter",
         "name": "id",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -75,5 +79,6 @@ Object {
     },
   ],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;

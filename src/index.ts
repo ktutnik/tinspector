@@ -10,12 +10,12 @@ export interface Decorator { targetType: DecoratorTargetType, target: string, va
 export interface ParameterDecorator extends Decorator { targetType: "Parameter", targetIndex: number }
 export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection
 export interface ReflectionBase { kind: string, name: string }
-export interface ParameterReflection extends ReflectionBase { kind: "Parameter", decorators: any[], type?: any }
-export interface PropertyReflection extends ReflectionBase { kind: "Property", decorators: any[], type?: any, get: any, set: any }
-export interface MethodReflection extends ReflectionBase { kind: "Method", parameters: ParameterReflection[], returnType: any, decorators: any[] }
+export interface ParameterReflection extends ReflectionBase { kind: "Parameter", decorators: any[], type?: any, typeClassification?: "Class" | "Array" | "Primitive" }
+export interface PropertyReflection extends ReflectionBase { kind: "Property", decorators: any[], type?: any, get: any, set: any, typeClassification?: "Class" | "Array" | "Primitive" }
+export interface MethodReflection extends ReflectionBase { kind: "Method", parameters: ParameterReflection[], returnType: any, decorators: any[], typeClassification?: "Class" | "Array" | "Primitive" }
 export interface ConstructorReflection extends ReflectionBase { kind: "Constructor", parameters: ParameterReflection[] }
 export interface FunctionReflection extends ReflectionBase { kind: "Function", parameters: ParameterReflection[], returnType: any }
-export interface ClassReflection extends ReflectionBase { kind: "Class", ctor: ConstructorReflection, methods: MethodReflection[], properties: PropertyReflection[], decorators: any[], type: Class }
+export interface ClassReflection extends ReflectionBase { kind: "Class", ctor: ConstructorReflection, methods: MethodReflection[], properties: PropertyReflection[], decorators: any[], type: Class, typeClassification?: "Class" | "Array" | "Primitive" }
 export interface ObjectReflection extends ReflectionBase { kind: "Object", members: Reflection[] }
 export interface ArrayDecorator { kind: "Array", type: Class }
 export interface TypeDecorator { kind: "Override", type: Class, info?: string }
@@ -49,8 +49,7 @@ function cleanUp(fn: string) {
 export function getParameterNames(fn: Function) {
     const regex = /\(\s*([^]*?)\)\s*\{/mg
     const result = regex.exec(fn.toString())
-    if (!result) return []
-    const match = cleanUp(result[1])
+    const match = cleanUp(result![1])
     return match.split(",").map(x => x.trim()).filter(x => !!x)
 }
 
@@ -90,6 +89,27 @@ export function getDeepMembers(fun: Function) {
     }
     const distinctDeepFunctions = (x: any) => Array.from(new Set(deepFunctions(x)));
     return distinctDeepFunctions(fun.prototype).filter(name => name !== "constructor" && !~name.indexOf("__"))
+}
+
+function isCustomClass(type: Function | Function[]) {
+    switch (type) {
+        case Boolean:
+        case String:
+        case Array:
+        case Number:
+        case Object:
+        case Date:
+            return false
+        default:
+            return true
+    }
+}
+
+function getTypeClassification(type:any) : "Class" | "Array" | "Primitive" | undefined{
+    if(type === undefined) return undefined
+    else if(Array.isArray(type)) return "Array"
+    else if(isCustomClass(type)) return "Class"
+    else return "Primitive"
 }
 
 
@@ -214,27 +234,34 @@ function reDecorateParameter(decs: Decorator[], method: string, index: number, p
     const decorators = (<ParameterDecorator[]>decs)
         .filter((x) => x.targetType == "Parameter" && x.target == method && x.targetIndex == index)
         .map(x => ({ ...x.value }))
+    const type = getReflectionType(decorators, par.type)
+    const typeClassification = getTypeClassification(type)
     return {
-        ...par, decorators, type: getReflectionType(decorators, par.type)
+        ...par, decorators, type, typeClassification
     }
 }
 
 function reDecorateMethod(decs: Decorator[], fn: MethodReflection): MethodReflection {
     const decorators = decs.filter(x => x.targetType == "Method" && x.target == fn.name).map(x => ({ ...x.value }))
+    const type = getReflectionType(decorators, fn.returnType)
+    const typeClassification = getTypeClassification(type)
     return {
         ...fn,
         decorators,
         parameters: fn.parameters.map((x, i) => reDecorateParameter(decs, fn.name, i, x)),
-        returnType: getReflectionType(decorators, fn.returnType)
+        returnType:type,
+        typeClassification
     }
 }
 
 function reDecorateProperty(decs: Decorator[], ref: PropertyReflection): PropertyReflection {
     const decorators = decs.filter(x => x.targetType == "Property" && x.target == ref.name).map(x => ({ ...x.value }))
+    const type = getReflectionType(decorators, ref.type)
+    const typeClassification = getTypeClassification(type)
     return {
         ...ref,
         decorators,
-        type: getReflectionType(decorators, ref.type)
+        type, typeClassification
     }
 }
 
@@ -260,7 +287,8 @@ function reDecorateClass(decs: Decorator[], reflection: ClassReflection): ClassR
             name: "constructor"
         },
         methods: methods.filter(x => notPrivate(x)),
-        properties: properties.concat(ctorProperties).filter(x => notPrivate(x)),
+        properties: properties.concat(ctorProperties).filter(x => notPrivate(x))
+        
     }
 }
 
@@ -316,7 +344,8 @@ function reflectClass(fn: Class): ClassReflection {
         methods: members.filter((x): x is MethodReflection => x.kind === "Method"),
         properties: members.filter((x): x is PropertyReflection => x.kind === "Property"),
         decorators: [],
-        type: fn
+        type: fn,
+        typeClassification: "Class"
     })
 }
 
@@ -341,7 +370,7 @@ function reflectClassRecursive(fn: Class): ClassReflection {
     function merge(child: ClassReflection, parent: ClassReflection): ClassReflection {
         return {
             kind: "Class", type: child.type, name: child.name,
-            ctor: child.ctor,
+            ctor: child.ctor, typeClassification: child.typeClassification,
             //merge only methods, properties and decorators
             methods: removeDuplicate(child.methods.concat(parent.methods)),
             properties: removeDuplicate(child.properties.concat(parent.properties)),

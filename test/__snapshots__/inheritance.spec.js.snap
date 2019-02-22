@@ -20,14 +20,17 @@ Object {
           "kind": "Parameter",
           "name": "a",
           "type": undefined,
+          "typeClassification": undefined,
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "ChildClass",
   "properties": Array [],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -42,12 +45,14 @@ Object {
         "kind": "Parameter",
         "name": "propOne",
         "type": String,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "propTwo",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -81,6 +86,7 @@ Object {
     },
   ],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -103,6 +109,7 @@ Object {
       "name": "childProp",
       "set": undefined,
       "type": undefined,
+      "typeClassification": undefined,
     },
     Object {
       "decorators": Array [],
@@ -111,9 +118,11 @@ Object {
       "name": "parentProp",
       "set": undefined,
       "type": undefined,
+      "typeClassification": undefined,
     },
   ],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -136,6 +145,7 @@ Object {
       "name": "childProp",
       "set": undefined,
       "type": undefined,
+      "typeClassification": undefined,
     },
     Object {
       "decorators": Array [
@@ -148,9 +158,11 @@ Object {
       "name": "parentProp",
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -170,11 +182,13 @@ Object {
       "name": "myMethod",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "ChildClass",
   "properties": Array [],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -202,14 +216,17 @@ Object {
           "kind": "Parameter",
           "name": "a",
           "type": String,
+          "typeClassification": "Primitive",
         },
       ],
       "returnType": String,
+      "typeClassification": "Primitive",
     },
   ],
   "name": "ChildClass",
   "properties": Array [],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -236,9 +253,11 @@ Object {
       "name": "parentProp",
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -253,24 +272,28 @@ Object {
         "kind": "Parameter",
         "name": "name",
         "type": String,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "discontinue",
         "type": Boolean,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "price",
         "type": Number,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "type",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -336,6 +359,7 @@ Object {
     },
   ],
   "type": Item,
+  "typeClassification": "Class",
 }
 `;
 
@@ -350,24 +374,28 @@ Object {
         "kind": "Parameter",
         "name": "name",
         "type": String,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "discontinue",
         "type": Boolean,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "price",
         "type": Number,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "type",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -424,6 +452,7 @@ Object {
       "name": "id",
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [
@@ -434,9 +463,11 @@ Object {
       "name": "createdAt",
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "type": Item,
+  "typeClassification": "Class",
 }
 `;
 
@@ -451,12 +482,14 @@ Object {
         "kind": "Parameter",
         "name": "name",
         "type": String,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "date",
         "type": Date,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -514,5 +547,6 @@ Object {
     },
   ],
   "type": ChildClass,
+  "typeClassification": "Class",
 }
 `;

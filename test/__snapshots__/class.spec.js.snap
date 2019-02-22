@@ -26,14 +26,17 @@ Object {
           "kind": "Parameter",
           "name": "dummy",
           "type": OtherDummyClass,
+          "typeClassification": "Class",
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -55,6 +58,7 @@ Object {
         "type": Array [
           EmptyClass,
         ],
+        "typeClassification": "Array",
       },
     ],
   },
@@ -66,6 +70,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -98,14 +103,17 @@ Object {
           "type": Array [
             EmptyClass,
           ],
+          "typeClassification": "Array",
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -125,11 +133,13 @@ Object {
       "name": "dummyMethod",
       "parameters": Array [],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -144,12 +154,14 @@ Object {
         "kind": "Parameter",
         "name": "id",
         "type": undefined,
+        "typeClassification": undefined,
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "name",
         "type": undefined,
+        "typeClassification": undefined,
       },
     ],
   },
@@ -159,6 +171,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -182,20 +195,24 @@ Object {
           "kind": "Parameter",
           "name": "dummy",
           "type": undefined,
+          "typeClassification": undefined,
         },
         Object {
           "decorators": Array [],
           "kind": "Parameter",
           "name": "other",
           "type": undefined,
+          "typeClassification": undefined,
         },
       ],
       "returnType": undefined,
+      "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -210,12 +227,14 @@ Object {
         "kind": "Parameter",
         "name": "id",
         "type": Number,
+        "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "name",
         "type": String,
+        "typeClassification": "Primitive",
       },
     ],
   },
@@ -227,6 +246,7 @@ Object {
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
 
@@ -252,19 +272,23 @@ Object {
           "kind": "Parameter",
           "name": "dummy",
           "type": String,
+          "typeClassification": "Primitive",
         },
         Object {
           "decorators": Array [],
           "kind": "Parameter",
           "name": "other",
           "type": Object,
+          "typeClassification": "Primitive",
         },
       ],
       "returnType": Number,
+      "typeClassification": "Primitive",
     },
   ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
+  "typeClassification": "Class",
 }
 `;
