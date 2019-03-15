@@ -37,6 +37,28 @@ describe("Inheritance", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should get base class from deep inheritance", () => {
+
+        class BaseClass {
+            @decorateProperty({ value: 1 })
+            parentProp = 1
+        }
+        class ChildClass extends BaseClass {
+            @decorateProperty({ value: 1 })
+            childProp = 1
+        }
+        class GrandChildClass extends ChildClass { 
+            @decorateProperty({ value: 1 })
+            grandChildProp = 1
+        }
+        class GreatGrandChildClass extends GrandChildClass { 
+            @decorateProperty({ value: 1 })
+            greatGrandChildProp = 1
+        }
+        const meta = reflect(GreatGrandChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should get base class getter", () => {
         class BaseClass {
             get parentProp() { return 1 }
@@ -165,7 +187,7 @@ describe("Inheritance", () => {
                 super()
             }
         }
-        
+
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
     })

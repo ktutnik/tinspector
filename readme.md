@@ -2,7 +2,7 @@
 TypeScript type inspector
 
 [![Build Status](https://travis-ci.org/plumier/tinspector.svg?branch=master)](https://travis-ci.org/plumier/tinspector)
-[![Coverage Status](https://coveralls.io/repos/github/ktutnik/tinspector/badge.svg?branch=master)](https://coveralls.io/github/ktutnik/tinspector?branch=master) 
+[![Coverage Status](https://coveralls.io/repos/github/plumier/tinspector/badge.svg?branch=master)](https://coveralls.io/github/plumier/tinspector?branch=master) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/plumier/tinspector.svg)](https://greenkeeper.io/)
 
 ## Description
@@ -111,7 +111,7 @@ metadata:
 
 ## Reflect With Decorator Information
 Use predefined decorator `decorate`, `decorateClass`, `decorateMethod`, `decorateProperty`, `decorateParameter` to add 
-decorator informaton that understand by `reflect`
+decorator information that understand by `reflect`
 
 ```typescript
 import reflect, { decorateMethod } from "tinspector"
@@ -234,9 +234,20 @@ metadata:
     }]
 }
 */
-
-
 ```
+
+
+## Hook Decorator Creation
+All Predefined decorators receives two type of argument, an object or a callback to hook function on decorator creation.
+
+```typescript
+decorateParameter(callback: ((target: Class, name: string, index: number) => object))
+decorateMethod(callback: ((target: Class, name: string) => object))
+decorateProperty(callback: ((target: Class, name: string, index?: any) => object))
+decorateClass(callback: ((target: Class) => object))
+```
+
+Using callback you can get more information about applied object.
 
 <!-- ## Ignore Member From Metadata Generated
 

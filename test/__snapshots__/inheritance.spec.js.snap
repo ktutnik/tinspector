@@ -60,9 +60,6 @@ Object {
     Object {
       "type": "ParameterProperties",
     },
-    Object {
-      "type": "ParameterProperties",
-    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -86,6 +83,76 @@ Object {
     },
   ],
   "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Should get base class from deep inheritance 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "GreatGrandChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "greatGrandChildProp",
+      "set": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "grandChildProp",
+      "set": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "childProp",
+      "set": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "type": GreatGrandChildClass,
   "typeClassification": "Class",
 }
 `;
@@ -301,9 +368,6 @@ Object {
     Object {
       "type": "ParameterProperties",
     },
-    Object {
-      "type": "ParameterProperties",
-    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -403,9 +467,6 @@ Object {
     Object {
       "type": "ParameterProperties",
     },
-    Object {
-      "type": "ParameterProperties",
-    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -494,9 +555,6 @@ Object {
     ],
   },
   "decorators": Array [
-    Object {
-      "type": "ParameterProperties",
-    },
     Object {
       "type": "ParameterProperties",
     },

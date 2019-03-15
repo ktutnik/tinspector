@@ -1,10 +1,10 @@
 import "reflect-metadata"
 
-
 /* ---------------------------------------------------------------- */
 /* --------------------------- TYPES ------------------------------ */
 /* ---------------------------------------------------------------- */
 type Class = new (...arg: any[]) => any
+type DecoratorIterator = (type: DecoratorTargetType, target: string, index?: number) => any[]
 export type DecoratorTargetType = "Method" | "Class" | "Parameter" | "Property" | "Constructor"
 export interface Decorator { targetType: DecoratorTargetType, target: string, value: any }
 export interface ParameterDecorator extends Decorator { targetType: "Parameter", targetIndex: number }
@@ -27,7 +27,6 @@ export const DESIGN_TYPE = "design:type"
 export const DESIGN_PARAMETER_TYPE = "design:paramtypes"
 export const DESIGN_RETURN_TYPE = "design:returntype"
 const CACHE: CacheItem[] = []
-
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- HELPERS ---------------------------- */
@@ -105,10 +104,10 @@ function isCustomClass(type: Function | Function[]) {
     }
 }
 
-function getTypeClassification(type:any) : "Class" | "Array" | "Primitive" | undefined{
-    if(type === undefined) return undefined
-    else if(Array.isArray(type)) return "Array"
-    else if(isCustomClass(type)) return "Class"
+function getTypeClassification(type: any): "Class" | "Array" | "Primitive" | undefined {
+    if (type === undefined) return undefined
+    else if (Array.isArray(type)) return "Array"
+    else if (isCustomClass(type)) return "Class"
     else return "Primitive"
 }
 
@@ -200,6 +199,50 @@ export function getDecorators(target: any): Decorator[] {
     return Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
 }
 
+function getDecoratorIterator(fn: any): DecoratorIterator {
+    return (type: DecoratorTargetType, target: string, index?: number) => getDecorators(fn)
+        .filter(x => {
+            const par = x as ParameterDecorator
+            return x.targetType === type && x.target === target
+                && (par.targetIndex === undefined || par.targetIndex === index)
+        })
+        .map(x => x.value)
+}
+
+function getReflectionType(decorators: any[], type: any) {
+    const array = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
+    const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
+    if (override)
+        return override.type
+    else if (array)
+        return [array.type]
+    else
+        return type
+}
+
+function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
+    const seen: { [key: string]: boolean } = {}
+    const result: T[] = []
+    for (let i = 0; i < reflections.length; i++) {
+        const element = reflections[i];
+        if (!seen[element.name]) {
+            result.push(element)
+            seen[element.name] = true
+        }
+    }
+    return result;
+}
+
+function extendsClass(child: ClassReflection, parent: ClassReflection): ClassReflection {
+    return {
+        kind: "Class", type: child.type, name: child.name,
+        ctor: child.ctor, typeClassification: child.typeClassification,
+        decorators: child.decorators,
+        //merge only methods, properties and decorators
+        methods: removeDuplicate(child.methods.concat(parent.methods)),
+        properties: removeDuplicate(child.properties.concat(parent.properties))
+    }
+}
 
 /* ---------------------------------------------------------------- */
 /* ------------------------- CACHE FUNCTIONS ---------------------- */
@@ -214,86 +257,15 @@ function setCache(key: string | Class, result: Reflection) {
     return result
 }
 
-
 /* ---------------------------------------------------------------- */
 /* ------------------------- MAIN FUNCTIONS ----------------------- */
 /* ---------------------------------------------------------------- */
 
-function getReflectionType(decorators: any[], type: any) {
-    const array = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
-    const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
-    if (override)
-        return override.type
-    else if (array)
-        return [array.type]
-    else
-        return type
-}
-
-function reDecorateParameter(decs: Decorator[], method: string, index: number, par: ParameterReflection): ParameterReflection {
-    const decorators = (<ParameterDecorator[]>decs)
-        .filter((x) => x.targetType == "Parameter" && x.target == method && x.targetIndex == index)
-        .map(x => ({ ...x.value }))
-    const type = getReflectionType(decorators, par.type)
+function reflectParameter(name: string, typeAnnotation?: any, decs?: any[]): ParameterReflection {
+    const decorators = decs || []
+    const type = getReflectionType(decorators, typeAnnotation)
     const typeClassification = getTypeClassification(type)
-    return {
-        ...par, decorators, type, typeClassification
-    }
-}
-
-function reDecorateMethod(decs: Decorator[], fn: MethodReflection): MethodReflection {
-    const decorators = decs.filter(x => x.targetType == "Method" && x.target == fn.name).map(x => ({ ...x.value }))
-    const type = getReflectionType(decorators, fn.returnType)
-    const typeClassification = getTypeClassification(type)
-    return {
-        ...fn,
-        decorators,
-        parameters: fn.parameters.map((x, i) => reDecorateParameter(decs, fn.name, i, x)),
-        returnType:type,
-        typeClassification
-    }
-}
-
-function reDecorateProperty(decs: Decorator[], ref: PropertyReflection): PropertyReflection {
-    const decorators = decs.filter(x => x.targetType == "Property" && x.target == ref.name).map(x => ({ ...x.value }))
-    const type = getReflectionType(decorators, ref.type)
-    const typeClassification = getTypeClassification(type)
-    return {
-        ...ref,
-        decorators,
-        type, typeClassification
-    }
-}
-
-function reDecorateClass(decs: Decorator[], reflection: ClassReflection): ClassReflection {
-    const notPrivate = (x: { decorators: any[] }) => !x.decorators.some((x: PrivateDecorator) => x.kind === "Ignore")
-    const decorators = decs.filter(x => x.targetType == "Class" && x.target == reflection.name).map(x => ({ ...x.value }))
-    const methods = reflection.methods.map(x => reDecorateMethod(decs, x))
-    const ctorParameters = reflection.ctor.parameters.map((x, i) => reDecorateParameter(decs, "constructor", i, x))
-    const properties = reflection.properties.map(x => reDecorateProperty(decs, x))
-    let ctorProperties: PropertyReflection[] = []
-    if (decorators.some(x => x.type === "ParameterProperties")) {
-        ctorProperties = ctorParameters
-            .map(x => <PropertyReflection>{
-                decorators: x.decorators, type: x.type,
-                name: x.name, kind: "Property", get: undefined, set: undefined
-            })
-    }
-    return <ClassReflection>{
-        ...reflection, decorators,
-        ctor: {
-            kind: "Constructor",
-            parameters: ctorParameters,
-            name: "constructor"
-        },
-        methods: methods.filter(x => notPrivate(x)),
-        properties: properties.concat(ctorProperties).filter(x => notPrivate(x))
-        
-    }
-}
-
-function reflectParameter(name: string, typeAnnotation?: any): ParameterReflection {
-    return { kind: "Parameter", name, decorators: [], type: typeAnnotation }
+    return { kind: "Parameter", name, type, decorators, typeClassification }
 }
 
 function reflectFunction(fn: Function): FunctionReflection {
@@ -301,52 +273,66 @@ function reflectFunction(fn: Function): FunctionReflection {
     return { kind: "Function", name: fn.name, parameters, returnType: undefined }
 }
 
-function reflectMethod(clazz: Class, method: Function): MethodReflection {
+function reflectMethod(clazz: Class, method: Function, iterator: DecoratorIterator): MethodReflection {
     const parType: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, clazz.prototype, method.name) || []
-    const returnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, clazz.prototype, method.name)
-    const parameters = getParameterNames(method).map((x, i) => reflectParameter(x, parType[i]))
-    return { kind: "Method", name: method.name, parameters, decorators: [], returnType }
+    const rawReturnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, clazz.prototype, method.name)
+    const parameters = getParameterNames(method).map((x, i) => reflectParameter(x, parType[i], iterator("Parameter", method.name, i)))
+    const decorators = iterator("Method", method.name)
+    const returnType = getReflectionType(decorators, rawReturnType)
+    const typeClassification = getTypeClassification(returnType)
+    return { kind: "Method", name: method.name, parameters, decorators, returnType, typeClassification }
 }
 
-function reflectProperty(name: string, type: Class, get: any, set: any): PropertyReflection {
-    return { kind: "Property", name, type: type, decorators: [], get, set }
+function reflectProperty(name: string, typeAnnotation: Class, des: PropertyDescriptor | undefined, iterator: DecoratorIterator): PropertyReflection {
+    const decorators = iterator("Property", name)
+    const type = getReflectionType(decorators, typeAnnotation)
+    const typeClassification = getTypeClassification(type)
+    return {
+        kind: "Property", name, type, decorators, typeClassification,
+        get: des && des.get, set: des && des.set
+    }
 }
 
-function reflectMember(clazz: Class, name: string) {
+function reflectMember(clazz: Class, name: string, iterator: DecoratorIterator) {
     const type: any = Reflect.getOwnMetadata(DESIGN_TYPE, clazz.prototype, name)
     const des = Reflect.getOwnPropertyDescriptor(clazz.prototype, name)
     if (des && typeof des.value === "function" && !des.get && !des.set) {
-        return reflectMethod(clazz, clazz.prototype[name])
+        return reflectMethod(clazz, clazz.prototype[name], iterator)
     }
     else {
-        return reflectProperty(name, type, des && des.get, des && des.set)
+        return reflectProperty(name, type, des, iterator)
     }
 }
 
-function reflectConstructor(fn: Class): ConstructorReflection {
+function reflectConstructor(fn: Class, iterator: DecoratorIterator): ConstructorReflection {
     const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, fn) || []
     const params = getConstructorParameters(fn)
     return {
         kind: "Constructor",
         name: "constructor",
-        parameters: params.map((x, i) => reflectParameter(x, parTypes[i]))
+        parameters: params.map((x, i) => reflectParameter(x, parTypes[i], iterator("Parameter", "constructor", i)))
     }
 }
 
 function reflectClass(fn: Class): ClassReflection {
-    const members = getDeepMembers(fn).map(x => reflectMember(fn, x))
-    const ctorParameters = reflectConstructor(fn)
-    const decorators = getDecorators(fn)
-    return reDecorateClass(decorators, {
-        kind: "Class",
-        ctor: ctorParameters,
-        name: fn.name,
-        methods: members.filter((x): x is MethodReflection => x.kind === "Method"),
-        properties: members.filter((x): x is PropertyReflection => x.kind === "Property"),
-        decorators: [],
-        type: fn,
-        typeClassification: "Class"
-    })
+    const notPrivate = (x: { decorators: any[] }) => !x.decorators.some((x: PrivateDecorator) => x.kind === "Ignore")
+    const iterator = getDecoratorIterator(fn)
+    const members = getDeepMembers(fn).map(x => reflectMember(fn, x, iterator))
+    const ctor = reflectConstructor(fn, iterator)
+    const decorators = iterator("Class", fn.name)
+    const properties = members.filter((x): x is PropertyReflection => x.kind === "Property" && notPrivate(x))
+    if (decorators.some(x => x.type === "ParameterProperties")) {
+        const parProps = ctor.parameters.filter(x => notPrivate(x)).map(x => <PropertyReflection>({
+            decorators: x.decorators, type: x.type,
+            name: x.name, kind: "Property", get: undefined, set: undefined
+        }))
+        properties.push(...parProps)
+    }
+    return {
+        kind: "Class", ctor, name: fn.name,
+        methods: members.filter((x): x is MethodReflection => x.kind === "Method" && notPrivate(x)),
+        properties, decorators, type: fn, typeClassification: "Class"
+    }
 }
 
 function reflectClassRecursive(fn: Class): ClassReflection {
@@ -355,32 +341,10 @@ function reflectClassRecursive(fn: Class): ClassReflection {
         ctor: {} as ConstructorReflection,
         methods: [], properties: [], decorators: []
     }
-    function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
-        const seen: { [key: string]: boolean } = {}
-        const result: T[] = []
-        for (let i = 0; i < reflections.length; i++) {
-            const element = reflections[i];
-            if (!seen[element.name]) {
-                result.push(element)
-                seen[element.name] = true
-            }
-        }
-        return result;
-    }
-    function merge(child: ClassReflection, parent: ClassReflection): ClassReflection {
-        return {
-            kind: "Class", type: child.type, name: child.name,
-            ctor: child.ctor, typeClassification: child.typeClassification,
-            //merge only methods, properties and decorators
-            methods: removeDuplicate(child.methods.concat(parent.methods)),
-            properties: removeDuplicate(child.properties.concat(parent.properties)),
-            decorators: child.decorators.concat(parent.decorators),
-        }
-    }
     const childMeta = reflectClass(fn)
     const parent = Object.getPrototypeOf(fn)
-    const parentMeta = parent.prototype ? reflectClass(parent) : defaultRef
-    return merge(childMeta, parentMeta)
+    const parentMeta = parent.prototype ? reflectClassRecursive(parent) : defaultRef
+    return extendsClass(childMeta, parentMeta)
 }
 
 function reflectObject(object: any, name: string = "module"): ObjectReflection {
