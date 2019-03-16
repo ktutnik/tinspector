@@ -75,19 +75,16 @@ function getType(object: any) {
         return "Object"
 }
 
-export function getDeepMembers(fun: Function) {
-    const isGetter = (x: any, name: string) => Object.getOwnPropertyDescriptor(x, name)!.get
-    const isFunction = (x: any, name: string) => typeof x[name] === "function";
-    function deepFunctions(x: any): string[] {
-        const members = Object.getOwnPropertyNames(x)
-            .filter(name => isGetter(x, name) || isFunction(x, name))
-        const properties = (Reflect.getOwnMetadata(DECORATOR_KEY, x.constructor) || [])
-            .filter((x: Decorator) => x.targetType === "Property")
-            .map((x: Decorator) => x.target)
-        return members.concat(properties)
-    }
-    const distinctDeepFunctions = (x: any) => Array.from(new Set(deepFunctions(x)));
-    return distinctDeepFunctions(fun.prototype).filter(name => name !== "constructor" && !~name.indexOf("__"))
+export function getMembers(fun: Function) {
+    const isGetter = (name: string) => Object.getOwnPropertyDescriptor(fun.prototype, name)!.get
+    const isFunction = (name: string) => typeof fun.prototype[name] === "function";
+    const members = Object.getOwnPropertyNames(fun.prototype)
+        .filter(name => isGetter(name) || isFunction(name))
+    const properties = (Reflect.getOwnMetadata(DECORATOR_KEY, fun) || [])
+        .filter((x: Decorator) => x.targetType === "Property")
+        .map((x: Decorator) => x.target)
+    return members.concat(properties)
+        .filter(name => name !== "constructor" && !~name.indexOf("__"))
 }
 
 function isCustomClass(type: Function | Function[]) {
@@ -117,6 +114,76 @@ function addDecorator<T extends Decorator>(target: any, decorator: T) {
     decorators.push(decorator)
     Reflect.defineMetadata(DECORATOR_KEY, decorators, target)
 }
+
+function getDecorators(target: any): Decorator[] {
+    return Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
+}
+
+function getDecoratorIterator(fn: any): DecoratorIterator {
+    return (type: DecoratorTargetType, target: string, index?: number) => getDecorators(fn)
+        .filter(x => {
+            const par = x as ParameterDecorator
+            return x.targetType === type && x.target === target
+                && (par.targetIndex === undefined || par.targetIndex === index)
+        })
+        .map(x => x.value)
+}
+
+function getReflectionType(decorators: any[], type: any) {
+    const array = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
+    const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
+    if (override)
+        return override.type
+    else if (array)
+        return [array.type]
+    else
+        return type
+}
+
+function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
+    const seen: { [key: string]: boolean } = {}
+    const result: T[] = []
+    for (let i = 0; i < reflections.length; i++) {
+        const element = reflections[i];
+        if (!seen[element.name]) {
+            result.push(element)
+            seen[element.name] = true
+        }
+    }
+    return result;
+}
+
+/*
+Decorator is not inherited by design due to TypeScript behavior that use decorator to provide type information,
+except on inherited method/properties that is not overridden in the child class.
+*/
+function extendsClass(child: ClassReflection, parent: ClassReflection): ClassReflection {
+    return {
+        kind: "Class", type: child.type, name: child.name,
+        ctor: child.ctor, typeClassification: child.typeClassification,
+        decorators: child.decorators,
+        //merge only methods, properties and decorators
+        methods: removeDuplicate(child.methods.concat(parent.methods)),
+        properties: removeDuplicate(child.properties.concat(parent.properties))
+    }
+}
+
+/* ---------------------------------------------------------------- */
+/* ------------------------- CACHE FUNCTIONS ---------------------- */
+/* ---------------------------------------------------------------- */
+
+function getCache(key: string | Class) {
+    return CACHE.find(x => x.key === key)
+}
+
+function setCache(key: string | Class, result: Reflection) {
+    CACHE.push({ key, result })
+    return result
+}
+
+/* ---------------------------------------------------------------- */
+/* --------------------------- DECORATORS ------------------------- */
+/* ---------------------------------------------------------------- */
 
 export function decorateParameter(callback: ((target: Class, name: string, index: number) => object)): (target: any, name: string, index: number) => void
 export function decorateParameter(data: {}): (target: any, name: string, index: number) => void
@@ -195,68 +262,6 @@ export function mergeDecorator(...fn: Function[]) {
     }
 }
 
-export function getDecorators(target: any): Decorator[] {
-    return Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
-}
-
-function getDecoratorIterator(fn: any): DecoratorIterator {
-    return (type: DecoratorTargetType, target: string, index?: number) => getDecorators(fn)
-        .filter(x => {
-            const par = x as ParameterDecorator
-            return x.targetType === type && x.target === target
-                && (par.targetIndex === undefined || par.targetIndex === index)
-        })
-        .map(x => x.value)
-}
-
-function getReflectionType(decorators: any[], type: any) {
-    const array = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
-    const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
-    if (override)
-        return override.type
-    else if (array)
-        return [array.type]
-    else
-        return type
-}
-
-function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
-    const seen: { [key: string]: boolean } = {}
-    const result: T[] = []
-    for (let i = 0; i < reflections.length; i++) {
-        const element = reflections[i];
-        if (!seen[element.name]) {
-            result.push(element)
-            seen[element.name] = true
-        }
-    }
-    return result;
-}
-
-function extendsClass(child: ClassReflection, parent: ClassReflection): ClassReflection {
-    return {
-        kind: "Class", type: child.type, name: child.name,
-        ctor: child.ctor, typeClassification: child.typeClassification,
-        decorators: child.decorators,
-        //merge only methods, properties and decorators
-        methods: removeDuplicate(child.methods.concat(parent.methods)),
-        properties: removeDuplicate(child.properties.concat(parent.properties))
-    }
-}
-
-/* ---------------------------------------------------------------- */
-/* ------------------------- CACHE FUNCTIONS ---------------------- */
-/* ---------------------------------------------------------------- */
-
-function getCache(key: string | Class) {
-    return CACHE.find(x => x.key === key)
-}
-
-function setCache(key: string | Class, result: Reflection) {
-    CACHE.push({ key, result })
-    return result
-}
-
 /* ---------------------------------------------------------------- */
 /* ------------------------- MAIN FUNCTIONS ----------------------- */
 /* ---------------------------------------------------------------- */
@@ -317,7 +322,7 @@ function reflectConstructor(fn: Class, iterator: DecoratorIterator): Constructor
 function reflectClass(fn: Class): ClassReflection {
     const notPrivate = (x: { decorators: any[] }) => !x.decorators.some((x: PrivateDecorator) => x.kind === "Ignore")
     const iterator = getDecoratorIterator(fn)
-    const members = getDeepMembers(fn).map(x => reflectMember(fn, x, iterator))
+    const members = getMembers(fn).map(x => reflectMember(fn, x, iterator))
     const ctor = reflectConstructor(fn, iterator)
     const decorators = iterator("Class", fn.name)
     const properties = members.filter((x): x is PropertyReflection => x.kind === "Property" && notPrivate(x))

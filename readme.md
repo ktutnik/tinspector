@@ -260,6 +260,9 @@ Using callback you can get more information about applied object.
 ## Merge Decorators -->
 
 ## Caveat
-tinpector uses regex to extract parameter name on constructor, function and methods. Some ES6 parameter feature still not supported.
-* Destructuring parameter
-* Complex default parameter (not tested)
+
+1. tinpector uses regex to extract parameter name on constructor, function and methods. Some ES6 parameter feature still not supported.
+   * Destructuring parameter
+   * Complex default parameter (not tested)
+
+2. Decorator is not inherited by design due to TypeScript behavior that use decorator to provide type information, which in some case will force duplication. Except on inherited method/properties that is not overridden in the child class. Example
