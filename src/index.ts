@@ -20,13 +20,12 @@ export interface ObjectReflection extends ReflectionBase { kind: "Object", membe
 export interface ArrayDecorator { kind: "Array", type: Class }
 export interface TypeDecorator { kind: "Override", type: Class, info?: string }
 export interface PrivateDecorator { kind: "Ignore" }
-interface CacheItem { key: string | Class, result: Reflection }
 
 export const DECORATOR_KEY = "plumier.key:DECORATOR"
 export const DESIGN_TYPE = "design:type"
 export const DESIGN_PARAMETER_TYPE = "design:paramtypes"
 export const DESIGN_RETURN_TYPE = "design:returntype"
-const CACHE: CacheItem[] = []
+const cacheStore = new Map<string|Class, Reflection>()
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- HELPERS ---------------------------- */
@@ -168,18 +167,20 @@ function extendsClass(child: ClassReflection, parent: ClassReflection): ClassRef
     }
 }
 
-/* ---------------------------------------------------------------- */
-/* ------------------------- CACHE FUNCTIONS ---------------------- */
-/* ---------------------------------------------------------------- */
 
-function getCache(key: string | Class) {
-    return CACHE.find(x => x.key === key)
+export function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R, getKey: (...args: P) => K) {
+    return (...args: P) => {
+        const key = getKey(...args)
+        const result = cache.get(key)
+        if(!!result) return result
+        else {
+            const newResult = fn(...args)
+            cache.set(key, newResult)
+            return newResult
+        }
+    }
 }
 
-function setCache(key: string | Class, result: Reflection) {
-    CACHE.push({ key, result })
-    return result
-}
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- DECORATORS ------------------------- */
@@ -371,6 +372,10 @@ function traverse(fn: any, name: string): Reflection | undefined {
             return
     }
 }
+
+const reflectObjectCached = useCache(cacheStore, reflectObject, x => x)
+const reflectClassRecursiveCached = useCache(cacheStore, reflectClassRecursive, x => x)
+
 /**
  * Reflect module
  * @param path module name
@@ -383,13 +388,11 @@ export function reflect(path: string): ObjectReflection
  */
 export function reflect(classType: Class): ClassReflection
 export function reflect(option: string | Class) {
-    const cache = getCache(option)
-    if (!!cache) return cache.result
     if (typeof option === "string") {
-        return setCache(option, reflectObject(require(option)))
+        return reflectObjectCached(require(option))
     }
     else {
-        return setCache(option, reflectClassRecursive(option))
+        return reflectClassRecursiveCached(option)
     }
 }
 

@@ -7,6 +7,7 @@ describe("Private Decorator", () => {
             @reflect.ignore()
             get data() { return 1 }
         }
+        
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
     })
