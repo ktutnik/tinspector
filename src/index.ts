@@ -47,6 +47,7 @@ function cleanUp(fn: string) {
 export function getParameterNames(fn: Function) {
     const regex = /\(\s*([^]*?)\)\s*\{/mg
     const result = regex.exec(fn.toString())
+    if(!result) return []
     const match = cleanUp(result![1])
     return match.split(",").map(x => x.trim()).filter(x => !!x)
 }

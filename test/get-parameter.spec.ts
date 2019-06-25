@@ -1,4 +1,5 @@
 import { getConstructorParameters, getParameterNames, decorate } from "../src";
+import {model, collection} from "@plumier/mongoose"
 
 function globalFunction(a: any, b: any) {
 
@@ -103,7 +104,7 @@ describe("Method Parameters", () => {
                 par3: string,
                 /* this is comment {} */
                 par4: string
-            ) { 
+            ) {
                 globalFunction(par1, par2)
             }
         }
@@ -118,7 +119,7 @@ describe("Method Parameters", () => {
                 par2 = 123,
                 par3 = new Date(),
                 par4 = false
-            ) { 
+            ) {
                 globalFunction(par1, par2)
             }
         }
@@ -150,7 +151,7 @@ describe("Function Parameters", () => {
             par3: string,
             /* this is comment {} */
             par4: string
-        ) { 
+        ) {
             globalFunction(par1, par2)
         }
         const result = getParameterNames(myFunction)
@@ -163,10 +164,22 @@ describe("Function Parameters", () => {
             par2 = 123,
             par3 = new Date(),
             par4 = false
-        ) { 
+        ) {
             globalFunction(par1, par2)
         }
         const result = getParameterNames(myFunction)
+        expect(result).toMatchSnapshot()
+    })
+})
+
+describe("Durability", () => {
+    it("Should not error when provided proxy", () => {
+        @collection()
+        class MyEntity{
+            constructor(public name:string){}
+        }
+        const Model = model(MyEntity)
+        const result = getParameterNames(Model)
         expect(result).toMatchSnapshot()
     })
 })
