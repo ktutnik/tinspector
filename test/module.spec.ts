@@ -31,4 +31,10 @@ describe("Module Introspection", () => {
         expect(meta.members.length).toBe(1)
         expect(meta.members[0]).toMatchSnapshot()
     })
+
+    it("Should inspect module with enum", async () => {
+        const meta = await reflect(join(__dirname, "./mocks/mock.module-with-enum"))
+        expect(meta.members.length).toBe(2)
+        expect(meta.members[0]).toMatchSnapshot()
+    })
 })
