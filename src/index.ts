@@ -25,7 +25,7 @@ export const DECORATOR_KEY = "plumier.key:DECORATOR"
 export const DESIGN_TYPE = "design:type"
 export const DESIGN_PARAMETER_TYPE = "design:paramtypes"
 export const DESIGN_RETURN_TYPE = "design:returntype"
-const cacheStore = new Map<string|Class, Reflection>()
+const cacheStore = new Map<string | Class, Reflection>()
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- HELPERS ---------------------------- */
@@ -47,7 +47,7 @@ function cleanUp(fn: string) {
 export function getParameterNames(fn: Function) {
     const regex = /\(\s*([^]*?)\)\s*\{/mg
     const result = regex.exec(fn.toString())
-    if(!result) return []
+    if (!result) return []
     const match = cleanUp(result![1])
     return match.split(",").map(x => x.trim()).filter(x => !!x)
 }
@@ -71,6 +71,13 @@ function getType(object: any) {
     }
     else if (Array.isArray(object))
         return "Array"
+    else if (typeof object === "boolean"
+        || typeof object === "number"
+        || typeof object === "bigint"
+        || typeof object === "string"
+        || typeof object === "symbol"
+        || typeof object === "undefined")
+        return "Value"
     else
         return "Object"
 }
@@ -173,7 +180,7 @@ export function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: 
     return (...args: P) => {
         const key = getKey(...args)
         const result = cache.get(key)
-        if(!!result) return result
+        if (!!result) return result
         else {
             const newResult = fn(...args)
             cache.set(key, newResult)

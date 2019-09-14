@@ -12,7 +12,7 @@
             "args": [
                 "${relativeFile}",
                 "--config",
-                "jest.config.js"
+                "jest.config.debug.js"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",

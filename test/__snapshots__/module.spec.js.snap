@@ -137,3 +137,11 @@ Object {
   "typeClassification": "Class",
 }
 `;
+
+exports[`Module Introspection Should inspect module with enum 1`] = `
+Object {
+  "kind": "Object",
+  "members": Array [],
+  "name": "MyEnum",
+}
+`;
