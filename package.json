@@ -6,7 +6,6 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "postinstall": "tsc",
     "build": "tsc",
     "prepublish": "tsc -p tsconfig.build.json"
   },
