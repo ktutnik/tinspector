@@ -427,7 +427,7 @@ reflect.ignore = function () {
  * @param type The type overridden
  * @param info Additional information about type (readonly, partial etc)
  */
-reflect.type = function (type: Class, info?: string) {
+reflect.type = function (type: Class | Class[], info?: string) {
     return decorate(<TypeDecorator>{ kind: "Override", type: type, info }, ["Parameter", "Method", "Property"])
 }
 

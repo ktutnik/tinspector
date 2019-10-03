@@ -64,6 +64,17 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect array on method parameter using @reflect.type", () => {
+        class EmptyClass { }
+        class DummyClass {
+            @decorateMethod({})
+            dummyMethod(@reflect.type([EmptyClass]) empty: EmptyClass[]) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta.methods[0].parameters[0].type).toEqual([EmptyClass])
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should able to override type with other type", () => {
         class OtherDummyClass { }
         class DummyClass {
@@ -72,6 +83,18 @@ describe("Class Introspection", () => {
         const meta = reflect(DummyClass)
         expect(meta.methods[0].parameters[0].decorators[0].type).toEqual(OtherDummyClass)
         expect(meta.methods[0].parameters[0].decorators[0].info).toEqual("Readonly")
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should able to define return type of method", () => {
+        class DummyClass {
+            @reflect.type([Number])
+            method() {
+                return [1, 2, 3]
+            }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta.methods[0].returnType).toEqual([Number])
         expect(meta).toMatchSnapshot()
     })
 
