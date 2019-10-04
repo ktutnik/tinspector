@@ -109,6 +109,41 @@ metadata:
 */
 ```
 
+## Override Type Information
+Tinspector uses TypeScript design type metadata information, 
+TypeScript doesn't provide enough information about some complex data type such as: 
+* Array item data type
+* Any generic type such as `Partial` `Promise` etc 
+To do so, you need to specify  the type manually by using `@reflect.type()`
+
+### Array
+Array type can be defined by providing array of the type like example below
+
+```typescript 
+@decorate({})
+class MyAwesomeClass {
+    constructor(
+        @reflect.type([Number])
+        public numbers:number[]
+    ){}
+}
+```
+
+### Generic
+Generic can be defined with some extra information like example below
+
+```typescript 
+@decorate({})
+class MyAwesomeClass {
+
+    @reflect.type(Number, "Promise")
+    getAwesome():Promise<number> {
+        
+    }
+}
+```
+
+
 ## Reflect With Decorator Information
 Use predefined decorator `decorate`, `decorateClass`, `decorateMethod`, `decorateProperty`, `decorateParameter` to add 
 decorator information that understand by `reflect`
