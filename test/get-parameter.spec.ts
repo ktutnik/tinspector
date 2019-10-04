@@ -178,7 +178,6 @@ describe("Durability", () => {
             return "[Function]"
         }
         const result = getParameterNames(MyFunction)
-        console.log(result)
         expect(result).toMatchSnapshot()
     })
 })
