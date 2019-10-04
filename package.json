@@ -1,6 +1,6 @@
 {
   "name": "tinspector",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "description": "TypeScript type inspector",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
