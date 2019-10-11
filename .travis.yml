@@ -3,5 +3,5 @@ node_js:
   - 8
   - 10
   - stable
-before_script: yarn build
+before_script: yarn prepublish
 after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
