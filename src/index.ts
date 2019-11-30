@@ -1,4 +1,5 @@
 import "reflect-metadata"
+import { parse, Node } from "acorn"
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- TYPES ------------------------------ */
@@ -10,7 +11,7 @@ export interface Decorator { targetType: DecoratorTargetType, target: string, va
 export interface ParameterDecorator extends Decorator { targetType: "Parameter", targetIndex: number }
 export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection
 export interface ReflectionBase { kind: string, name: string }
-export interface ParameterReflection extends ReflectionBase { kind: "Parameter", decorators: any[], type?: any, typeClassification?: "Class" | "Array" | "Primitive" }
+export interface ParameterReflection extends ReflectionBase { kind: "Parameter", properties: string | { [key: string]: string[] }, decorators: any[], type?: any, typeClassification?: "Class" | "Array" | "Primitive" }
 export interface PropertyReflection extends ReflectionBase { kind: "Property", decorators: any[], type?: any, get: any, set: any, typeClassification?: "Class" | "Array" | "Primitive" }
 export interface MethodReflection extends ReflectionBase { kind: "Method", parameters: ParameterReflection[], returnType: any, decorators: any[], typeClassification?: "Class" | "Array" | "Primitive" }
 export interface ConstructorReflection extends ReflectionBase { kind: "Constructor", parameters: ParameterReflection[] }
@@ -31,33 +32,56 @@ const cacheStore = new Map<string | Class, Reflection>()
 /* --------------------------- HELPERS ---------------------------- */
 /* ---------------------------------------------------------------- */
 
-//logic from https://github.com/goatslacker/get-parameter-names
-function cleanUp(fn: string) {
-    return fn
-        //strive comments
-        .replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg, '')
-        //strive rest parameter
-        .replace(/\.{3}/mg, '')
-        //strive lambda
-        .replace(/=>.*$/mg, '')
-        //strive default params
-        .replace(/=[^,]+/mg, '');
+
+function getNode(node: Node, criteria: (x: any) => boolean): Node | undefined {
+    if (criteria(node)) return node
+    if (!(node as any).body) return
+    if (Array.isArray((node as any).body)) {
+        for (const child of (node as any).body) {
+            const result = getNode(child, criteria)
+            if (result) return result
+        }
+    }
+    return getNode((node as any).body, criteria)
+}
+
+function getNamesFromAst(nodes: any[]) {
+    const getName = (node: any): undefined | string | { [key: string]: string[] } => {
+        if (node.type === "Identifier") return node.name
+        if (node.type === "AssignmentPattern") return node.left.name
+        if (node.type === "RestElement") return node.argument.name
+        if (node.type === "Property") {
+            if (node.value.type === "Identifier") return node.value.name
+            else {
+                const result: { [key: string]: any } ={}
+                result[node.key.name] = getName(node.value)
+                return result
+            }
+        }
+        if (node.type === "ObjectPattern") {
+            return node.properties.map((x: any) => getName(x))
+        }
+    }
+    return nodes.map(x => getName(x)).filter((x): x is string | { [key: string]: string[] } => !!x)
 }
 
 export function getParameterNames(fn: Function) {
-    const regex = /\(\s*([^]*?)\)\s*\{/mg
-    const result = regex.exec(fn.toString())
-    if (!result) return []
-    const match = cleanUp(result![1])
-    return match.split(",").map(x => x.trim()).filter(x => !!x)
+    const body = fn.toString()
+    const src = !body.startsWith("function") ? "function " + body : body
+    try {
+        const ast = parse(src)
+        return getNamesFromAst((ast as any).body[0].params)
+    }
+    catch {
+        return []
+    }
 }
 
 export function getConstructorParameters(fn: Class) {
-    const regex = /constructor\s*\(\s*([^]*?)\)\s*\{/mg
-    const result = regex.exec(fn.toString())
-    if (!result) return []
-    const match = cleanUp(result[1])
-    return match.split(",").map(x => x.trim()).filter(x => !!x)
+    const body = fn.toString()
+    const ast = parse(body)
+    const ctor = getNode(ast, x => x.type === "MethodDefinition" && x.kind === "constructor")
+    return getNamesFromAst(ctor ? (ctor as any).value.params : [])
 }
 
 function isConstructor(value: Function) {
@@ -275,11 +299,20 @@ export function mergeDecorator(...fn: Function[]) {
 /* ------------------------- MAIN FUNCTIONS ----------------------- */
 /* ---------------------------------------------------------------- */
 
-function reflectParameter(name: string, typeAnnotation?: any, decs?: any[]): ParameterReflection {
+function reflectParameter(name: string | { [key: string]: string[] }, typeAnnotation?: any, decs?: any[]): ParameterReflection {
     const decorators = decs || []
     const type = getReflectionType(decorators, typeAnnotation)
     const typeClassification = getTypeClassification(type)
-    return { kind: "Parameter", name, type, decorators, typeClassification }
+    let parName
+    let properties: { [key: string]: string[] } = {}
+    if (typeof name === "object") {
+        parName = "__destruct__"
+        properties = name
+    }
+    else {
+        parName = name
+    }
+    return { kind: "Parameter", name: parName, type, decorators, typeClassification, properties }
 }
 
 function reflectFunction(fn: Function): FunctionReflection {

@@ -35,6 +35,16 @@ Array [
 
 exports[`Constructor parameter Should return empty array when no constructor provided 1`] = `Array []`;
 
+exports[`Durability Should not error when provided constructor without parameter 1`] = `Array []`;
+
+exports[`Durability Should not error when provided default constructor 1`] = `Array []`;
+
+exports[`Durability Should not error when provided function without parameter 1`] = `Array []`;
+
+exports[`Durability Should not error when provided method first than constructor 1`] = `Array []`;
+
+exports[`Durability Should not error when provided method without parameter 1`] = `Array []`;
+
 exports[`Durability Should not error when provided proxy 1`] = `Array []`;
 
 exports[`Function Parameters Should get function parameter name 1`] = `
@@ -88,5 +98,58 @@ Array [
   "par2",
   "par3",
   "par4",
+]
+`;
+
+exports[`Parameter Destructuring Should parse parameter destructuring 1`] = `
+Array [
+  "par",
+  Array [
+    "date",
+    "num",
+  ],
+]
+`;
+
+exports[`Parameter Destructuring Should parse parameter destructuring on constructor 1`] = `
+Array [
+  Array [
+    "tanggal",
+    "num",
+  ],
+]
+`;
+
+exports[`Parameter Destructuring Should parse parameter destructuring on method 1`] = `
+Array [
+  Array [
+    "tanggal",
+    "num",
+  ],
+]
+`;
+
+exports[`Parameter Destructuring Should parse parameter destructuring with custom name 1`] = `
+Array [
+  Array [
+    "tanggal",
+    "num",
+  ],
+]
+`;
+
+exports[`Parameter Destructuring Should parse parameter destructuring with nested property 1`] = `
+Array [
+  "par",
+  Array [
+    "tanggal",
+    "num",
+    Object {
+      "inner": Array [
+        "str",
+        "dateOfBirth",
+      ],
+    },
+  ],
 ]
 `;
