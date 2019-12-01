@@ -1,4 +1,4 @@
-import { getConstructorParameters, getParameterNames, decorate } from "../src";
+import { decorate, getConstructorParameters, getParameterNames } from "../src"
 
 function globalFunction(a: any, b: any) {
 
@@ -73,7 +73,6 @@ describe("Constructor parameter", () => {
         const result = getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
-
 
 })
 
@@ -178,6 +177,105 @@ describe("Durability", () => {
             return "[Function]"
         }
         const result = getParameterNames(MyFunction)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should not error when provided function without parameter", () => {
+        function myFun() { }
+        const result = getParameterNames(myFun)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should not error when provided method without parameter", () => {
+        class MyClass {
+            myMethod() { }
+        }
+        const result = getParameterNames(MyClass.prototype["myMethod"])
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should not error when provided constructor without parameter", () => {
+        class MyClass {
+            constructor() { }
+        }
+        const result = getConstructorParameters(MyClass)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should not error when provided default constructor", () => {
+        class MyClass {
+        }
+        const result = getConstructorParameters(MyClass)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should not error when provided method first than constructor", () => {
+        class MyClass {
+            myMethod() { }
+            constructor() { }
+        }
+        const result = getConstructorParameters(MyClass)
+        expect(result).toMatchSnapshot()
+    })
+})
+
+describe("Parameter Destructuring", () => {
+    it("Should parse parameter destructuring", () => {
+        interface MyModel {
+            date: Date
+            num: number
+        }
+        function myFun(par:string, { date, num }: MyModel) { }
+        const result = getParameterNames(myFun)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should parse parameter destructuring with custom name", () => {
+        interface MyModel {
+            date: Date
+            num: number
+        }
+        function myFun({ date: tanggal, num }: MyModel) { }
+        const result = getParameterNames(myFun)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should parse parameter destructuring with nested property", () => {
+        interface MyModel {
+            date: Date
+            num: number,
+            inner: InnerModel
+        }
+        interface InnerModel {
+            str: string
+            dob: Date
+        }
+        function myFun(par:string, { date: tanggal, num, inner: { str, dob: dateOfBirth } }: MyModel) { }
+        const result = getParameterNames(myFun)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should parse parameter destructuring on constructor", () => {
+        interface MyModel {
+            date: Date
+            num: number
+        }
+        class MyClass {
+            constructor({ date: tanggal, num }: MyModel) { }
+        }
+        const result = getConstructorParameters(MyClass)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("Should parse parameter destructuring on method", () => {
+        interface MyModel {
+            date: Date
+            num: number
+        }
+        class MyClass {
+            myMethod({ date: tanggal, num }: MyModel) { }
+        }
+        const result = getParameterNames(MyClass.prototype["myMethod"])
         expect(result).toMatchSnapshot()
     })
 })

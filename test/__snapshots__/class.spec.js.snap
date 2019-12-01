@@ -61,6 +61,7 @@ Object {
           ],
           "kind": "Parameter",
           "name": "dummy",
+          "properties": Object {},
           "type": OtherDummyClass,
           "typeClassification": "Class",
         },
@@ -91,6 +92,7 @@ Object {
         ],
         "kind": "Parameter",
         "name": "empty",
+        "properties": Object {},
         "type": Array [
           EmptyClass,
         ],
@@ -136,6 +138,7 @@ Object {
           ],
           "kind": "Parameter",
           "name": "empty",
+          "properties": Object {},
           "type": Array [
             EmptyClass,
           ],
@@ -182,6 +185,7 @@ Object {
           ],
           "kind": "Parameter",
           "name": "empty",
+          "properties": Object {},
           "type": Array [
             EmptyClass,
           ],
@@ -235,6 +239,7 @@ Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "id",
+        "properties": Object {},
         "type": undefined,
         "typeClassification": undefined,
       },
@@ -242,6 +247,7 @@ Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "name",
+        "properties": Object {},
         "type": undefined,
         "typeClassification": undefined,
       },
@@ -276,6 +282,7 @@ Object {
           "decorators": Array [],
           "kind": "Parameter",
           "name": "dummy",
+          "properties": Object {},
           "type": undefined,
           "typeClassification": undefined,
         },
@@ -283,6 +290,7 @@ Object {
           "decorators": Array [],
           "kind": "Parameter",
           "name": "other",
+          "properties": Object {},
           "type": undefined,
           "typeClassification": undefined,
         },
@@ -308,6 +316,7 @@ Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "id",
+        "properties": Object {},
         "type": Number,
         "typeClassification": "Primitive",
       },
@@ -315,6 +324,7 @@ Object {
         "decorators": Array [],
         "kind": "Parameter",
         "name": "name",
+        "properties": Object {},
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -325,6 +335,100 @@ Object {
   ],
   "kind": "Class",
   "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Class Introspection Should inspect destructed method parameter type 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "kind": "Method",
+      "name": "dummyMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "type": Domain,
+            },
+          ],
+          "kind": "Parameter",
+          "name": "__destruct__",
+          "properties": Array [
+            "date",
+            "name",
+          ],
+          "type": Domain,
+          "typeClassification": "Class",
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Class Introspection Should inspect destructed parameters type with method decorator 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "kind": "Method",
+      "name": "dummyMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "par",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "__destruct__",
+          "properties": Array [
+            "date",
+            "name",
+          ],
+          "type": Domain,
+          "typeClassification": "Class",
+        },
+      ],
+      "returnType": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
   "name": "DummyClass",
   "properties": Array [],
   "type": DummyClass,
@@ -353,6 +457,7 @@ Object {
           "decorators": Array [],
           "kind": "Parameter",
           "name": "dummy",
+          "properties": Object {},
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -360,6 +465,7 @@ Object {
           "decorators": Array [],
           "kind": "Parameter",
           "name": "other",
+          "properties": Object {},
           "type": Object,
           "typeClassification": "Primitive",
         },
