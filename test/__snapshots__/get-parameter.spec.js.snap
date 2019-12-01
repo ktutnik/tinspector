@@ -45,7 +45,11 @@ exports[`Durability Should not error when provided method first than constructor
 
 exports[`Durability Should not error when provided method without parameter 1`] = `Array []`;
 
-exports[`Durability Should not error when provided proxy 1`] = `Array []`;
+exports[`Durability getConstructorParameters should not error when provided proxy 1`] = `Array []`;
+
+exports[`Durability getMethodParameters should not error when provided proxy 1`] = `Array []`;
+
+exports[`Durability getParameterNames should not error when provided proxy 1`] = `Array []`;
 
 exports[`Function Parameters Should get function parameter name 1`] = `
 Array [

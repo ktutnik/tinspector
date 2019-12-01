@@ -1,4 +1,4 @@
-import { decorate, getConstructorParameters, getParameterNames } from "../src"
+import { decorate, getConstructorParameters, getParameterNames, getMethodParameters } from "../src"
 
 function globalFunction(a: any, b: any) {
 
@@ -88,7 +88,7 @@ describe("Method Parameters", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getParameterNames(DummyClass.prototype["myMethod"])
+        const result = getMethodParameters(DummyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -106,7 +106,7 @@ describe("Method Parameters", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getParameterNames(DummyClass.prototype["myMethod"])
+        const result = getMethodParameters(DummyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -121,7 +121,7 @@ describe("Method Parameters", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getParameterNames(DummyClass.prototype["myMethod"])
+        const result = getMethodParameters(DummyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 })
@@ -171,12 +171,35 @@ describe("Function Parameters", () => {
 })
 
 describe("Durability", () => {
-    it("Should not error when provided proxy", () => {
+    it("getParameterNames should not error when provided proxy", () => {
         function MyFunction() { }
         MyFunction.toString = () => {
             return "[Function]"
         }
         const result = getParameterNames(MyFunction)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("getConstructorParameters should not error when provided proxy", () => {
+        class MyFunction { 
+            constructor(){}
+        }
+        MyFunction.toString = () => {
+            return "[Function]"
+        }
+        const result = getConstructorParameters(MyFunction)
+        expect(result).toMatchSnapshot()
+    })
+
+    it("getMethodParameters should not error when provided proxy", () => {
+        class MyFunction { 
+            constructor(){}
+            myMethod(){}
+        }
+        MyFunction.toString = () => {
+            return "[Function]"
+        }
+        const result = getMethodParameters(MyFunction, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -190,7 +213,7 @@ describe("Durability", () => {
         class MyClass {
             myMethod() { }
         }
-        const result = getParameterNames(MyClass.prototype["myMethod"])
+        const result = getMethodParameters(MyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -275,7 +298,7 @@ describe("Parameter Destructuring", () => {
         class MyClass {
             myMethod({ date: tanggal, num }: MyModel) { }
         }
-        const result = getParameterNames(MyClass.prototype["myMethod"])
+        const result = getMethodParameters(MyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 })

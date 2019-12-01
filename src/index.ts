@@ -66,15 +66,21 @@ function getNamesFromAst(nodes: any[]) {
 }
 
 export function getParameterNames(fn: Function) {
-    const body = fn.toString()
-    const src = !body.startsWith("function") ? "function " + body : body
     try {
-        const ast = parse(src)
+        const body = fn.toString()
+        const ast = parse(body)
         return getNamesFromAst((ast as any).body[0].params)
     }
     catch {
         return []
     }
+}
+
+export function getMethodParameters(fn: Class, method: string) {
+    const body = fn.toString()
+    const ast = parse(body)
+    const ctor = getNode(ast, x => x.type === "MethodDefinition" && x.kind === "method" && x.key.name === method)
+    return getNamesFromAst(ctor ? (ctor as any).value.params : [])
 }
 
 export function getConstructorParameters(fn: Class) {
@@ -320,14 +326,14 @@ function reflectFunction(fn: Function): FunctionReflection {
     return { kind: "Function", name: fn.name, parameters, returnType: undefined }
 }
 
-function reflectMethod(clazz: Class, method: Function, iterator: DecoratorIterator): MethodReflection {
-    const parType: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, clazz.prototype, method.name) || []
-    const rawReturnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, clazz.prototype, method.name)
-    const parameters = getParameterNames(method).map((x, i) => reflectParameter(x, parType[i], iterator("Parameter", method.name, i)))
-    const decorators = iterator("Method", method.name)
+function reflectMethod(clazz: Class, method: string, iterator: DecoratorIterator): MethodReflection {
+    const parType: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, clazz.prototype, method) || []
+    const rawReturnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, clazz.prototype, method)
+    const parameters = getMethodParameters(clazz, method).map((x, i) => reflectParameter(x, parType[i], iterator("Parameter", method, i)))
+    const decorators = iterator("Method", method)
     const returnType = getReflectionType(decorators, rawReturnType)
     const typeClassification = getTypeClassification(returnType)
-    return { kind: "Method", name: method.name, parameters, decorators, returnType, typeClassification }
+    return { kind: "Method", name: method, parameters, decorators, returnType, typeClassification }
 }
 
 function reflectProperty(name: string, typeAnnotation: Class, des: PropertyDescriptor | undefined, iterator: DecoratorIterator): PropertyReflection {
@@ -344,7 +350,7 @@ function reflectMember(clazz: Class, name: string, iterator: DecoratorIterator) 
     const type: any = Reflect.getOwnMetadata(DESIGN_TYPE, clazz.prototype, name)
     const des = Reflect.getOwnPropertyDescriptor(clazz.prototype, name)
     if (des && typeof des.value === "function" && !des.get && !des.set) {
-        return reflectMethod(clazz, clazz.prototype[name], iterator)
+        return reflectMethod(clazz, name, iterator)
     }
     else {
         return reflectProperty(name, type, des, iterator)

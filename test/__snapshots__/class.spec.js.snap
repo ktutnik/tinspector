@@ -203,6 +203,51 @@ Object {
 }
 `;
 
+exports[`Class Introspection Should inspect async method with parameters 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "kind": "Method",
+      "name": "dummyMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "dummy",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "other",
+          "properties": Object {},
+          "type": Object,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": Promise,
+      "typeClassification": "Class",
+    },
+  ],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Class Introspection Should inspect class properly 1`] = `
 Object {
   "ctor": Object {
