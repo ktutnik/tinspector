@@ -53,14 +53,14 @@ function getNamesFromAst(nodes: any[]) {
         if (node.type === "Property") {
             if (node.value.type === "Identifier") return node.value.name
             else {
-                const result: { [key: string]: any } ={}
+                const result: { [key: string]: any } = {}
                 result[node.key.name] = getName(node.value)
                 return result
             }
         }
-        if (node.type === "ObjectPattern") {
-            return node.properties.map((x: any) => getName(x))
-        }
+        //if (node.type === "ObjectPattern") {
+        return node.properties.map((x: any) => getName(x))
+        //}
     }
     return nodes.map(x => getName(x)).filter((x): x is string | { [key: string]: string[] } => !!x)
 }
