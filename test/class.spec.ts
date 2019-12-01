@@ -43,6 +43,21 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect destructed parameters type with method decorator", () => {
+        class Domain {
+            constructor(
+                public date: Date,
+                public name: string
+            ) { }
+        }
+        class DummyClass {
+            @decorateMethod({})
+            dummyMethod(par: string, { date, name }: Domain): number { return 1 }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should inspect array on constructor parameters", () => {
         class EmptyClass { }
         @decorateClass({})
@@ -75,6 +90,21 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect destructed method parameter type", () => {
+        class Domain {
+            constructor(
+                public date: Date,
+                public name: string
+            ) { }
+        }
+        class DummyClass {
+            @decorateMethod({})
+            dummyMethod(@reflect.type(Domain) { date, name }: Domain) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should able to override type with other type", () => {
         class OtherDummyClass { }
         class DummyClass {
@@ -97,5 +127,4 @@ describe("Class Introspection", () => {
         expect(meta.methods[0].returnType).toEqual([Number])
         expect(meta).toMatchSnapshot()
     })
-
 })

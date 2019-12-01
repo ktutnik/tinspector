@@ -17,7 +17,9 @@
   "author": "Ketut Sandiarsa",
   "license": "MIT",
   "dependencies": {
-    "reflect-metadata": "^0.1.13"
+    "@types/acorn": "4.0.3",
+    "reflect-metadata": "^0.1.13",
+    "acorn": "7.1.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
