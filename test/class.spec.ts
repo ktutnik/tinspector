@@ -43,6 +43,15 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect async method with parameters", () => {
+        class DummyClass {
+            @decorateMethod({})
+            async dummyMethod(dummy: string, other: any): Promise<number> { return 1 }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should inspect destructed parameters type with method decorator", () => {
         class Domain {
             constructor(
