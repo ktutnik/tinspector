@@ -22,7 +22,7 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^25.1.0",
     "@types/node": "^12.12.14",
     "coveralls": "^3.0.9",
     "jest": "^24.9.0",
