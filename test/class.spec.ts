@@ -77,6 +77,17 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect array on method parameter but without type override", () => {
+        class EmptyClass { }
+        class DummyClass {
+            @decorateMethod({})
+            dummyMethod(empty: EmptyClass[]) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta.methods[0].parameters[0].type).toEqual([Object])
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should inspect array on method parameter", () => {
         class EmptyClass { }
         class DummyClass {

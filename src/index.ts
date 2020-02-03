@@ -173,6 +173,8 @@ function getReflectionType(decorators: any[], type: any) {
         return override.type
     else if (array)
         return [array.type]
+    else if (type === Array)
+        return [Object]
     else
         return type
 }

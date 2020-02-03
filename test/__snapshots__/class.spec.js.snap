@@ -156,6 +156,45 @@ Object {
 }
 `;
 
+exports[`Class Introspection Should inspect array on method parameter but without type override 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "kind": "Method",
+      "name": "dummyMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "empty",
+          "properties": Object {},
+          "type": Array [
+            Object,
+          ],
+          "typeClassification": "Array",
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Class Introspection Should inspect array on method parameter using @reflect.type 1`] = `
 Object {
   "ctor": Object {
