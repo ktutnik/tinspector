@@ -426,6 +426,64 @@ Object {
 }
 `;
 
+exports[`Class Introspection Should inspect deep nested destructed method parameter type 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {},
+      ],
+      "kind": "Method",
+      "name": "dummyMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "type": Domain,
+            },
+          ],
+          "kind": "Parameter",
+          "name": "{ a, b, child: { c, d, child: { e, f } } }",
+          "properties": Array [
+            "a",
+            "b",
+            Object {
+              "child": Array [
+                "c",
+                "d",
+                Object {
+                  "child": Array [
+                    "e",
+                    "f",
+                  ],
+                },
+              ],
+            },
+          ],
+          "type": Domain,
+          "typeClassification": "Class",
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "DummyClass",
+  "properties": Array [],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Class Introspection Should inspect destructed method parameter type 1`] = `
 Object {
   "ctor": Object {
@@ -452,7 +510,7 @@ Object {
             },
           ],
           "kind": "Parameter",
-          "name": "__destruct__",
+          "name": "{ date, name }",
           "properties": Array [
             "date",
             "name",
@@ -500,7 +558,7 @@ Object {
         Object {
           "decorators": Array [],
           "kind": "Parameter",
-          "name": "__destruct__",
+          "name": "{ date, name }",
           "properties": Array [
             "date",
             "name",
