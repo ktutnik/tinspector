@@ -221,6 +221,19 @@ export function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: 
     }
 }
 
+function printDestruct(params: any[]) {
+    const result: string[] = []
+    for (const key in params) {
+        const par = params[key];
+        if (typeof par === "string")
+            result.push(par)
+        else {
+            const key = Object.keys(par)[0]
+            result.push(`${key}: ${printDestruct(par[key])}`)
+        }
+    }
+    return `{ ${result.join(", ")} }`
+}
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- DECORATORS ------------------------- */
@@ -312,9 +325,9 @@ function reflectParameter(name: string | { [key: string]: string[] }, typeAnnota
     const type = getReflectionType(decorators, typeAnnotation)
     const typeClassification = getTypeClassification(type)
     let parName
-    let properties: { [key: string]: string[] } = {}
+    let properties: { [key: string]: any[] } = {}
     if (typeof name === "object") {
-        parName = "__destruct__"
+        parName = printDestruct(name as any)
         properties = name
     }
     else {

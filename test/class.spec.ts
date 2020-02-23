@@ -125,6 +125,35 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect deep nested destructed method parameter type", () => {
+        class Domain {
+            constructor(
+                public a: Date,
+                public b: string,
+                public child: ChildDomain
+            ) { }
+        }
+        class ChildDomain {
+            constructor(
+                public c: Date,
+                public d: string,
+                public child: GrandChildDomain
+            ) { }
+        }
+        class GrandChildDomain {
+            constructor(
+                public e: Date,
+                public f: string
+            ) { }
+        }
+        class DummyClass {
+            @decorateMethod({})
+            dummyMethod(@reflect.type(Domain) { a, b, child: { c, d, child: { e, f } } }: Domain) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should able to override type with other type", () => {
         class OtherDummyClass { }
         class DummyClass {
