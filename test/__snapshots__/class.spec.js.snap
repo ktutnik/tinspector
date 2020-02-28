@@ -18,6 +18,11 @@ Object {
           "type": Array [
             Number,
           ],
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -57,6 +62,11 @@ Object {
               "info": "Readonly",
               "kind": "Override",
               "type": OtherDummyClass,
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -88,6 +98,11 @@ Object {
           Object {
             "kind": "Array",
             "type": EmptyClass,
+            Symbol(tinspector:decoratorId): Symbol(array),
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": false,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -101,7 +116,12 @@ Object {
     ],
   },
   "decorators": Array [
-    Object {},
+    Object {
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -124,7 +144,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -134,6 +159,11 @@ Object {
             Object {
               "kind": "Array",
               "type": EmptyClass,
+              Symbol(tinspector:decoratorId): Symbol(array),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -168,7 +198,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -207,7 +242,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -220,6 +260,11 @@ Object {
               "type": Array [
                 EmptyClass,
               ],
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -254,7 +299,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -415,7 +465,12 @@ Object {
     ],
   },
   "decorators": Array [
-    Object {},
+    Object {
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -438,7 +493,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -449,6 +509,11 @@ Object {
               "info": undefined,
               "kind": "Override",
               "type": Domain,
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -496,7 +561,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -507,6 +577,11 @@ Object {
               "info": undefined,
               "kind": "Override",
               "type": Domain,
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -542,7 +617,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -578,6 +658,127 @@ Object {
 }
 `;
 
+exports[`Class Introspection Should inspect getter and setter 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": get myProp,
+      "kind": "Property",
+      "name": "myProp",
+      "set": set myProp,
+      "type": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Class Introspection Should inspect getter and setter with decorator 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": get myProp,
+      "kind": "Property",
+      "name": "myProp",
+      "set": set myProp,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Class Introspection Should inspect parameter properties 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "myProp",
+        "properties": Object {},
+        "type": Number,
+        "typeClassification": "Primitive",
+      },
+      Object {
+        "decorators": Array [],
+        "kind": "Parameter",
+        "name": "myOtherProp",
+        "properties": Object {},
+        "type": String,
+        "typeClassification": "Primitive",
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "myProp",
+      "set": undefined,
+      "type": Number,
+    },
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "myOtherProp",
+      "set": undefined,
+      "type": String,
+    },
+  ],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Class Introspection Should inspect parameters type with method decorator 1`] = `
 Object {
   "ctor": Object {
@@ -590,7 +791,12 @@ Object {
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "dummyMethod",
@@ -618,6 +824,83 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Class Introspection Should inspect property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "myProp",
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "myOtherProp",
+      "set": undefined,
+      "type": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Class Introspection Should inspect setter only 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": undefined,
+      "kind": "Property",
+      "name": "myProp",
+      "set": set myProp,
+      "type": undefined,
+      "typeClassification": undefined,
+    },
+  ],
   "type": DummyClass,
   "typeClassification": "Class",
 }

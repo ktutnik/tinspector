@@ -52,6 +52,11 @@ Object {
         "decorators": Array [
           Object {
             "kind": "Ignore",
+            Symbol(tinspector:decoratorId): Symbol(ignore),
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": false,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -65,6 +70,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",

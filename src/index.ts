@@ -1,14 +1,19 @@
 import "reflect-metadata"
 import { parse, Node } from "acorn"
 
+
 /* ---------------------------------------------------------------- */
 /* --------------------------- TYPES ------------------------------ */
 /* ---------------------------------------------------------------- */
+
+export const DecoratorOption = Symbol("tinspector:decoratorOption")
+export const DecoratorId = Symbol("tinspector:decoratorId")
+
 type Class = new (...arg: any[]) => any
 type DecoratorIterator = (type: DecoratorTargetType, target: string, index?: number) => any[]
 export type DecoratorTargetType = "Method" | "Class" | "Parameter" | "Property" | "Constructor"
-export interface Decorator { targetType: DecoratorTargetType, target: string, value: any }
-export interface ParameterDecorator extends Decorator { targetType: "Parameter", targetIndex: number }
+export interface Decorator { targetType: DecoratorTargetType, target: string, value: any, inherit: boolean, allowMultiple: boolean }
+export interface ParamDecorator extends Decorator { targetType: "Parameter", targetIndex: number }
 export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection
 export interface ReflectionBase { kind: string, name: string }
 export interface ParameterReflection extends ReflectionBase { kind: "Parameter", properties: string | { [key: string]: string[] }, decorators: any[], type?: any, typeClassification?: "Class" | "Array" | "Primitive" }
@@ -21,6 +26,12 @@ export interface ObjectReflection extends ReflectionBase { kind: "Object", membe
 export interface ArrayDecorator { kind: "Array", type: Class }
 export interface TypeDecorator { kind: "Override", type: Class, info?: string }
 export interface PrivateDecorator { kind: "Ignore" }
+export interface DecoratorOption {
+    inherit?: boolean,
+    allowMultiple?: boolean
+}
+
+export type PropertyDecorator = (target: Object, propertyKey: string | symbol, ...index: any[]) => void;
 
 export const DECORATOR_KEY = "plumier.key:DECORATOR"
 export const DESIGN_TYPE = "design:type"
@@ -114,14 +125,16 @@ function getType(object: any) {
 
 export function getMembers(fun: Function) {
     const isGetter = (name: string) => Object.getOwnPropertyDescriptor(fun.prototype, name)!.get
+    const isSetter = (name: string) => Object.getOwnPropertyDescriptor(fun.prototype, name)!.set
     const isFunction = (name: string) => typeof fun.prototype[name] === "function";
     const members = Object.getOwnPropertyNames(fun.prototype)
-        .filter(name => isGetter(name) || isFunction(name))
+        .filter(name => isGetter(name) || isSetter(name) || isFunction(name))
     const properties = (Reflect.getOwnMetadata(DECORATOR_KEY, fun) || [])
         .filter((x: Decorator) => x.targetType === "Property")
         .map((x: Decorator) => x.target)
-    return members.concat(properties)
+    const names = members.concat(properties)
         .filter(name => name !== "constructor" && !~name.indexOf("__"))
+    return [...new Set(names)]
 }
 
 function isCustomClass(type: Function | Function[]) {
@@ -159,11 +172,15 @@ function getDecorators(target: any): Decorator[] {
 function getDecoratorIterator(fn: any): DecoratorIterator {
     return (type: DecoratorTargetType, target: string, index?: number) => getDecorators(fn)
         .filter(x => {
-            const par = x as ParameterDecorator
+            const par = x as ParamDecorator
             return x.targetType === type && x.target === target
                 && (par.targetIndex === undefined || par.targetIndex === index)
         })
-        .map(x => x.value)
+        .map(x => {
+            const { value, inherit, allowMultiple } = x
+            value[DecoratorOption] = <DecoratorOption>{ inherit, allowMultiple }
+            return value
+        })
 }
 
 function getReflectionType(decorators: any[], type: any) {
@@ -177,34 +194,6 @@ function getReflectionType(decorators: any[], type: any) {
         return [Object]
     else
         return type
-}
-
-function removeDuplicate<T extends Reflection>(reflections: T[]): T[] {
-    const seen: { [key: string]: boolean } = {}
-    const result: T[] = []
-    for (let i = 0; i < reflections.length; i++) {
-        const element = reflections[i];
-        if (!seen[element.name]) {
-            result.push(element)
-            seen[element.name] = true
-        }
-    }
-    return result;
-}
-
-/*
-Decorator is not inherited by design due to TypeScript behavior that use decorator to provide type information,
-except on inherited method/properties that is not overridden in the child class.
-*/
-function extendsClass(child: ClassReflection, parent: ClassReflection): ClassReflection {
-    return {
-        kind: "Class", type: child.type, name: child.name,
-        ctor: child.ctor, typeClassification: child.typeClassification,
-        decorators: child.decorators,
-        //merge only methods, properties and decorators
-        methods: removeDuplicate(child.methods.concat(parent.methods)),
-        properties: removeDuplicate(child.properties.concat(parent.properties))
-    }
 }
 
 
@@ -235,40 +224,45 @@ function printDestruct(params: any[]) {
     return `{ ${result.join(", ")} }`
 }
 
+function isIncluded(x: { decorators: any[] }) {
+    return !x.decorators.some((x: PrivateDecorator) => x.kind === "Ignore")
+}
+
 /* ---------------------------------------------------------------- */
 /* --------------------------- DECORATORS ------------------------- */
 /* ---------------------------------------------------------------- */
 
-export function decorateParameter(callback: ((target: Class, name: string, index: number) => object)): (target: any, name: string, index: number) => void
-export function decorateParameter(data: {}): (target: any, name: string, index: number) => void
-export function decorateParameter(data: any) {
-    return decorate(data, ["Parameter"])
+
+export function decorateParameter(callback: ((target: Class, name: string, index: number) => any), option?: DecoratorOption): ParameterDecorator
+export function decorateParameter(data: any, option?: DecoratorOption): ParameterDecorator
+export function decorateParameter(data: any, option?: DecoratorOption): ParameterDecorator {
+    return decorate(data, ["Parameter"], option) as any
 }
 
-export function decorateMethod(callback: ((target: Class, name: string) => object)): (target: any, name: string) => void
-export function decorateMethod(data: {}): (target: any, name: string) => void
-export function decorateMethod(data: any) {
-    return decorate(data, ["Method"])
+export function decorateMethod(callback: ((target: Class, name: string) => any), option?: DecoratorOption): MethodDecorator
+export function decorateMethod(data: any, option?: DecoratorOption): MethodDecorator
+export function decorateMethod(data: any, option?: DecoratorOption) {
+    return decorate(data, ["Method"], option)
 }
 
-export function decorateProperty(callback: ((target: Class, name: string, index?: any) => object)): (target: any, name: string, index?: any) => void
-export function decorateProperty(data: {}): (target: any, name: string, index?: any) => void
-export function decorateProperty(data: any) {
-    return decorate(data, ["Property", "Parameter"])
+export function decorateProperty(callback: ((target: Class, name: string, index?: any) => any), option?: DecoratorOption): PropertyDecorator
+export function decorateProperty(data: any, option?: DecoratorOption): PropertyDecorator
+export function decorateProperty(data: any, option?: DecoratorOption) {
+    return decorate(data, ["Property", "Parameter"], option)
 }
 
-export function decorateClass(callback: ((target: Class) => object)): (target: any) => void
-export function decorateClass(data: {}): (target: any) => void
-export function decorateClass(data: any) {
-    return decorate(data, ["Class"])
+export function decorateClass(callback: ((target: Class) => any), option?: DecoratorOption): ClassDecorator
+export function decorateClass(data: any, option?: DecoratorOption): ClassDecorator
+export function decorateClass(data: any, option?: DecoratorOption) {
+    return decorate(data, ["Class"], option)
 }
 
-export function decorate(data: any, targetTypes: DecoratorTargetType[] = []) {
+export function decorate(data: any | ((...args: any[]) => any), targetTypes: DecoratorTargetType[] = [], option?: Partial<DecoratorOption>) {
     const throwIfNotOfType = (target: DecoratorTargetType) => {
         if (targetTypes.length > 0 && !targetTypes.some(x => x === target))
             throw new Error(`Reflect Error: Decorator of type ${targetTypes.join(", ")} applied into ${target}`)
     }
-
+    const opt: Required<DecoratorOption> = { allowMultiple: true, inherit: true, ...option }
     return (...args: any[]) => {
         //class decorator
         if (args.length === 1) {
@@ -276,7 +270,8 @@ export function decorate(data: any, targetTypes: DecoratorTargetType[] = []) {
             return addDecorator(args[0], {
                 targetType: "Class",
                 target: args[0].name,
-                value: typeof data === "function" ? data(args[0]) : data
+                value: typeof data === "function" ? data(args[0]) : data,
+                ...opt
             })
         }
         //parameter decorator
@@ -285,11 +280,12 @@ export function decorate(data: any, targetTypes: DecoratorTargetType[] = []) {
             const isCtorParam = isConstructor(args[0])
             const targetType = isCtorParam ? args[0] : args[0].constructor
             const targetName = isCtorParam ? "constructor" : args[1]
-            return addDecorator<ParameterDecorator>(targetType, {
+            return addDecorator<ParamDecorator>(targetType, {
                 targetType: "Parameter",
                 target: targetName,
                 targetIndex: args[2],
-                value: typeof data === "function" ? data(targetType, targetName, args[2]) : data
+                value: typeof data === "function" ? data(targetType, targetName, args[2]) : data,
+                ...opt
             })
         }
         //property
@@ -298,27 +294,96 @@ export function decorate(data: any, targetTypes: DecoratorTargetType[] = []) {
             return addDecorator(args[0].constructor, {
                 targetType: "Property",
                 target: args[1],
-                value: typeof data === "function" ? data(args[0].constructor, args[1]) : data
+                value: typeof data === "function" ? data(args[0].constructor, args[1]) : data,
+                ...opt
             })
         }
         throwIfNotOfType("Method")
         return addDecorator(args[0].constructor, {
             targetType: "Method",
             target: args[1],
-            value: typeof data === "function" ? data(args[0].constructor, args[1]) : data
+            value: typeof data === "function" ? data(args[0].constructor, args[1]) : data,
+            ...opt
         })
     }
 }
 
-export function mergeDecorator(...fn: Function[]) {
+export function mergeDecorator(...fn: (ClassDecorator | PropertyDecorator | ParamDecorator | MethodDecorator)[]) {
     return (...args: any[]) => {
-        fn.forEach(x => x(...args))
+        fn.forEach(x => (x as Function)(...args))
     }
 }
 
-/* ---------------------------------------------------------------- */
-/* ------------------------- MAIN FUNCTIONS ----------------------- */
-/* ---------------------------------------------------------------- */
+// --------------------------------------------------------------------- //
+// --------------------- EXTEND METADATA FUNCTIONS --------------------- //
+// --------------------------------------------------------------------- //
+
+function extendDecorators(child: any[], parent: any[]) {
+    const result = [...child]
+    for (const decorator of parent) {
+        const options: DecoratorOption = decorator[DecoratorOption]!
+        // continue, if the decorator is not inheritable
+        if (!options.inherit) continue
+        // continue, if allow multiple and already has decorator with the same ID
+        if (!options.allowMultiple && child.some(x => x[DecoratorId] === decorator[DecoratorId])) continue
+        result.push(decorator)
+    }
+    return result
+}
+
+function extendParameter(child: ParameterReflection[], parent: ParameterReflection[]) {
+    const result: ParameterReflection[] = []
+    for (const member of child) {
+        const exists = parent.find(x => x.name === member.name)!
+        member.decorators = extendDecorators(member.decorators, exists.decorators)
+        result.push(member)
+    }
+    return result
+}
+
+function extendProperty(child: PropertyReflection[], parent: PropertyReflection[]) {
+    const result = [...child]
+    for (const member of parent) {
+        const exists = result.find(x => x.name === member.name)
+        if (exists) {
+            exists.decorators = extendDecorators(exists.decorators, member.decorators)
+            continue
+        }
+        member.decorators = extendDecorators([], member.decorators)
+        result.push(member)
+    }
+    return result
+}
+
+function extendMethod(child: MethodReflection[], parent: MethodReflection[]) {
+    const result = [...child]
+    for (const member of parent) {
+        const exists = result.find(x => x.name === member.name)
+        if (exists) {
+            exists.parameters = extendParameter(exists.parameters, member.parameters)
+            exists.decorators = extendDecorators(exists.decorators, member.decorators)
+            continue
+        }
+        member.decorators = extendDecorators([], member.decorators)
+        result.push(member)
+    }
+    return result
+}
+
+function extendClass(child: ClassReflection, parent: ClassReflection): ClassReflection {
+    const { ctor, methods, properties, decorators, ...result } = child;
+    return {
+        ...result,
+        ctor,
+        decorators: extendDecorators(child.decorators, parent.decorators),
+        methods: extendMethod(child.methods, parent.methods),
+        properties: extendProperty(child.properties, parent.properties)
+    }
+}
+
+// --------------------------------------------------------------------- //
+// -------------------------- REFLECT FUNCTION ------------------------- //
+// --------------------------------------------------------------------- //
 
 function reflectParameter(name: string | { [key: string]: string[] }, typeAnnotation?: any, decs?: any[]): ParameterReflection {
     const decorators = decs || []
@@ -383,14 +448,13 @@ function reflectConstructor(fn: Class, iterator: DecoratorIterator): Constructor
 }
 
 function reflectClass(fn: Class): ClassReflection {
-    const notPrivate = (x: { decorators: any[] }) => !x.decorators.some((x: PrivateDecorator) => x.kind === "Ignore")
     const iterator = getDecoratorIterator(fn)
     const members = getMembers(fn).map(x => reflectMember(fn, x, iterator))
     const ctor = reflectConstructor(fn, iterator)
     const decorators = iterator("Class", fn.name)
-    const properties = members.filter((x): x is PropertyReflection => x.kind === "Property" && notPrivate(x))
+    const properties = members.filter((x): x is PropertyReflection => x.kind === "Property" && isIncluded(x))
     if (decorators.some(x => x.type === "ParameterProperties")) {
-        const parProps = ctor.parameters.filter(x => notPrivate(x)).map(x => <PropertyReflection>({
+        const parProps = ctor.parameters.filter(x => isIncluded(x)).map(x => <PropertyReflection>({
             decorators: x.decorators, type: x.type,
             name: x.name, kind: "Property", get: undefined, set: undefined
         }))
@@ -398,7 +462,7 @@ function reflectClass(fn: Class): ClassReflection {
     }
     return {
         kind: "Class", ctor, name: fn.name,
-        methods: members.filter((x): x is MethodReflection => x.kind === "Method" && notPrivate(x)),
+        methods: members.filter((x): x is MethodReflection => x.kind === "Method" && isIncluded(x)),
         properties, decorators, type: fn, typeClassification: "Class"
     }
 }
@@ -412,7 +476,7 @@ function reflectClassRecursive(fn: Class): ClassReflection {
     const childMeta = reflectClass(fn)
     const parent = Object.getPrototypeOf(fn)
     const parentMeta = parent.prototype ? reflectClassRecursive(parent) : defaultRef
-    return extendsClass(childMeta, parentMeta)
+    return extendClass(childMeta, parentMeta)
 }
 
 function reflectObject(object: any, name: string = "module"): ObjectReflection {
@@ -462,11 +526,23 @@ export function reflect(option: string | Class) {
 /* ------------------------- DECORATORS --------------------------- */
 /* ---------------------------------------------------------------- */
 
+const IgnoreId = Symbol("ignore")
+const OverrideId = Symbol("override")
+const ArrayId = Symbol("array")
+const ParamPropId = Symbol("paramProp")
+
+/**
+ * Decorator that do nothing, intended to be able to inspect data type
+ */
+reflect.noop = function () {
+    return decorate({})
+}
+
 /**
  * Ignore member from metadata generated
  */
 reflect.ignore = function () {
-    return decorate(<PrivateDecorator>{ kind: "Ignore" }, ["Parameter", "Method", "Property"])
+    return decorate(<PrivateDecorator>{ [DecoratorId]: IgnoreId, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 /**
@@ -482,7 +558,7 @@ reflect.ignore = function () {
  * @param info Additional information about type (readonly, partial etc)
  */
 reflect.type = function (type: Class | Class[], info?: string) {
-    return decorate(<TypeDecorator>{ kind: "Override", type: type, info }, ["Parameter", "Method", "Property"])
+    return decorate(<TypeDecorator>{ [DecoratorId]: OverrideId, kind: "Override", type: type, info }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 /**
@@ -490,15 +566,14 @@ reflect.type = function (type: Class | Class[], info?: string) {
  * @param type Data type of array element
  */
 reflect.array = function (type: Class) {
-    return decorate(<ArrayDecorator>{ kind: "Array", type: type }, ["Parameter", "Method", "Property"])
+    return decorate(<ArrayDecorator>{ [DecoratorId]: ArrayId, kind: "Array", type: type }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 /**
  * Mark all constructor parameters as properties
  */
 reflect.parameterProperties = function () {
-    return decorateClass({ type: "ParameterProperties" })
+    return decorateClass({ [DecoratorId]: ParamPropId, type: "ParameterProperties" }, { allowMultiple: false })
 }
-
 
 export default reflect

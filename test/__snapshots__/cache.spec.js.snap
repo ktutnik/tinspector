@@ -10,6 +10,10 @@ Object {
   "decorators": Array [
     Object {
       "name": "first",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -49,6 +53,10 @@ Object {
   "decorators": Array [
     Object {
       "name": "second",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
