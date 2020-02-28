@@ -1,4 +1,4 @@
-import { reflect, getMembers, decorateProperty, DECORATOR_KEY, decorateMethod, DESIGN_PARAMETER_TYPE } from "../src";
+import { reflect, getMembers, decorateProperty, DECORATOR_KEY, decorateMethod, DESIGN_PARAMETER_TYPE, decorateClass, DecoratorId, decorateParameter } from "../src";
 import { inspect } from "util";
 
 describe("getDeepMember", () => {
@@ -47,11 +47,11 @@ describe("Inheritance", () => {
             @decorateProperty({ value: 1 })
             childProp = 1
         }
-        class GrandChildClass extends ChildClass { 
+        class GrandChildClass extends ChildClass {
             @decorateProperty({ value: 1 })
             grandChildProp = 1
         }
-        class GreatGrandChildClass extends GrandChildClass { 
+        class GreatGrandChildClass extends GrandChildClass {
             @decorateProperty({ value: 1 })
             greatGrandChildProp = 1
         }
@@ -70,18 +70,6 @@ describe("Inheritance", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it("Should get base class getter with decorator", () => {
-        class BaseClass {
-            @decorateProperty({ value: 1 })
-            get parentProp() { return 1 }
-        }
-        class ChildClass extends BaseClass {
-            get childProp() { return 1 }
-        }
-        const meta = reflect(ChildClass)
-        expect(meta).toMatchSnapshot()
-    })
-
     it("Should get base class method", () => {
         class BaseClass {
             myMethod() { }
@@ -90,17 +78,6 @@ describe("Inheritance", () => {
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
     })
-
-    it("Should get base class method with decorator", () => {
-        class BaseClass {
-            @decorateMethod({ value: 1 })
-            myMethod(a: string): string { return "" }
-        }
-        class ChildClass extends BaseClass { }
-        const meta = reflect(ChildClass)
-        expect(meta).toMatchSnapshot()
-    })
-
 
     it("Should inspect domain with inheritance using constructor property", () => {
         @reflect.parameterProperties()
@@ -144,7 +121,6 @@ describe("Inheritance", () => {
         expect(meta).toMatchSnapshot()
     })
 
-
     it("Overridden method should not duplicated", () => {
         class BaseClass {
             myMethod(a: string): string { return "" }
@@ -155,6 +131,31 @@ describe("Inheritance", () => {
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
     })
+
+    // it("Should not override private method", () => {
+    //     class BaseClass {
+    //         @reflect.ignore()
+    //         privateMethod(a: string): string { return "" }
+    //     }
+    //     class ChildClass extends BaseClass {
+    //         myMethod(a: string): string { return "Hello" }
+    //     }
+    //     const meta = reflect(ChildClass)
+    //     expect(meta).toMatchSnapshot()
+    // })
+
+    // it("Should not override private property", () => {
+    //     class BaseClass {
+    //         @reflect.ignore()
+    //         baseProp:number = 1
+    //     }
+    //     class ChildClass extends BaseClass {
+    //         @reflect.noop()
+    //         childProp:number = 2
+    //     }
+    //     const meta = reflect(ChildClass)
+    //     expect(meta).toMatchSnapshot()
+    // })
 
     it("Overridden parameter property should not duplicated", () => {
         @reflect.parameterProperties()
@@ -190,5 +191,280 @@ describe("Inheritance", () => {
 
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
+    })
+
+    describe("Decorators", () => {
+        describe("Decorator On Class", () => {
+            it("Should get base class decorators", () => {
+                @decorateClass({ value: 1 })
+                @decorateClass({ value: 2 })
+                class BaseClass {
+                }
+                class ChildClass extends BaseClass { }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should merge base class decorators and child decorators", () => {
+                @decorateClass({ value: 1 })
+                @decorateClass({ value: 2 })
+                class BaseClass {
+                }
+                @decorateClass({ value: 3 })
+                @decorateClass({ value: 4 })
+                class ChildClass extends BaseClass { }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not inherit decorator if specified", () => {
+                @decorateClass({ value: 1 }, { inherit: false })
+                @decorateClass({ value: 2 })
+                class BaseClass {
+                }
+                @decorateClass({ value: 3 })
+                class ChildClass extends BaseClass { }
+                const parMeta = reflect(BaseClass)
+                const meta = reflect(ChildClass)
+                expect(parMeta).toMatchSnapshot()
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not merge decorator if not allowMultiple", () => {
+                @decorateClass({ [DecoratorId]: "the-id", value: 1 }, { allowMultiple: false })
+                @decorateClass({ value: 2 })
+                class BaseClass {
+                }
+                @decorateClass({ [DecoratorId]: "the-id", value: 3 })
+                class ChildClass extends BaseClass { }
+                const parMeta = reflect(BaseClass)
+                const meta = reflect(ChildClass)
+                expect(parMeta).toMatchSnapshot()
+                expect(meta).toMatchSnapshot()
+            })
+        })
+
+        describe("Decorator on property", () => {
+            it("Should get decorator on property", () => {
+                class BaseClass {
+                    @decorateProperty({ value: 1 })
+                    parentProp: number = 2
+                }
+                class ChildClass extends BaseClass {
+                    @decorateProperty({ value: 2 })
+                    childProp: number = 2
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should get decorator on parameter property", () => {
+                @reflect.parameterProperties()
+                class BaseClass {
+                    constructor(
+                        @decorateProperty({ value: 1 })
+                        public parentProp: number = 2
+                    ) { }
+                }
+                class ChildClass extends BaseClass {
+
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should get base class getter decorator", () => {
+                class BaseClass {
+                    @decorateProperty({ value: 1 })
+                    get parentProp() { return 1 }
+                }
+                class ChildClass extends BaseClass {
+                    //override
+                    get parentProp() { return 3 }
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not inherit if specified", () => {
+                class BaseClass {
+                    @decorateProperty({ value: 1 }, { inherit: false })
+                    get parentProp() { return 1 }
+                }
+                class ChildClass extends BaseClass {
+                    //override
+                    get parentProp() { return 3 }
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not inherit on non overridden property", () => {
+                class BaseClass {
+                    @decorateProperty({ value: 1 }, { inherit: false })
+                    get parentProp() { return 1 }
+                }
+                class ChildClass extends BaseClass {
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not merge decorator if not allowMultiple", () => {
+                class BaseClass {
+                    @decorateProperty({ [DecoratorId]: "id", value: 1 }, { allowMultiple: false })
+                    get parentProp() { return 1 }
+                }
+                class ChildClass extends BaseClass {
+                    //override
+                    @decorateProperty({ [DecoratorId]: "id", value: 1 }, { allowMultiple: false })
+                    get parentProp() { return 3 }
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+        })
+
+        describe("Decorator on Method", () => {
+            it("Should get base class method decorator", () => {
+                class BaseClass {
+                    @decorateMethod({ value: 1 })
+                    myMethod(a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass { }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should merge decorators by default", () => {
+                class BaseClass {
+                    @decorateMethod({ value: 1 })
+                    myMethod(a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    @decorateMethod({ value: 2 })
+                    myMethod(a: string): string { return "" }
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not inherit decorator if specified", () => {
+                class BaseClass {
+                    @decorateMethod({ value: 1 }, { inherit: false })
+                    myMethod(a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    @decorateMethod({ value: 2 })
+                    myMethod(a: string): string { return "" }
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not inherit decorator on non overridden method", () => {
+                class BaseClass {
+                    @decorateMethod({ value: 1 }, { inherit: false })
+                    myMethod(a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not merge decorators if not allowMultiple", () => {
+                class BaseClass {
+                    @decorateMethod({ [DecoratorId]: "id", value: 1 }, { allowMultiple: false })
+                    myMethod(a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    @decorateMethod({ [DecoratorId]: "id", value: 1 }, { allowMultiple: false })
+                    myMethod(a: string): string { return "" }
+                }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+        })
+
+        describe("Decorator on Method Parameter", () => {
+            it("Should get base class parameter decorator", () => {
+                class BaseClass {
+                    myMethod(@decorateParameter({ value: 1 }) a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass { }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should merge decorators by default", () => {
+                class BaseClass {
+                    myMethod(@decorateParameter({ value: 1 }) a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    myMethod(@decorateParameter({ value: 2 }) a: string): string { return "" }
+                 }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not include decorators if parameter not included on derived method", () => {
+                class BaseClass {
+                    myMethod(@decorateParameter({ value: 1 }) a: string, @decorateParameter({ value: 3 }) c:number): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    myMethod(@decorateParameter({ value: 2 }) a: string): string { return "" }
+                 }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not inherit decorator if specified", () => {
+                class BaseClass {
+                    myMethod(@decorateParameter({ value: 1 }, {inherit: false}) a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    myMethod(@decorateParameter({ value: 2 }) a: string): string { return "" }
+                 }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not merge decorators if not allowMultiple", () => {
+                class BaseClass {
+                    myMethod(@decorateParameter({ [DecoratorId]: "id", value: 1 }, {allowMultiple: false}) a: string): string { return "" }
+                }
+                class ChildClass extends BaseClass {
+                    myMethod(@decorateParameter({ [DecoratorId]: "id",  value: 2 }) a: string): string { return "" }
+                 }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+        })
+
+        describe("Decorator on Constructor Parameter", () => {
+            it("Should not get base class parameter", () => {
+                class BaseClass {
+                    constructor(a: string){}
+                }
+                class ChildClass extends BaseClass { }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+            it("Should not merge decorator if the same name", () => {
+                class BaseClass {
+                    constructor(@decorateParameter({ value: 1 }) a: string){}
+                }
+                class ChildClass extends BaseClass {
+                    constructor(@decorateParameter({ value: 2 }) a: string){
+                        super(a)
+                    }
+                 }
+                const meta = reflect(ChildClass)
+                expect(meta).toMatchSnapshot()
+            })
+
+        })
     })
 })

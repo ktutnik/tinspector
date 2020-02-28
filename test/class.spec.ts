@@ -17,9 +17,11 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it("Should inspect class with method parameters", () => {
+    it("Should inspect array on constructor parameters", () => {
+        class EmptyClass { }
+        @decorateClass({})
         class DummyClass {
-            dummyMethod(dummy: string, other: any) { }
+            constructor(@reflect.array(EmptyClass) empty: EmptyClass[]) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
@@ -34,12 +36,32 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should inspect class with method parameters", () => {
+        class DummyClass {
+            dummyMethod(dummy: string, other: any) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should inspect parameters type with method decorator", () => {
         class DummyClass {
             @decorateMethod({})
             dummyMethod(dummy: string, other: any): number { return 1 }
         }
         const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should able to define return type of method", () => {
+        class DummyClass {
+            @reflect.type([Number])
+            method() {
+                return [1, 2, 3]
+            }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta.methods[0].returnType).toEqual([Number])
         expect(meta).toMatchSnapshot()
     })
 
@@ -62,16 +84,6 @@ describe("Class Introspection", () => {
         class DummyClass {
             @decorateMethod({})
             dummyMethod(par: string, { date, name }: Domain): number { return 1 }
-        }
-        const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
-
-    it("Should inspect array on constructor parameters", () => {
-        class EmptyClass { }
-        @decorateClass({})
-        class DummyClass {
-            constructor(@reflect.array(EmptyClass) empty: EmptyClass[]) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
@@ -165,15 +177,58 @@ describe("Class Introspection", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it("Should able to define return type of method", () => {
+    it("Should inspect property", () => {
         class DummyClass {
-            @reflect.type([Number])
-            method() {
-                return [1, 2, 3]
-            }
+            @reflect.noop()
+            myProp: number = 10
+            @reflect.noop()
+            myOtherProp: string = "hello"
         }
+
         const meta = reflect(DummyClass)
-        expect(meta.methods[0].returnType).toEqual([Number])
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should inspect getter and setter", () => {
+        class DummyClass {
+            get myProp() { return 1 }
+            set myProp(val: number) { }
+        }
+
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should inspect setter only", () => {
+        class DummyClass {
+            set myProp(val: number) { }
+        }
+
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should inspect getter and setter with decorator", () => {
+        class DummyClass {
+            @reflect.noop()
+            get myProp() { return 1 }
+            set myProp(val: number) { }
+        }
+
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should inspect parameter properties", () => {
+        @reflect.parameterProperties()
+        class DummyClass {
+            constructor(
+                public myProp:number,
+                public myOtherProp:string,
+            ){}
+        }
+
+        const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
     })
 })

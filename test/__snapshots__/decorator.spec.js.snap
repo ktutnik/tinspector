@@ -10,9 +10,17 @@ Object {
   "decorators": Array [
     Object {
       "info": "Some Info",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
     Object {
       "otherInfo": "Some Other Info",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -34,6 +42,10 @@ Object {
   "decorators": Array [
     Object {
       "name": "DummyClass",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -55,6 +67,10 @@ Object {
         "decorators": Array [
           Object {
             "info": "Some Info",
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -87,6 +103,10 @@ Object {
             "index": 0,
             "name": "constructor",
             "target": "DummyClass",
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -117,9 +137,17 @@ Object {
         "decorators": Array [
           Object {
             "info": "Some Info",
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
           Object {
             "otherInfo": "Some Other Info",
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -154,9 +182,17 @@ Object {
       "decorators": Array [
         Object {
           "info": "Some Info",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
         Object {
           "otherInfo": "Some Other Info",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -187,9 +223,17 @@ Object {
       "decorators": Array [
         Object {
           "info": "Some Info",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
         Object {
           "otherInfo": "Some Other Info",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -225,6 +269,10 @@ Object {
           "decorators": Array [
             Object {
               "info": "Some Info",
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -264,9 +312,17 @@ Object {
           "decorators": Array [
             Object {
               "info": "Some Info",
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
             },
             Object {
               "otherInfo": "Some Other Info",
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -308,6 +364,10 @@ Object {
               "index": 0,
               "name": "method",
               "target": "DummyClass",
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
             },
           ],
           "kind": "Parameter",
@@ -347,9 +407,18 @@ Object {
   "decorators": Array [
     Object {
       "type": "Cache",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -380,6 +449,10 @@ Object {
   "decorators": Array [
     Object {
       "info": "Some Info",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -399,20 +472,35 @@ Object {
     "parameters": Array [],
   },
   "decorators": Array [
-    Object {},
+    Object {
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
   ],
   "kind": "Class",
   "methods": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "kind": "Method",
       "name": "myFunction",
       "parameters": Array [
         Object {
           "decorators": Array [
-            Object {},
+            Object {
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
           ],
           "kind": "Parameter",
           "name": "par",
@@ -429,7 +517,12 @@ Object {
   "properties": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "get": undefined,
       "kind": "Property",
@@ -458,6 +551,10 @@ Object {
       "decorators": Array [
         Object {
           "info": "Some Info",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -488,6 +585,10 @@ Object {
       "decorators": Array [
         Object {
           "info": "Some Info",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -519,6 +620,10 @@ Object {
         Object {
           "method": "method",
           "target": "DummyClass",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -550,6 +655,10 @@ Object {
         Object {
           "method": "method",
           "target": "DummyClass",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "kind": "Method",
@@ -607,7 +716,12 @@ Object {
   "properties": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "get": get data,
       "kind": "Property",
@@ -639,6 +753,10 @@ Object {
         Object {
           "name": "data",
           "target": DummyClass,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": get data,
@@ -670,9 +788,17 @@ Object {
       "decorators": Array [
         Object {
           "value": 2,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": get data,
@@ -702,7 +828,12 @@ Object {
   "properties": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "get": undefined,
       "kind": "Property",
@@ -733,9 +864,17 @@ Object {
       "decorators": Array [
         Object {
           "value": 2,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -769,6 +908,10 @@ Object {
           "index": undefined,
           "name": "dummyProp",
           "target": DummyClass,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -796,6 +939,10 @@ Object {
             "index": 0,
             "name": "constructor",
             "target": DummyClass,
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -809,6 +956,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -821,6 +973,10 @@ Object {
           "index": 0,
           "name": "constructor",
           "target": DummyClass,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -854,6 +1010,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -882,7 +1043,12 @@ Object {
     "parameters": Array [
       Object {
         "decorators": Array [
-          Object {},
+          Object {
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
+          },
         ],
         "kind": "Parameter",
         "name": "data",
@@ -895,6 +1061,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -903,7 +1074,12 @@ Object {
   "properties": Array [
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "get": undefined,
       "kind": "Property",
@@ -928,6 +1104,10 @@ Object {
           Object {
             "name": "constructor",
             "target": DummyClass,
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -941,6 +1121,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -952,6 +1137,10 @@ Object {
         Object {
           "name": "constructor",
           "target": DummyClass,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -976,9 +1165,17 @@ Object {
         "decorators": Array [
           Object {
             "value": 2,
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
           Object {
             "value": 1,
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -992,6 +1189,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -1002,9 +1204,17 @@ Object {
       "decorators": Array [
         Object {
           "value": 2,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -1037,6 +1247,11 @@ Object {
         "decorators": Array [
           Object {
             "kind": "Ignore",
+            Symbol(tinspector:decoratorId): Symbol(ignore),
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": false,
+              "inherit": true,
+            },
           },
         ],
         "kind": "Parameter",
@@ -1050,6 +1265,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",

@@ -1,5 +1,929 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Inheritance Decorators Decorator On Class Should get base class decorators 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "value": 2,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 1,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator On Class Should merge base class decorators and child decorators 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "value": 4,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 3,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 2,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 1,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator On Class Should not inherit decorator if specified 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "value": 2,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 1,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "BaseClass",
+  "properties": Array [],
+  "type": BaseClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator On Class Should not inherit decorator if specified 2`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "value": 3,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 2,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator On Class Should not merge decorator if not allowMultiple 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "value": 2,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 1,
+      Symbol(tinspector:decoratorId): "the-id",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "BaseClass",
+  "properties": Array [],
+  "type": BaseClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator On Class Should not merge decorator if not allowMultiple 2`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "value": 3,
+      Symbol(tinspector:decoratorId): "the-id",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+    Object {
+      "value": 2,
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Constructor Parameter Should not get base class parameter 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Constructor Parameter Should not merge decorator if the same name 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [
+          Object {
+            "value": 2,
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": true,
+              "inherit": true,
+            },
+          },
+        ],
+        "kind": "Parameter",
+        "name": "a",
+        "properties": Object {},
+        "type": String,
+        "typeClassification": "Primitive",
+      },
+    ],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Parameter Should get base class parameter decorator 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "value": 1,
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+          ],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Parameter Should merge decorators by default 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "value": 2,
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+            Object {
+              "value": 1,
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+          ],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Parameter Should not include decorators if parameter not included on derived method 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "value": 2,
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+            Object {
+              "value": 1,
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+          ],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Parameter Should not inherit decorator if specified 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "value": 2,
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+          ],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Parameter Should not merge decorators if not allowMultiple 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "value": 2,
+              Symbol(tinspector:decoratorId): "id",
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": true,
+                "inherit": true,
+              },
+            },
+          ],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Should get base class method decorator 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Should merge decorators by default 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 2,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Should not inherit decorator if specified 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 2,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Should not inherit decorator on non overridden method 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on Method Should not merge decorators if not allowMultiple 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorId): "id",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "kind": "Parameter",
+          "name": "a",
+          "properties": Object {},
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on property Should get base class getter decorator 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": get parentProp,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on property Should get decorator on parameter property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Number,
+    },
+  ],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on property Should get decorator on property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 2,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "childProp",
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on property Should not inherit if specified 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": get parentProp,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on property Should not inherit on non overridden property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [],
+      "get": get parentProp,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Decorators Decorator on property Should not merge decorator if not allowMultiple 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorId): "id",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": get parentProp,
+      "kind": "Property",
+      "name": "parentProp",
+      "set": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Inheritance Overridden method should not duplicated 1`] = `
 Object {
   "ctor": Object {
@@ -62,6 +986,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -106,6 +1035,10 @@ Object {
       "decorators": Array [
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -119,6 +1052,10 @@ Object {
       "decorators": Array [
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -132,6 +1069,10 @@ Object {
       "decorators": Array [
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -145,6 +1086,10 @@ Object {
       "decorators": Array [
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -196,46 +1141,6 @@ Object {
 }
 `;
 
-exports[`Inheritance Should get base class getter with decorator 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "ChildClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [],
-      "get": get childProp,
-      "kind": "Property",
-      "name": "childProp",
-      "set": undefined,
-      "type": undefined,
-      "typeClassification": undefined,
-    },
-    Object {
-      "decorators": Array [
-        Object {
-          "value": 1,
-        },
-      ],
-      "get": get parentProp,
-      "kind": "Property",
-      "name": "parentProp",
-      "set": undefined,
-      "type": Object,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "type": ChildClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Inheritance Should get base class method 1`] = `
 Object {
   "ctor": Object {
@@ -262,45 +1167,6 @@ Object {
 }
 `;
 
-exports[`Inheritance Should get base class method with decorator 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "value": 1,
-        },
-      ],
-      "kind": "Method",
-      "name": "myMethod",
-      "parameters": Array [
-        Object {
-          "decorators": Array [],
-          "kind": "Parameter",
-          "name": "a",
-          "properties": Object {},
-          "type": String,
-          "typeClassification": "Primitive",
-        },
-      ],
-      "returnType": String,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "name": "ChildClass",
-  "properties": Array [],
-  "type": ChildClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Inheritance Should get base class properties 1`] = `
 Object {
   "ctor": Object {
@@ -317,6 +1183,10 @@ Object {
       "decorators": Array [
         Object {
           "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -375,6 +1245,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -478,6 +1353,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -518,7 +1398,12 @@ Object {
     },
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "get": undefined,
       "kind": "Property",
@@ -529,7 +1414,12 @@ Object {
     },
     Object {
       "decorators": Array [
-        Object {},
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
       ],
       "get": undefined,
       "kind": "Property",
@@ -571,6 +1461,11 @@ Object {
   "decorators": Array [
     Object {
       "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
     },
   ],
   "kind": "Class",
@@ -597,6 +1492,10 @@ Object {
       "decorators": Array [
         Object {
           "cache": 10,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
@@ -609,6 +1508,10 @@ Object {
       "decorators": Array [
         Object {
           "cache": 20,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
         },
       ],
       "get": undefined,
