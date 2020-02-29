@@ -245,7 +245,7 @@ function cacheAndDelay(duration:number){
 }
 ```
 
-## Decorator Option
+## Decorator Option (Inheritance, Allow Multiple)
 Decorator can be further configured to match the behavior you need like below.
 
 ```typescript

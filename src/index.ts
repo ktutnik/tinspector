@@ -264,6 +264,11 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
     }
     const opt: Required<DecoratorOption> = { allowMultiple: true, inherit: true, ...option }
     return (...args: any[]) => {
+        const theData = typeof data === "function" ? data(...args) : data
+        if (!opt.allowMultiple && !theData[DecoratorId]){
+            const ctorName = isConstructor(args[0]) ? args[0].name : args[0].constructor.name
+            throw new Error(`Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in ${ctorName}`)
+        }
         //class decorator
         if (args.length === 1) {
             throwIfNotOfType("Class")
