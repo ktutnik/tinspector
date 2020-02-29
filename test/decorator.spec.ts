@@ -314,49 +314,127 @@ describe("Decorator", () => {
     })
 
     describe("Error Handling", () => {
-        it("Should throw when method decorator applied on wrong location", () => {
+        const DecoratorIdError = 'Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in DummyClass'
+        function error(callback: () => void) {
+            const fn = jest.fn()
             try {
-                @decorate({}, ["Method", "Parameter"])
-                class DummyClass { }
+                callback()
             }
             catch (e) {
-                expect(e.message).toBe('Reflect Error: Decorator of type Method, Parameter applied into Class')
+                fn(e)
             }
+            return fn.mock.calls[0][0]
+        }
+
+        it("Should throw when method decorator applied on wrong location", () => {
+            const err = error(() => {
+                @decorate({}, ["Method", "Parameter"])
+                class DummyClass { }
+            })
+            expect(err.message).toBe('Reflect Error: Decorator of type Method, Parameter applied into Class')
         })
 
         it("Should throw when method decorator applied on wrong location", () => {
-            try {
+            const err = error(() => {
                 class DummyClass {
                     @decorate({}, ["Method"])
                     myProp = 200
                 }
-            }
-            catch (e) {
-                expect(e.message).toBe('Reflect Error: Decorator of type Method applied into Property')
-            }
+            })
+            expect(err.message).toBe('Reflect Error: Decorator of type Method applied into Property')
         })
 
         it("Should throw when method decorator applied on wrong location", () => {
-            try {
+            const err = error(() => {
                 class DummyClass {
                     @decorate({}, ["Property"])
                     myFunction() { }
                 }
-            }
-            catch (e) {
-                expect(e.message).toBe('Reflect Error: Decorator of type Property applied into Method')
-            }
+            })
+            expect(err.message).toBe('Reflect Error: Decorator of type Property applied into Method')
         })
 
         it("Should throw when method decorator applied on wrong location", () => {
-            try {
+            const err = error(() => {
                 class DummyClass {
-                    constructor(@decorate({}, ["Parameter"]) param: string) { }
+                    constructor(@decorate({}, ["Property"]) param: string) { }
                 }
-            }
-            catch (e) {
-                expect(e.message).toBe('Reflect Error: Decorator of type Property applied into Parameter')
-            }
+            })
+            expect(err.message).toBe('Reflect Error: Decorator of type Property applied into Parameter')
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on class level", () => {
+            const err = error(() => {
+                @decorateClass({ hello: "world" }, { allowMultiple: false })
+                class DummyClass { }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on class level with hook", () => {
+            const err = error(() => {
+                @decorateClass(target => ({ hello: "world" }), { allowMultiple: false })
+                class DummyClass { }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on method level", () => {
+            const err = error(() => {
+                class DummyClass {
+                    @decorateMethod({ hello: "world" }, { allowMultiple: false })
+                    dummy() { }
+                }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on method level with hook", () => {
+            const err = error(() => {
+                class DummyClass {
+                    @decorateMethod(target => ({ hello: "world" }), { allowMultiple: false })
+                    dummy() { }
+                }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on parameter level", () => {
+            const err = error(() => {
+                class DummyClass {
+                    dummy(@decorateParameter({ hello: "world" }, { allowMultiple: false }) a: number) { }
+                }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on parameter level with hook", () => {
+            const err = error(() => {
+                class DummyClass {
+                    dummy(@decorateParameter(target => ({ hello: "world" }), { allowMultiple: false }) a: number) { }
+                }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on property level", () => {
+            const err = error(() => {
+                class DummyClass {
+                    @decorateProperty({ hello: "world" }, { allowMultiple: false })
+                    myProp:number = 1
+                }
+            })
+            expect(err.message).toBe(DecoratorIdError)
+        })
+
+        it("Should throw when allowMultiple false but without DecoratorId on property level with hook", () => {
+            const err = error(() => {
+                class DummyClass {
+                    @decorateProperty(target => ({ hello: "world" }), { allowMultiple: false })
+                    myProp:number = 1
+                }
+            })
+            expect(err.message).toBe(DecoratorIdError)
         })
     })
 })
