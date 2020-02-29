@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/plumier/tinspector/badge.svg?branch=master)](https://coveralls.io/github/plumier/tinspector?branch=master) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/plumier/tinspector.svg)](https://greenkeeper.io/)
 
-TypeScript reflection (introspection) library. Extract JavaScript/TypeScript type into metadata information such as class name, methods, parameters and their appropriate data types
+An introspection (reflection) library, extract JavaScript/TypeScript type into metadata information such as class name, methods, parameters and their appropriate data types
 
 ## Example
 
@@ -122,6 +122,8 @@ class Awesome {
     @reflect.noop()
     awesome(multiply:number): number { return 1 }
 }
+
+const metadata = reflect(Awesome)
 ```
 
 tinspector will be able to get type information of the method's return type and parameters of the `awesome` method above. Note that we applied `@reflect.noop()` decorator on the `awesome` method. `@reflect.noop()` does nothing except to force TypeScript to emit metadata information.
@@ -133,6 +135,8 @@ class Awesome {
     @reflect.noop()
     aweProperty:number
 }
+
+const metadata = reflect(Awesome)
 ```
 
 Above code showing that we able to get type information of a property. 
@@ -144,6 +148,8 @@ import reflect from "tinspector"
 class Awesome {
     constructor(multiply:number){}
 }
+
+const metadata = reflect(Awesome)
 ```
 Above code showing that we able to get type information of parameters of the constructor, by applying decorator on the class level. 
 
@@ -157,6 +163,8 @@ class Awesome {
     @reflect.type([Number])
     awesome(multiply:number): Array<number> {}
 }
+
+const metadata = reflect(Awesome)
 ```
 
 Above code showing that we able to get method's return type information by providing `@reflect.type([Number])`. Note that the `[Number]` is an array of `Number`. 
@@ -172,6 +180,8 @@ class Awesome {
     @reflect.type(Option)
     awesome(multiply:number): Partial<Option> {}
 }
+
+const metadata = reflect(Awesome)
 ```
 
 We will be able to get generic type information such as `Partial`, `Required` etc by applying `@reflect.type()` like above. 
@@ -186,6 +196,8 @@ import reflect from "tinspector"
 class Awesome {
     constructor(public multiply:number){}
 }
+
+const metadata = reflect(Awesome)
 ```
 
 ## Custom Decorator 
