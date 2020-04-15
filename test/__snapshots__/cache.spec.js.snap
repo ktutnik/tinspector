@@ -38,6 +38,7 @@ Object {
   ],
   "name": "MyClass",
   "properties": Array [],
+  "super": Object,
   "type": MyClass,
   "typeClassification": "Class",
 }
@@ -81,6 +82,7 @@ Object {
   ],
   "name": "MyClass",
   "properties": Array [],
+  "super": Object,
   "type": MyClass,
   "typeClassification": "Class",
 }

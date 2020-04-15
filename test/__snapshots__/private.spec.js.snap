@@ -12,6 +12,7 @@ Object {
   "methods": Array [],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -29,6 +30,7 @@ Object {
   "methods": Array [],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -90,6 +92,7 @@ Object {
       "type": String,
     },
   ],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }

@@ -27,6 +27,7 @@ Object {
   "methods": Array [],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -73,6 +74,7 @@ Object {
   "methods": Array [],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -105,6 +107,7 @@ Object {
   "methods": Array [],
   "name": "BaseClass",
   "properties": Array [],
+  "super": Object,
   "type": BaseClass,
   "typeClassification": "Class",
 }
@@ -137,6 +140,7 @@ Object {
   "methods": Array [],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -170,6 +174,7 @@ Object {
   "methods": Array [],
   "name": "BaseClass",
   "properties": Array [],
+  "super": Object,
   "type": BaseClass,
   "typeClassification": "Class",
 }
@@ -203,6 +208,7 @@ Object {
   "methods": Array [],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -220,6 +226,7 @@ Object {
   "methods": Array [],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -254,6 +261,7 @@ Object {
   "methods": Array [],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -297,6 +305,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -347,6 +356,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -397,6 +407,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -440,6 +451,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -484,6 +496,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -527,6 +540,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -577,6 +591,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -620,6 +635,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -655,6 +671,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -699,6 +716,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -734,6 +752,7 @@ Object {
       "typeClassification": undefined,
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -777,6 +796,7 @@ Object {
       "type": Number,
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -829,6 +849,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -856,6 +877,7 @@ Object {
       "typeClassification": undefined,
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -883,6 +905,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -919,6 +942,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -954,6 +978,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -1014,6 +1039,7 @@ Object {
       "type": String,
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -1100,6 +1126,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": GrandChildClass,
   "type": GreatGrandChildClass,
   "typeClassification": "Class",
 }
@@ -1136,6 +1163,7 @@ Object {
       "typeClassification": undefined,
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -1162,6 +1190,7 @@ Object {
   ],
   "name": "ChildClass",
   "properties": Array [],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -1197,6 +1226,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }
@@ -1305,6 +1335,7 @@ Object {
       "type": Object,
     },
   ],
+  "super": DomainBase,
   "type": Item,
   "typeClassification": "Class",
 }
@@ -1429,6 +1460,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": DomainBase,
   "type": Item,
   "typeClassification": "Class",
 }
@@ -1521,6 +1553,7 @@ Object {
       "type": String,
     },
   ],
+  "super": BaseClass,
   "type": ChildClass,
   "typeClassification": "Class",
 }

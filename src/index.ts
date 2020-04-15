@@ -21,7 +21,7 @@ export interface PropertyReflection extends ReflectionBase { kind: "Property", d
 export interface MethodReflection extends ReflectionBase { kind: "Method", parameters: ParameterReflection[], returnType: any, decorators: any[], typeClassification?: "Class" | "Array" | "Primitive" }
 export interface ConstructorReflection extends ReflectionBase { kind: "Constructor", parameters: ParameterReflection[] }
 export interface FunctionReflection extends ReflectionBase { kind: "Function", parameters: ParameterReflection[], returnType: any }
-export interface ClassReflection extends ReflectionBase { kind: "Class", ctor: ConstructorReflection, methods: MethodReflection[], properties: PropertyReflection[], decorators: any[], type: Class, typeClassification?: "Class" | "Array" | "Primitive" }
+export interface ClassReflection extends ReflectionBase { kind: "Class", ctor: ConstructorReflection, methods: MethodReflection[], properties: PropertyReflection[], decorators: any[], type: Class, super: Class, typeClassification?: "Class" | "Array" | "Primitive" }
 export interface ObjectReflection extends ReflectionBase { kind: "Object", members: Reflection[] }
 export interface ArrayDecorator { kind: "Array", type: Class }
 export interface TypeDecorator { kind: "Override", type: Class, info?: string }
@@ -265,7 +265,7 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
     const opt: Required<DecoratorOption> = { allowMultiple: true, inherit: true, ...option }
     return (...args: any[]) => {
         const theData = typeof data === "function" ? data(...args) : data
-        if (!opt.allowMultiple && !theData[DecoratorId]){
+        if (!opt.allowMultiple && !theData[DecoratorId]) {
             const ctorName = isConstructor(args[0]) ? args[0].name : args[0].constructor.name
             throw new Error(`Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in ${ctorName}`)
         }
@@ -458,6 +458,7 @@ function reflectClass(fn: Class): ClassReflection {
     const ctor = reflectConstructor(fn, iterator)
     const decorators = iterator("Class", fn.name)
     const properties = members.filter((x): x is PropertyReflection => x.kind === "Property" && isIncluded(x))
+    const proto = Object.getPrototypeOf(fn)
     if (decorators.some(x => x.type === "ParameterProperties")) {
         const parProps = ctor.parameters.filter(x => isIncluded(x)).map(x => <PropertyReflection>({
             decorators: x.decorators, type: x.type,
@@ -468,7 +469,8 @@ function reflectClass(fn: Class): ClassReflection {
     return {
         kind: "Class", ctor, name: fn.name,
         methods: members.filter((x): x is MethodReflection => x.kind === "Method" && isIncluded(x)),
-        properties, decorators, type: fn, typeClassification: "Class"
+        properties, decorators, type: fn, typeClassification: "Class",
+        super: proto.prototype ? proto : Object
     }
 }
 
@@ -476,7 +478,8 @@ function reflectClassRecursive(fn: Class): ClassReflection {
     const defaultRef: ClassReflection = {
         kind: "Class", type: Object, name: "Object",
         ctor: {} as ConstructorReflection,
-        methods: [], properties: [], decorators: []
+        methods: [], properties: [], decorators: [],
+        super: Object
     }
     const childMeta = reflectClass(fn)
     const parent = Object.getPrototypeOf(fn)
