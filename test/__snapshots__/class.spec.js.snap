@@ -36,6 +36,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -82,6 +83,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -127,6 +129,7 @@ Object {
   "methods": Array [],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -181,6 +184,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -225,6 +229,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -282,6 +287,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -332,6 +338,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -358,6 +365,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -392,6 +400,7 @@ Object {
   "methods": Array [],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -435,6 +444,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -476,6 +486,7 @@ Object {
   "methods": Array [],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -544,6 +555,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -600,6 +612,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -653,6 +666,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -680,6 +694,7 @@ Object {
       "typeClassification": undefined,
     },
   ],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -714,6 +729,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -774,6 +790,7 @@ Object {
       "type": String,
     },
   ],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -824,6 +841,7 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -874,6 +892,7 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
@@ -901,6 +920,7 @@ Object {
       "typeClassification": undefined,
     },
   ],
+  "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
 }
