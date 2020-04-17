@@ -1,5 +1,5 @@
-import { reflect, getMembers, decorateProperty, DECORATOR_KEY, decorateMethod, DESIGN_PARAMETER_TYPE, decorateClass, DecoratorId, decorateParameter } from "../src";
-import { inspect } from "util";
+import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect } from "../src"
+import { getMembers } from "../src/reflect"
 
 describe("getDeepMember", () => {
 
