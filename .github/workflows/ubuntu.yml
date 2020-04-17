@@ -1,10 +1,5 @@
-name: test
-
-on:
-  push:
-    branches:    
-      - master 
-
+name: ubuntu
+on: [push]
 jobs:
   node:
     runs-on: ubuntu-latest
