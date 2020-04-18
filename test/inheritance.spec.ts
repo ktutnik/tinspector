@@ -1,17 +1,17 @@
 import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect } from "../src"
-import { getMembers } from "../src/reflect"
+import { metadata } from "../src/helpers"
 
 describe("getDeepMember", () => {
 
     it("Should inspect getter", () => {
         class ChildClass { get data() { return 1 } }
-        const members = getMembers(ChildClass)
+        const members = metadata.getClassMembers(ChildClass)
         expect(members).toMatchObject(["data"])
     })
 
     it("Should inspect function", () => {
         class ChildClass { myFunction() { } }
-        const members = getMembers(ChildClass)
+        const members = metadata.getClassMembers(ChildClass)
         expect(members).toMatchObject(["myFunction"])
     })
 
@@ -20,7 +20,7 @@ describe("getDeepMember", () => {
             @decorateProperty({})
             myProp = 1
         }
-        const members = getMembers(ChildClass)
+        const members = metadata.getClassMembers(ChildClass)
         expect(members).toMatchObject(["myProp"])
     })
 

@@ -1,6 +1,29 @@
 import "reflect-metadata"
-import { Class, DecoratorOption, DecoratorTargetType, DecoratorId, ParamDecorator, CustomPropertyDecorator } from "./types"
-import { isConstructor, addDecorator } from "./helpers"
+
+import {  metadata } from "./helpers"
+import {
+    ArrayDecorator,
+    Class,
+    CustomPropertyDecorator,
+    DecoratorId,
+    DecoratorOption,
+    DecoratorTargetType,
+    ParamDecorator,
+    PrivateDecorator,
+    TypeDecorator,
+    Decorator,
+    DECORATOR_KEY,
+} from "./types"
+
+// --------------------------------------------------------------------- //
+// ------------------------------- HELPER ------------------------------ //
+// --------------------------------------------------------------------- //
+
+function addDecorator<T extends Decorator>(target: any, decorator: T) {
+    const decorators: Decorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
+    decorators.push(decorator)
+    Reflect.defineMetadata(DECORATOR_KEY, decorators, target)
+}
 
 /* ---------------------------------------------------------------- */
 /* --------------------------- DECORATORS ------------------------- */
@@ -39,7 +62,7 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
     return (...args: any[]) => {
         const theData = typeof data === "function" ? data(...args) : data
         if (!opt.allowMultiple && !theData[DecoratorId]) {
-            const ctorName = isConstructor(args[0]) ? args[0].name : args[0].constructor.name
+            const ctorName = metadata.isConstructor(args[0]) ? args[0].name : args[0].constructor.name
             throw new Error(`Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in ${ctorName}`)
         }
         //class decorator
@@ -55,7 +78,7 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
         //parameter decorator
         if (args.length === 3 && typeof args[2] === "number") {
             throwIfNotOfType("Parameter")
-            const isCtorParam = isConstructor(args[0])
+            const isCtorParam = metadata.isConstructor(args[0])
             const targetType = isCtorParam ? args[0] : args[0].constructor
             const targetName = isCtorParam ? "constructor" : args[1]
             return addDecorator<ParamDecorator>(targetType, {
@@ -90,4 +113,24 @@ export function mergeDecorator(...fn: (ClassDecorator | PropertyDecorator | Para
     return (...args: any[]) => {
         fn.forEach(x => (x as Function)(...args))
     }
+}
+
+export function noop() {
+    return decorate({})
+}
+
+export function ignore() {
+    return decorate(<PrivateDecorator>{ [DecoratorId]: Symbol("ignore"), kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+}
+
+export function type(type: Class | Class[], info?: string) {
+    return decorate(<TypeDecorator>{ [DecoratorId]: Symbol("override"), kind: "Override", type: type, info }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+}
+
+export function array(type: Class) {
+    return decorate(<ArrayDecorator>{ [DecoratorId]: Symbol("array"), kind: "Array", type: type }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+}
+
+export function parameterProperties() {
+    return decorateClass({ [DecoratorId]: Symbol("paramProp"), type: "ParameterProperties" }, { allowMultiple: false })
 }

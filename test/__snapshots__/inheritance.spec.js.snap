@@ -1017,6 +1017,14 @@ Object {
         "inherit": true,
       },
     },
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -1281,6 +1289,14 @@ Object {
         "inherit": true,
       },
     },
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -1390,6 +1406,14 @@ Object {
         "inherit": true,
       },
     },
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
   ],
   "kind": "Class",
   "methods": Array [],
@@ -1491,6 +1515,14 @@ Object {
     ],
   },
   "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
     Object {
       "type": "ParameterProperties",
       Symbol(tinspector:decoratorId): Symbol(paramProp),
