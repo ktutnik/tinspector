@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Exported Should export members 1`] = `
+Array [
+  "DecoratorOption",
+  "DecoratorId",
+  "DECORATOR_KEY",
+  "DESIGN_TYPE",
+  "DESIGN_PARAMETER_TYPE",
+  "DESIGN_RETURN_TYPE",
+  "decorateParameter",
+  "decorateMethod",
+  "decorateProperty",
+  "decorateClass",
+  "decorate",
+  "mergeDecorator",
+  "noop",
+  "ignore",
+  "type",
+  "array",
+  "parameterProperties",
+  "useCache",
+  "metadata",
+  "reflect",
+  "default",
+]
+`;

@@ -1,4 +1,4 @@
-import { getConstructorParameters, getParameterNames, getMethodParameters } from "../src/reflect"
+import { metadata } from "../src/helpers"
 import {decorate} from "../src/decorators"
 
 function globalFunction(a: any, b: any) {
@@ -17,7 +17,7 @@ describe("Constructor parameter", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getConstructorParameters(DummyClass)
+        const result = metadata.getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -35,7 +35,7 @@ describe("Constructor parameter", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getConstructorParameters(DummyClass)
+        const result = metadata.getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -50,7 +50,7 @@ describe("Constructor parameter", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getConstructorParameters(DummyClass)
+        const result = metadata.getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -58,7 +58,7 @@ describe("Constructor parameter", () => {
         class DummyClass {
             constructor(...pars: any[]) { }
         }
-        const result = getConstructorParameters(DummyClass)
+        const result = metadata.getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -71,7 +71,7 @@ describe("Constructor parameter", () => {
                 @decorate({}) par: string
             ) { }
         }
-        const result = getConstructorParameters(DummyClass)
+        const result = metadata.getConstructorParameters(DummyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -89,7 +89,7 @@ describe("Method Parameters", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getMethodParameters(DummyClass, "myMethod")
+        const result = metadata.getMethodParameters(DummyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -107,7 +107,7 @@ describe("Method Parameters", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getMethodParameters(DummyClass, "myMethod")
+        const result = metadata.getMethodParameters(DummyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -122,7 +122,7 @@ describe("Method Parameters", () => {
                 globalFunction(par1, par2)
             }
         }
-        const result = getMethodParameters(DummyClass, "myMethod")
+        const result = metadata.getMethodParameters(DummyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 })
@@ -137,7 +137,7 @@ describe("Function Parameters", () => {
         ) {
             globalFunction(par1, par2)
         }
-        const result = getParameterNames(myFunction)
+        const result = metadata.getParameterNames(myFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -153,7 +153,7 @@ describe("Function Parameters", () => {
         ) {
             globalFunction(par1, par2)
         }
-        const result = getParameterNames(myFunction)
+        const result = metadata.getParameterNames(myFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -166,7 +166,7 @@ describe("Function Parameters", () => {
         ) {
             globalFunction(par1, par2)
         }
-        const result = getParameterNames(myFunction)
+        const result = metadata.getParameterNames(myFunction)
         expect(result).toMatchSnapshot()
     })
 })
@@ -177,7 +177,7 @@ describe("Durability", () => {
         MyFunction.toString = () => {
             return "[Function]"
         }
-        const result = getParameterNames(MyFunction)
+        const result = metadata.getParameterNames(MyFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -188,7 +188,7 @@ describe("Durability", () => {
         MyFunction.toString = () => {
             return "[Function]"
         }
-        const result = getConstructorParameters(MyFunction)
+        const result = metadata.getConstructorParameters(MyFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -200,13 +200,13 @@ describe("Durability", () => {
         MyFunction.toString = () => {
             return "[Function]"
         }
-        const result = getMethodParameters(MyFunction, "myMethod")
+        const result = metadata.getMethodParameters(MyFunction, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
     it("Should not error when provided function without parameter", () => {
         function myFun() { }
-        const result = getParameterNames(myFun)
+        const result = metadata.getParameterNames(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -214,7 +214,7 @@ describe("Durability", () => {
         class MyClass {
             myMethod() { }
         }
-        const result = getMethodParameters(MyClass, "myMethod")
+        const result = metadata.getMethodParameters(MyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 
@@ -222,14 +222,14 @@ describe("Durability", () => {
         class MyClass {
             constructor() { }
         }
-        const result = getConstructorParameters(MyClass)
+        const result = metadata.getConstructorParameters(MyClass)
         expect(result).toMatchSnapshot()
     })
 
     it("Should not error when provided default constructor", () => {
         class MyClass {
         }
-        const result = getConstructorParameters(MyClass)
+        const result = metadata.getConstructorParameters(MyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -238,7 +238,7 @@ describe("Durability", () => {
             myMethod() { }
             constructor() { }
         }
-        const result = getConstructorParameters(MyClass)
+        const result = metadata.getConstructorParameters(MyClass)
         expect(result).toMatchSnapshot()
     })
 })
@@ -250,7 +250,7 @@ describe("Parameter Destructuring", () => {
             num: number
         }
         function myFun(par:string, { date, num }: MyModel) { }
-        const result = getParameterNames(myFun)
+        const result = metadata.getParameterNames(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -260,7 +260,7 @@ describe("Parameter Destructuring", () => {
             num: number
         }
         function myFun({ date: tanggal, num }: MyModel) { }
-        const result = getParameterNames(myFun)
+        const result = metadata.getParameterNames(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -275,7 +275,7 @@ describe("Parameter Destructuring", () => {
             dob: Date
         }
         function myFun(par:string, { date: tanggal, num, inner: { str, dob: dateOfBirth } }: MyModel) { }
-        const result = getParameterNames(myFun)
+        const result = metadata.getParameterNames(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -287,7 +287,7 @@ describe("Parameter Destructuring", () => {
         class MyClass {
             constructor({ date: tanggal, num }: MyModel) { }
         }
-        const result = getConstructorParameters(MyClass)
+        const result = metadata.getConstructorParameters(MyClass)
         expect(result).toMatchSnapshot()
     })
 
@@ -299,7 +299,7 @@ describe("Parameter Destructuring", () => {
         class MyClass {
             myMethod({ date: tanggal, num }: MyModel) { }
         }
-        const result = getMethodParameters(MyClass, "myMethod")
+        const result = metadata.getMethodParameters(MyClass, "myMethod")
         expect(result).toMatchSnapshot()
     })
 })
