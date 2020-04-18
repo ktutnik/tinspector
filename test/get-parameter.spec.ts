@@ -1,4 +1,5 @@
-import { decorate, getConstructorParameters, getParameterNames, getMethodParameters } from "../src"
+import { getConstructorParameters, getParameterNames, getMethodParameters } from "../src/reflect"
+import {decorate} from "../src/decorators"
 
 function globalFunction(a: any, b: any) {
 
