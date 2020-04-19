@@ -3,25 +3,27 @@
 /* --------------------------- TYPES ------------------------------ */
 /* ---------------------------------------------------------------- */
 
-export const DecoratorOption = Symbol("tinspector:decoratorOption")
+export const DecoratorOptionId = Symbol("tinspector:decoratorOption")
 export const DecoratorId = Symbol("tinspector:decoratorId")
 
 export type Class = new (...arg: any[]) => any
 export type DecoratorIterator = (type: DecoratorTargetType, target: string, index?: number) => any[]
-export type DecoratorTargetType = "Method" | "Class" | "Parameter" | "Property" | "Constructor"
-export interface Decorator {
+export type DecoratorTargetType = "Method" | "Class" | "Parameter" | "Property"
+export interface NativeDecorator {
     targetType: DecoratorTargetType,
     target: string,
     value: any,
     inherit: boolean,
     allowMultiple: boolean
 }
-export interface ParamDecorator extends Decorator { 
-    targetType: "Parameter", 
-    targetIndex: number 
+export interface NativeParameterDecorator extends NativeDecorator {
+    targetType: "Parameter",
+    targetIndex: number
 }
 
-export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection
+export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection | ConstructorReflection
+export type WithOwnerReflection = MethodReflection | PropertyReflection | ParameterReflection
+export type TypedReflection = ClassReflection | MethodReflection | PropertyReflection | ParameterReflection | ConstructorReflection | ParameterPropertyReflection
 
 export interface ReflectionBase {
     kind: string,
@@ -29,18 +31,25 @@ export interface ReflectionBase {
 }
 export interface ParameterReflection extends ReflectionBase {
     kind: "Parameter",
-    properties: string | { [key: string]: string[] },
+    fields: string | { [key: string]: string[] },
     decorators: any[],
     type?: any,
     typeClassification?: "Class" | "Array" | "Primitive"
+    owner: Class[],
+    index: number
 }
 export interface PropertyReflection extends ReflectionBase {
     kind: "Property",
     decorators: any[],
     type?: any,
-    get: any,
-    set: any,
+    get?: any,
+    set?: any,
     typeClassification?: "Class" | "Array" | "Primitive"
+    owner: Class[], 
+}
+export interface ParameterPropertyReflection extends PropertyReflection {
+    index:number,
+    isParameter:boolean
 }
 export interface MethodReflection extends ReflectionBase {
     kind: "Method",
@@ -48,10 +57,11 @@ export interface MethodReflection extends ReflectionBase {
     returnType: any,
     decorators: any[],
     typeClassification?: "Class" | "Array" | "Primitive"
+    owner: Class[]
 }
 export interface ConstructorReflection extends ReflectionBase {
     kind: "Constructor",
-    parameters: ParameterReflection[]
+    parameters: ParameterReflection[],
 }
 export interface FunctionReflection extends ReflectionBase {
     kind: "Function",
@@ -66,7 +76,8 @@ export interface ClassReflection extends ReflectionBase {
     decorators: any[],
     type: Class,
     super: Class,
-    typeClassification?: "Class" | "Array" | "Primitive"
+    typeClassification?: "Class" | "Array" | "Primitive",
+    owner: Class[]
 }
 export interface ObjectReflection extends ReflectionBase {
     kind: "Object",
@@ -83,6 +94,9 @@ export interface TypeDecorator {
 }
 export interface PrivateDecorator {
     kind: "Ignore"
+}
+export interface ParameterPropertiesDecorator {
+    type: "ParameterProperties"
 }
 export interface DecoratorOption {
     inherit?: boolean,

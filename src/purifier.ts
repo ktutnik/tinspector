@@ -1,0 +1,262 @@
+import { parseClass } from "./parser"
+import {
+    ArrayDecorator,
+    ClassReflection,
+    DecoratorId,
+    DecoratorOption,
+    DecoratorOptionId,
+    DESIGN_PARAMETER_TYPE,
+    DESIGN_RETURN_TYPE,
+    DESIGN_TYPE,
+    ParameterPropertiesDecorator,
+    ParameterPropertyReflection,
+    PrivateDecorator,
+    Reflection,
+    TypeDecorator,
+    TypedReflection,
+    Class,
+    DecoratorTargetType,
+    NativeDecorator,
+    DECORATOR_KEY,
+    NativeParameterDecorator,
+} from "./types"
+import { metadata } from "./helpers"
+
+// --------------------------------------------------------------------- //
+// ------------------------------- HELPER ------------------------------ //
+// --------------------------------------------------------------------- //
+
+function isParameterProperties(meta: any): meta is ParameterPropertyReflection {
+    return meta && meta.kind === "Property" && (meta as ParameterPropertyReflection).isParameter
+}
+
+function getDecorators(targetClass: Class, targetType: DecoratorTargetType, target: string, index?: number) {
+    const natives: NativeDecorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, targetClass) || []
+    const result = []
+    for (const { allowMultiple, inherit, ...item } of natives) {
+        const par = item as NativeParameterDecorator
+        if (item.targetType === targetType && item.target === target && (index == undefined || par.targetIndex === index)) {
+            result.push({ ...item.value, [DecoratorOptionId]: <DecoratorOption>{ allowMultiple, inherit } })
+        }
+    }
+    return result
+}
+
+// --------------------------------------------------------------------- //
+// ------------------------------ PURIFIER ----------------------------- //
+// --------------------------------------------------------------------- //
+
+type ReflectionVisitor = (value: TypedReflection, ctx: TraverseContext) => TypedReflection | undefined
+
+interface TraverseContext {
+    target: Class
+    parent: Reflection
+    visitor: ReflectionVisitor
+}
+
+function createVisitors(...visitors: ReflectionVisitor[]): ReflectionVisitor {
+    return (value, ctx) => {
+        return visitors.reduce((a, b) => !!a ? b(a, ctx) : a, value as any)
+    }
+}
+
+function purifyTraversal(meta: any, ctx: TraverseContext) {
+    const result = ctx.visitor(meta, ctx)
+    for (const key in result) {
+        if (["parameters", "properties", "methods", "ctor"].some(x => x === key)) {
+            const item: TypedReflection | TypedReflection[] = (result as any)[key]
+            if (Array.isArray(item)) {
+                const node = item.map((x, i) => purifyTraversal(x, { ...ctx, parent: result }));
+                (result as any)[key] = node.filter(x => !!x)
+            }
+            else {
+                const node = purifyTraversal(item, { ...ctx, parent: item });
+                (result as any)[key] = node
+            }
+        }
+    }
+    return result
+}
+
+// --------------------------------------------------------------------- //
+// ------------------------------ EXTENDER ----------------------------- //
+// --------------------------------------------------------------------- //
+
+function traverseArray(childItem: TypedReflection[], parentItem: TypedReflection[]): (TypedReflection | undefined)[] {
+    const items = []
+    // iterate all child nodes
+    for (let i = 0; i < childItem.length; i++) {
+        const ch = childItem[i]
+        const prn = parentItem.find(x => x.name === ch.name);
+        items.push(traverse(ch, prn))
+    }
+    // iterate only non existed parent nodes
+    for (const prn of parentItem) {
+        const ch = childItem.find(x => x.name === prn.name)
+        if (!ch)
+            items.push(traverse(ch, prn))
+    }
+    return items.filter(x => !!x)
+}
+
+function traverse(child?: TypedReflection, parent?: TypedReflection) {
+    const result = extendsNode(child, parent)
+    for (const key in child) {
+        if (["parameters", "properties", "methods", "ctor"].some(x => x === key)) {
+            const childItem: TypedReflection | TypedReflection[] = (child as any)[key]
+            if (Array.isArray(childItem)) {
+                const parentItem: TypedReflection[] = (parent || {} as any)[key] || [];
+                (result as any)[key] = traverseArray(childItem, parentItem);
+            }
+            else {
+                const parentItem: TypedReflection = (parent as any)[key]
+                const node = traverse(childItem, parentItem);
+                (result as any)[key] = node
+            }
+        }
+    }
+    return result
+}
+
+function extendsNode(child?: TypedReflection, parent?: TypedReflection): TypedReflection | undefined {
+    // don't extends constructor
+    if (child && child.kind === "Constructor") return child
+    // parent parameter should not be copied
+    if (!child && parent!.kind === "Parameter")
+        return undefined
+    // parameter property: copy parent index to get proper design type information
+    if (isParameterProperties(child) && isParameterProperties(parent))
+        return { ...child, owner: [...parent.owner, ...child.owner], index: parent.index }
+    // extends owner for all node except constructor
+    if (child && parent && parent.kind !== "Constructor")
+        return { ...child, owner: [...parent.owner, ...child.owner] }
+    // if child not exists, by default just copy parent
+    return child ?? parent
+}
+
+function extendsClass(meta: ClassReflection): ClassReflection {
+    const objectGraph: ClassReflection = {
+        kind: "Class", type: Object, name: "Object",
+        ctor: { kind: "Constructor", name: "constructor", parameters: [] },
+        methods: [], properties: [], decorators: [],
+        super: Object,
+        owner: [Object]
+    }
+    const parent = Object.getPrototypeOf(meta.type)
+    const parentMeta = parent.prototype ? extendsClass(parseClass(parent)) : objectGraph
+    return traverse(meta, parentMeta) as ClassReflection
+}
+
+// --------------------------------------------------------------------- //
+// ------------------------- PURIFIER VISITORS ------------------------- //
+// --------------------------------------------------------------------- //
+
+namespace visitors {
+    export function addSuperclassMeta(meta: TypedReflection, ctx: TraverseContext): TypedReflection {
+        if (meta.kind === "Class")
+            return extendsClass(meta)
+        return meta
+    }
+
+    export function addsDesignTypes(meta: TypedReflection, ctx: TraverseContext): TypedReflection {
+        const getType = (type: any, i: number) => type[i] === Array ? [Object] : type[i]
+        if (meta.kind === "Method") {
+            const returnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, meta.owner[0].prototype, meta.name)
+            return { ...meta, returnType }
+        }
+        else if (isParameterProperties(meta)) {
+            const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, meta.owner[0]) || []
+            return { ...meta, type: getType(parTypes, meta.index) }
+        }
+        else if (meta.kind === "Property") {
+            const type: any = Reflect.getOwnMetadata(DESIGN_TYPE, meta.owner[0].prototype, meta.name)
+            return { ...meta, type }
+        }
+        else if (meta.kind === "Parameter" && ctx.parent.kind === "Constructor") {
+            const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, meta.owner[0]) || []
+            return { ...meta, type: getType(parTypes, meta.index) }
+        }
+        else if (meta.kind === "Parameter" && ctx.parent.kind === "Method") {
+            const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, meta.owner[0].prototype, ctx.parent.name) || []
+            return { ...meta, type: getType(parTypes, meta.index) }
+        }
+        else
+            return meta
+    }
+
+    function extendDecorators(ownDecorators: any[], parentDecorators: any[]) {
+        const result = [...ownDecorators]
+        for (const decorator of parentDecorators) {
+            const options: DecoratorOption = decorator[DecoratorOptionId]!
+            // continue, if the decorator is not inheritable
+            if (!options.inherit) continue
+            // continue, if allow multiple and already has decorator with the same ID
+            if (!options.allowMultiple && ownDecorators.some(x => x[DecoratorId] === decorator[DecoratorId])) continue
+            result.push(decorator)
+        }
+        return result
+    }
+
+    export function addsDecorators(meta: TypedReflection, ctx: TraverseContext): TypedReflection {
+        const flat = (d: any[][]) => ([] as any[]).concat(...d)
+        const getOwners = (owners: Class[]): [Class, Class[]] => [ctx.target, owners.filter(x => x !== ctx.target)]
+        if (meta.kind === "Parameter" || isParameterProperties(meta)) {
+            const targetName = meta.kind === "Parameter" ? ctx.parent.name : "constructor"
+            const [owner, parents] = getOwners(meta.owner)
+            const ownDecorators = getDecorators(owner, "Parameter", targetName, meta.index)
+            const parentDecorators = parents.map(x => getDecorators(x, "Parameter", targetName, meta.index))
+            return { ...meta, decorators: extendDecorators(ownDecorators, flat(parentDecorators)) }
+        }
+        else if (meta.kind === "Method" || meta.kind === "Property" || meta.kind === "Class") {
+            const [owner, parents] = getOwners(meta.owner)
+            const ownDecorators = getDecorators(owner, meta.kind, meta.name)
+            const parentDecorators = parents.map(x => getDecorators(x, meta.kind, meta.kind === "Class" ? x.name : meta.name))
+            return { ...meta, decorators: extendDecorators(ownDecorators, flat(parentDecorators)) }
+        }
+        return meta
+    }
+
+    export function addsTypeOverridden(meta: TypedReflection, ctx: TraverseContext): TypedReflection {
+        if (meta.kind === "Constructor" || meta.kind === "Class") return meta
+        const arrayOverride = meta.decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
+        const override = meta.decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
+        const overridden = override?.type || arrayOverride && [arrayOverride.type]
+        if (meta.kind === "Method")
+            return { ...meta, returnType: overridden ?? meta.returnType }
+        return { ...meta, type: overridden ?? meta.type }
+    }
+
+    export function addsTypeClassification(meta: TypedReflection, ctx: TraverseContext): TypedReflection | undefined {
+        const get = (type: any): "Class" | "Array" | "Primitive" | undefined => {
+            if (type === undefined) return undefined
+            else if (Array.isArray(type)) return "Array"
+            else if (metadata.isCustomClass(type)) return "Class"
+            else return "Primitive"
+        }
+        if (meta.kind === "Method")
+            return { ...meta, typeClassification: get(meta.returnType) }
+        else if (meta.kind === "Property" || meta.kind === "Parameter")
+            return { ...meta, typeClassification: get(meta.type) }
+        else if (meta.kind === "Class")
+            return { ...meta, typeClassification: "Class" }
+        return meta
+    }
+
+    export function addsParameterProperties(meta: TypedReflection, ctx: TraverseContext): TypedReflection | undefined {
+        if (isParameterProperties(meta) && ctx.parent.kind === "Class") {
+            const isParamProp = ctx.parent.decorators.some((x: ParameterPropertiesDecorator) => x.type === "ParameterProperties")
+            return !!isParamProp ? meta : undefined
+        }
+        return meta
+    }
+
+    export function removeIgnored(meta: TypedReflection, ctx: TraverseContext): TypedReflection | undefined {
+        if (meta.kind === "Property" || meta.kind === "Method") {
+            const decorator = meta.decorators.find((x: PrivateDecorator): x is PrivateDecorator => x.kind === "Ignore")
+            return !decorator ? meta : undefined
+        }
+        return meta
+    }
+}
+
+export { visitors, purifyTraversal, createVisitors, extendsClass }

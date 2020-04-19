@@ -26,6 +26,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -73,6 +78,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -106,6 +116,10 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "BaseClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+  ],
   "properties": Array [],
   "super": Object,
   "type": BaseClass,
@@ -139,6 +153,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -173,6 +192,10 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "BaseClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+  ],
   "properties": Array [],
   "super": Object,
   "type": BaseClass,
@@ -207,6 +230,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -225,41 +253,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
-  "properties": Array [],
-  "super": BaseClass,
-  "type": ChildClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Inheritance Decorators Decorator on Constructor Parameter Should not merge decorator if the same name 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [
-      Object {
-        "decorators": Array [
-          Object {
-            "value": 2,
-            Symbol(tinspector:decoratorOption): Object {
-              "allowMultiple": true,
-              "inherit": true,
-            },
-          },
-        ],
-        "kind": "Parameter",
-        "name": "a",
-        "properties": Object {},
-        "type": String,
-        "typeClassification": "Primitive",
-      },
-    ],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -281,6 +279,9 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -292,9 +293,13 @@ Object {
               },
             },
           ],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -304,6 +309,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -325,6 +335,10 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -343,9 +357,14 @@ Object {
               },
             },
           ],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -355,6 +374,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -376,6 +400,10 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -394,9 +422,14 @@ Object {
               },
             },
           ],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -406,6 +439,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -427,6 +465,10 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -438,9 +480,14 @@ Object {
               },
             },
           ],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -450,6 +497,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -471,6 +523,10 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -483,9 +539,14 @@ Object {
               },
             },
           ],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -495,6 +556,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -524,12 +590,19 @@ Object {
       ],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -539,6 +612,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -575,12 +653,21 @@ Object {
       ],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -590,6 +677,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -619,12 +711,21 @@ Object {
       ],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -634,6 +735,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -655,12 +761,19 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -670,6 +783,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -700,12 +818,21 @@ Object {
       ],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -715,6 +842,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -733,6 +865,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -747,9 +884,13 @@ Object {
       "get": get parentProp,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "set": undefined,
-      "type": undefined,
-      "typeClassification": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "super": BaseClass,
@@ -778,6 +919,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -790,10 +936,16 @@ Object {
         },
       ],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": Number,
+      "typeClassification": "Primitive",
     },
   ],
   "super": BaseClass,
@@ -813,6 +965,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -827,6 +984,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "childProp",
+      "owner": Array [
+        ChildClass,
+      ],
       "set": undefined,
       "type": Number,
       "typeClassification": "Primitive",
@@ -844,6 +1004,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": Number,
       "typeClassification": "Primitive",
@@ -866,15 +1029,24 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": get parentProp,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "set": undefined,
-      "type": undefined,
-      "typeClassification": undefined,
+      "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "super": BaseClass,
@@ -894,12 +1066,20 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": get parentProp,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -922,6 +1102,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -937,6 +1122,10 @@ Object {
       "get": get parentProp,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -962,12 +1151,21 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
           "kind": "Parameter",
           "name": "a",
-          "properties": Object {},
+          "owner": Array [
+            BaseClass,
+            ChildClass,
+          ],
           "type": undefined,
           "typeClassification": undefined,
         },
@@ -977,6 +1175,11 @@ Object {
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -992,17 +1195,27 @@ Object {
     "parameters": Array [
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 0,
         "kind": "Parameter",
         "name": "propOne",
-        "properties": Object {},
+        "owner": Array [
+          BaseClass,
+          ChildClass,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 1,
         "kind": "Parameter",
         "name": "propTwo",
-        "properties": Object {},
+        "owner": Array [
+          BaseClass,
+          ChildClass,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1017,34 +1230,45 @@ Object {
         "inherit": true,
       },
     },
-    Object {
-      "type": "ParameterProperties",
-      Symbol(tinspector:decoratorId): Symbol(paramProp),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "inherit": true,
-      },
-    },
   ],
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "propOne",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 1,
+      "isParameter": true,
       "kind": "Property",
       "name": "propTwo",
+      "owner": Array [
+        BaseClass,
+        ChildClass,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
   ],
   "super": BaseClass,
@@ -1064,6 +1288,13 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "GreatGrandChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+    GrandChildClass,
+    GreatGrandChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1078,6 +1309,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "greatGrandChildProp",
+      "owner": Array [
+        GreatGrandChildClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1095,6 +1329,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "grandChildProp",
+      "owner": Array [
+        GrandChildClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1112,6 +1349,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "childProp",
+      "owner": Array [
+        ChildClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1129,6 +1369,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1151,12 +1394,20 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": get childProp,
       "kind": "Property",
       "name": "childProp",
+      "owner": Array [
+        ChildClass,
+      ],
       "set": undefined,
       "type": undefined,
       "typeClassification": undefined,
@@ -1166,6 +1417,9 @@ Object {
       "get": get parentProp,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": undefined,
       "typeClassification": undefined,
@@ -1191,12 +1445,20 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
+      "owner": Array [
+        BaseClass,
+      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [],
   "super": BaseClass,
   "type": ChildClass,
@@ -1215,6 +1477,11 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1229,6 +1496,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "parentProp",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1248,33 +1518,49 @@ Object {
     "parameters": Array [
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 0,
         "kind": "Parameter",
         "name": "name",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 1,
         "kind": "Parameter",
         "name": "discontinue",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": Boolean,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 2,
         "kind": "Parameter",
         "name": "price",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": Number,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 3,
         "kind": "Parameter",
         "name": "type",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1289,66 +1575,99 @@ Object {
         "inherit": true,
       },
     },
-    Object {
-      "type": "ParameterProperties",
-      Symbol(tinspector:decoratorId): Symbol(paramProp),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "inherit": true,
-      },
-    },
   ],
   "kind": "Class",
   "methods": Array [],
   "name": "Item",
+  "owner": Array [
+    Object,
+    DomainBase,
+    Item,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "name",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 1,
+      "isParameter": true,
       "kind": "Property",
       "name": "discontinue",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": Boolean,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 2,
+      "isParameter": true,
       "kind": "Property",
       "name": "price",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": Number,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 3,
+      "isParameter": true,
       "kind": "Property",
       "name": "type",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "id",
+      "owner": Array [
+        DomainBase,
+      ],
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 1,
+      "isParameter": true,
       "kind": "Property",
       "name": "createdAt",
+      "owner": Array [
+        DomainBase,
+      ],
       "set": undefined,
       "type": Object,
+      "typeClassification": "Primitive",
     },
   ],
   "super": DomainBase,
@@ -1365,33 +1684,49 @@ Object {
     "parameters": Array [
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 0,
         "kind": "Parameter",
         "name": "name",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 1,
         "kind": "Parameter",
         "name": "discontinue",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": Boolean,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 2,
         "kind": "Parameter",
         "name": "price",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": Number,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 3,
         "kind": "Parameter",
         "name": "type",
-        "properties": Object {},
+        "owner": Array [
+          Item,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1406,50 +1741,71 @@ Object {
         "inherit": true,
       },
     },
-    Object {
-      "type": "ParameterProperties",
-      Symbol(tinspector:decoratorId): Symbol(paramProp),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "inherit": true,
-      },
-    },
   ],
   "kind": "Class",
   "methods": Array [],
   "name": "Item",
+  "owner": Array [
+    Object,
+    DomainBase,
+    Item,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "name",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 1,
+      "isParameter": true,
       "kind": "Property",
       "name": "discontinue",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": Boolean,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 2,
+      "isParameter": true,
       "kind": "Property",
       "name": "price",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": Number,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 3,
+      "isParameter": true,
       "kind": "Property",
       "name": "type",
+      "owner": Array [
+        Item,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [
@@ -1463,6 +1819,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "id",
+      "owner": Array [
+        DomainBase,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1479,6 +1838,9 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "createdAt",
+      "owner": Array [
+        DomainBase,
+      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -1486,6 +1848,97 @@ Object {
   ],
   "super": DomainBase,
   "type": Item,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Should not override private method 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        ChildClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "a",
+          "owner": Array [
+            ChildClass,
+          ],
+          "type": undefined,
+          "typeClassification": undefined,
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
+  "properties": Array [],
+  "super": BaseClass,
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Should not override private property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "childProp",
+      "owner": Array [
+        ChildClass,
+      ],
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": BaseClass,
+  "type": ChildClass,
   "typeClassification": "Class",
 }
 `;
@@ -1498,17 +1951,25 @@ Object {
     "parameters": Array [
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 0,
         "kind": "Parameter",
         "name": "name",
-        "properties": Object {},
+        "owner": Array [
+          ChildClass,
+        ],
         "type": String,
         "typeClassification": "Primitive",
       },
       Object {
         "decorators": Array [],
+        "fields": Object {},
+        "index": 1,
         "kind": "Parameter",
         "name": "date",
-        "properties": Object {},
+        "owner": Array [
+          ChildClass,
+        ],
         "type": Date,
         "typeClassification": "Primitive",
       },
@@ -1523,34 +1984,43 @@ Object {
         "inherit": true,
       },
     },
-    Object {
-      "type": "ParameterProperties",
-      Symbol(tinspector:decoratorId): Symbol(paramProp),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "inherit": true,
-      },
-    },
   ],
   "kind": "Class",
   "methods": Array [],
   "name": "ChildClass",
+  "owner": Array [
+    Object,
+    BaseClass,
+    ChildClass,
+  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "name",
+      "owner": Array [
+        ChildClass,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [],
       "get": undefined,
+      "index": 1,
+      "isParameter": true,
       "kind": "Property",
       "name": "date",
+      "owner": Array [
+        ChildClass,
+      ],
       "set": undefined,
       "type": Date,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [
@@ -1563,10 +2033,16 @@ Object {
         },
       ],
       "get": undefined,
+      "index": 0,
+      "isParameter": true,
       "kind": "Property",
       "name": "propOne",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
     Object {
       "decorators": Array [
@@ -1579,10 +2055,16 @@ Object {
         },
       ],
       "get": undefined,
+      "index": 1,
+      "isParameter": true,
       "kind": "Property",
       "name": "propTwo",
+      "owner": Array [
+        BaseClass,
+      ],
       "set": undefined,
       "type": String,
+      "typeClassification": "Primitive",
     },
   ],
   "super": BaseClass,

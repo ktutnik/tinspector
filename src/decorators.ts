@@ -1,26 +1,27 @@
 import "reflect-metadata"
 
-import {  metadata } from "./helpers"
+import { metadata } from "./helpers"
 import {
     ArrayDecorator,
     Class,
     CustomPropertyDecorator,
+    DECORATOR_KEY,
     DecoratorId,
     DecoratorOption,
     DecoratorTargetType,
-    ParamDecorator,
+    NativeDecorator,
+    NativeParameterDecorator,
     PrivateDecorator,
     TypeDecorator,
-    Decorator,
-    DECORATOR_KEY,
+    ParameterPropertiesDecorator,
 } from "./types"
 
 // --------------------------------------------------------------------- //
 // ------------------------------- HELPER ------------------------------ //
 // --------------------------------------------------------------------- //
 
-function addDecorator<T extends Decorator>(target: any, decorator: T) {
-    const decorators: Decorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
+function addDecorator<T extends NativeDecorator>(target: any, decorator: T) {
+    const decorators: NativeDecorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, target) || []
     decorators.push(decorator)
     Reflect.defineMetadata(DECORATOR_KEY, decorators, target)
 }
@@ -81,7 +82,7 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
             const isCtorParam = metadata.isConstructor(args[0])
             const targetType = isCtorParam ? args[0] : args[0].constructor
             const targetName = isCtorParam ? "constructor" : args[1]
-            return addDecorator<ParamDecorator>(targetType, {
+            return addDecorator<NativeParameterDecorator>(targetType, {
                 targetType: "Parameter",
                 target: targetName,
                 targetIndex: args[2],
@@ -109,7 +110,7 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
     }
 }
 
-export function mergeDecorator(...fn: (ClassDecorator | PropertyDecorator | ParamDecorator | MethodDecorator)[]) {
+export function mergeDecorator(...fn: (ClassDecorator | PropertyDecorator | NativeParameterDecorator | MethodDecorator)[]) {
     return (...args: any[]) => {
         fn.forEach(x => (x as Function)(...args))
     }
@@ -119,18 +120,23 @@ export function noop() {
     return decorate({})
 }
 
+const symIgnore = Symbol("ignore")
+const symOverride = Symbol("override")
+const symArray = Symbol("array")
+const symParamProp = Symbol("paramProp")
+
 export function ignore() {
-    return decorate(<PrivateDecorator>{ [DecoratorId]: Symbol("ignore"), kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+    return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 export function type(type: Class | Class[], info?: string) {
-    return decorate(<TypeDecorator>{ [DecoratorId]: Symbol("override"), kind: "Override", type: type, info }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+    return decorate(<TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type: type, info }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 export function array(type: Class) {
-    return decorate(<ArrayDecorator>{ [DecoratorId]: Symbol("array"), kind: "Array", type: type }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+    return decorate(<ArrayDecorator>{ [DecoratorId]: symArray, kind: "Array", type: type }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 export function parameterProperties() {
-    return decorateClass({ [DecoratorId]: Symbol("paramProp"), type: "ParameterProperties" }, { allowMultiple: false })
+    return decorateClass(<ParameterPropertiesDecorator>{ [DecoratorId]: symParamProp, type: "ParameterProperties" }, { allowMultiple: false })
 }
