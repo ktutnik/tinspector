@@ -1,5 +1,5 @@
-import { metadata } from "../src/helpers"
 import {decorate} from "../src/decorators"
+import * as metadata from "../src/parser"
 
 function globalFunction(a: any, b: any) {
 
@@ -137,7 +137,7 @@ describe("Function Parameters", () => {
         ) {
             globalFunction(par1, par2)
         }
-        const result = metadata.getParameterNames(myFunction)
+        const result = metadata.getFunctionParameters(myFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -153,7 +153,7 @@ describe("Function Parameters", () => {
         ) {
             globalFunction(par1, par2)
         }
-        const result = metadata.getParameterNames(myFunction)
+        const result = metadata.getFunctionParameters(myFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -166,7 +166,7 @@ describe("Function Parameters", () => {
         ) {
             globalFunction(par1, par2)
         }
-        const result = metadata.getParameterNames(myFunction)
+        const result = metadata.getFunctionParameters(myFunction)
         expect(result).toMatchSnapshot()
     })
 })
@@ -177,7 +177,7 @@ describe("Durability", () => {
         MyFunction.toString = () => {
             return "[Function]"
         }
-        const result = metadata.getParameterNames(MyFunction)
+        const result = metadata.getFunctionParameters(MyFunction)
         expect(result).toMatchSnapshot()
     })
 
@@ -206,7 +206,7 @@ describe("Durability", () => {
 
     it("Should not error when provided function without parameter", () => {
         function myFun() { }
-        const result = metadata.getParameterNames(myFun)
+        const result = metadata.getFunctionParameters(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -250,7 +250,7 @@ describe("Parameter Destructuring", () => {
             num: number
         }
         function myFun(par:string, { date, num }: MyModel) { }
-        const result = metadata.getParameterNames(myFun)
+        const result = metadata.getFunctionParameters(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -260,7 +260,7 @@ describe("Parameter Destructuring", () => {
             num: number
         }
         function myFun({ date: tanggal, num }: MyModel) { }
-        const result = metadata.getParameterNames(myFun)
+        const result = metadata.getFunctionParameters(myFun)
         expect(result).toMatchSnapshot()
     })
 
@@ -275,7 +275,7 @@ describe("Parameter Destructuring", () => {
             dob: Date
         }
         function myFun(par:string, { date: tanggal, num, inner: { str, dob: dateOfBirth } }: MyModel) { }
-        const result = metadata.getParameterNames(myFun)
+        const result = metadata.getFunctionParameters(myFun)
         expect(result).toMatchSnapshot()
     })
 

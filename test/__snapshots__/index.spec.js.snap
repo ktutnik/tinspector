@@ -2,7 +2,7 @@
 
 exports[`Exported Should export members 1`] = `
 Array [
-  "DecoratorOption",
+  "DecoratorOptionId",
   "DecoratorId",
   "DECORATOR_KEY",
   "DESIGN_TYPE",
