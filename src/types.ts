@@ -85,18 +85,29 @@ export interface ObjectReflection extends ReflectionBase {
 }
 export interface ArrayDecorator {
     kind: "Array",
-    type: Class
+    type: Class | string
 }
 export interface TypeDecorator {
     kind: "Override",
-    type: Class,
-    info?: string
+    type: Class[] | Class | string | string[],
+    info?: string,
+    target: Class
 }
 export interface PrivateDecorator {
     kind: "Ignore"
 }
 export interface ParameterPropertiesDecorator {
     type: "ParameterProperties"
+}
+export interface GenericTypeDecorator {
+    kind: "GenericType",
+    types: (Class|Class[])[]
+    target:Class
+}
+export interface GenericTemplateDecorator {
+    kind: "GenericTemplate",
+    templates: string[]
+    target:Class
 }
 export interface DecoratorOption {
     inherit?: boolean,

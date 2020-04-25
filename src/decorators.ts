@@ -14,6 +14,8 @@ import {
     PrivateDecorator,
     TypeDecorator,
     ParameterPropertiesDecorator,
+    GenericTypeDecorator,
+    GenericTemplateDecorator,
 } from "./types"
 
 // --------------------------------------------------------------------- //
@@ -129,14 +131,25 @@ export function ignore() {
     return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
-export function type(type: Class | Class[], info?: string) {
-    return decorate(<TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type: type, info }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+export function type(type: string | string[] | Class | Class[], info?: string) {
+    return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type: type, info, target }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
-export function array(type: Class) {
+export function array(type: Class | string) {
     return decorate(<ArrayDecorator>{ [DecoratorId]: symArray, kind: "Array", type: type }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 export function parameterProperties() {
     return decorateClass(<ParameterPropertiesDecorator>{ [DecoratorId]: symParamProp, type: "ParameterProperties" }, { allowMultiple: false })
+}
+
+export namespace generic {
+    const symGenericType = Symbol("genericType")
+    const symGenericTemplate = Symbol("genericTemplate")
+    export function template(...templates: string[]) {
+        return decorateClass(target => <GenericTemplateDecorator>{ [DecoratorId]:symGenericTemplate, kind: "GenericTemplate", templates, target }, { inherit: false, allowMultiple: false })
+    }
+    export function type(...types: (Class | Class[])[]) {
+        return decorateClass(target => <GenericTypeDecorator>{ [DecoratorId]:symGenericType, kind: "GenericType", types, target }, { inherit: false, allowMultiple: false })
+    }
 }

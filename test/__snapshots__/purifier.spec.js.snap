@@ -1286,6 +1286,407 @@ Object {
 }
 `;
 
+exports[`Purifier Generic Type Should able to add generic array information 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": Array [
+            "T",
+          ],
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "method",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [],
+      "returnType": Array [
+        String,
+      ],
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+}
+`;
+
+exports[`Purifier Generic Type Should able to add generic info on method parameter 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "method",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "target": SuperClass,
+              "type": "T",
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
+            },
+          ],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "par1",
+          "owner": Array [
+            SuperClass,
+          ],
+          "type": String,
+        },
+      ],
+      "returnType": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+}
+`;
+
+exports[`Purifier Generic Type Should able to add generic information 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "method",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [],
+      "returnType": String,
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+}
+`;
+
+exports[`Purifier Generic Type Should able to add generic information on nested class 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        Number,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "num",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [],
+      "returnType": Number,
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": GrandSuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "str",
+      "owner": Array [
+        GrandSuperClass,
+      ],
+      "parameters": Array [],
+      "returnType": String,
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    GrandSuperClass,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+}
+`;
+
+exports[`Purifier Generic Type Should able to add generic information on nested class with multiple templates 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        Number,
+        Number,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "num",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "target": SuperClass,
+              "type": "U",
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
+            },
+          ],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "par",
+          "owner": Array [
+            SuperClass,
+          ],
+          "type": Number,
+        },
+      ],
+      "returnType": Number,
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": GrandSuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "str",
+      "owner": Array [
+        GrandSuperClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "target": GrandSuperClass,
+              "type": "U",
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
+            },
+          ],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "par",
+          "owner": Array [
+            GrandSuperClass,
+          ],
+          "type": Number,
+        },
+      ],
+      "returnType": String,
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    GrandSuperClass,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+}
+`;
+
 exports[`Purifier Ignore Member Should able to ignore getter 1`] = `
 Object {
   "ctor": Object {
@@ -2120,6 +2521,7 @@ Object {
           Object {
             "info": undefined,
             "kind": "Override",
+            "target": MyClass,
             "type": Array [
               Number,
             ],
@@ -2156,6 +2558,7 @@ Object {
         Object {
           "info": undefined,
           "kind": "Override",
+          "target": MyClass,
           "type": Array [
             Number,
           ],
@@ -2196,6 +2599,7 @@ Object {
           Object {
             "info": undefined,
             "kind": "Override",
+            "target": MyClass,
             "type": Array [
               CustomType,
             ],
@@ -2232,6 +2636,7 @@ Object {
         Object {
           "info": undefined,
           "kind": "Override",
+          "target": MyClass,
           "type": Array [
             CustomType,
           ],
@@ -2354,6 +2759,7 @@ Object {
             Object {
               "info": undefined,
               "kind": "Override",
+              "target": MyClass,
               "type": Array [
                 Number,
               ],
@@ -2412,6 +2818,7 @@ Object {
             Object {
               "info": undefined,
               "kind": "Override",
+              "target": MyClass,
               "type": Array [
                 CustomType,
               ],
@@ -2517,6 +2924,7 @@ Object {
         Object {
           "info": undefined,
           "kind": "Override",
+          "target": MyClass,
           "type": Number,
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
@@ -2559,6 +2967,7 @@ Object {
         Object {
           "info": undefined,
           "kind": "Override",
+          "target": MyClass,
           "type": Array [
             Number,
           ],

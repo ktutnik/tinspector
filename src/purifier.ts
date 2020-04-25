@@ -19,6 +19,8 @@ import {
     NativeDecorator,
     DECORATOR_KEY,
     NativeParameterDecorator,
+    GenericTypeDecorator,
+    GenericTemplateDecorator,
 } from "./types"
 import { metadata } from "./helpers"
 
@@ -40,6 +42,10 @@ function getDecorators(targetClass: Class, targetType: DecoratorTargetType, targ
         }
     }
     return result
+}
+
+function getParents(target: Class): Class[] {
+    return target.prototype ? [...getParents(Object.getPrototypeOf(target)), target] : [Object]
 }
 
 // --------------------------------------------------------------------- //
@@ -224,6 +230,59 @@ namespace visitors {
         if (meta.kind === "Method")
             return { ...meta, returnType: overridden ?? meta.returnType }
         return { ...meta, type: overridden ?? meta.type }
+    }
+
+
+    export function addsGenericOverridden(meta: TypedReflection, ctx: TraverseContext): TypedReflection {
+        /*
+        steps
+        1. Check if type is of type string 
+        2. Get the `target` property of the @type decorator. The target property is the parent generic
+        3. Get @generic.template of the target property contains list of template type string
+        4. Get list of parents classes of `ctx.target`, the order is like: [... GrandParent, Parent, Class]
+        5. Get class inherit the generic type (it MUST be the next class of the target - Generic class IS ALWAYS the direct child)
+        6. Get @generic.type of the inherited class contains list of types
+        7. Create map of <String, Class> from list step 3 and step 6 
+        8. Resolve the type of step 1 using map from step 7
+        */
+        if (meta.kind === "Constructor" || meta.kind === "Class") return meta
+        const getGenericTypeDecorator = (target: Class) => {
+            const decorator = getDecorators(target, "Class", target.name).find((x: GenericTypeDecorator): x is GenericTypeDecorator => x.kind === "GenericType")
+            return decorator?.types
+        }
+        const getGenericTemplateDecorator = (target: Class) => {
+            const decorator = getDecorators(target, "Class", target.name).find((x: GenericTemplateDecorator): x is GenericTemplateDecorator => x.kind === "GenericTemplate")
+            return decorator?.templates
+        }
+        const isString = (type: any): type is string | string[] => {
+            return typeof type === "string" || (Array.isArray(type) && typeof type[0] === "string")
+        }
+        const getConversion = (decorators: any[], original:any) => {
+            const decorator = decorators.find((x:TypeDecorator):x is TypeDecorator => x.kind === "Override")
+            if(!decorator) return original
+            const rawType = decorator.type;
+            if (isString(rawType)) {
+                const type = Array.isArray(rawType) ? rawType[0] : rawType
+                const templates = getGenericTemplateDecorator(decorator.target)
+                if (!templates) throw new Error(`Configuration Error: ${decorator.target.name}.${meta.name} uses template type ${type} but doesn't have generic type template @generic.template()`)
+                const parents = getParents(ctx.target)
+                const idx = parents.findIndex(x => x === decorator.target)
+                const inherited = parents[idx + 1]
+                const types = getGenericTypeDecorator(inherited)
+                if (!types) throw new Error(`Configuration Error: ${decorator.target.name}.${meta.name} uses template type but doesn't specify generic type @generic.type() on ${inherited.name}`)
+                if (types.length !== templates.length) throw new Error(`Configuration Error: number of generic templates defined on @generic.template not equals with the generic type defined on inherited type ${inherited.name}`)
+                const map = new Map(templates.map((x, i) => ([x, types[i]])))
+                const conversion = map.get(type)
+                return Array.isArray(rawType) ? [conversion] : conversion
+            }
+            return rawType
+        }
+        if (meta.kind === "Method") {
+            const returnType = getConversion(meta.decorators, meta.returnType)
+            return { ...meta, returnType }
+        }
+        const type = getConversion(meta.decorators, meta.type)
+        return { ...meta, type }
     }
 
     export function addsTypeClassification(meta: TypedReflection, ctx: TraverseContext): TypedReflection | undefined {
