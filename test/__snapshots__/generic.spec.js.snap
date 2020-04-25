@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Generic Should able to inspect generic on constructor parameters 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Generic Should able to inspect generic on getter 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": get prop,
+      "kind": "Property",
+      "name": "prop",
+      "owner": Array [
+        SuperClass,
+      ],
+      "set": undefined,
+      "type": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Generic Should able to inspect generic on method parameter 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "method",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "target": SuperClass,
+              "type": "T",
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
+            },
+          ],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "par",
+          "owner": Array [
+            SuperClass,
+          ],
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Generic Should able to inspect generic on parameter properties 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "index": 0,
+      "isParameter": true,
+      "kind": "Property",
+      "name": "prop",
+      "owner": Array [
+        SuperClass,
+      ],
+      "set": undefined,
+      "type": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Generic Should able to inspect generic on property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "prop",
+      "owner": Array [
+        SuperClass,
+      ],
+      "set": undefined,
+      "type": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Generic Should able to inspect generic type on method 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        String,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "method",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;

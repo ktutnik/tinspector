@@ -15,6 +15,7 @@ Object {
         Object {
           "info": undefined,
           "kind": "Override",
+          "target": DummyClass,
           "type": Array [
             Number,
           ],
@@ -72,6 +73,7 @@ Object {
             Object {
               "info": "Readonly",
               "kind": "Override",
+              "target": DummyClass,
               "type": OtherDummyClass,
               Symbol(tinspector:decoratorId): Symbol(override),
               Symbol(tinspector:decoratorOption): Object {
@@ -313,6 +315,7 @@ Object {
             Object {
               "info": undefined,
               "kind": "Override",
+              "target": DummyClass,
               "type": Array [
                 EmptyClass,
               ],
@@ -642,6 +645,7 @@ Object {
             Object {
               "info": undefined,
               "kind": "Override",
+              "target": DummyClass,
               "type": Domain,
               Symbol(tinspector:decoratorId): Symbol(override),
               Symbol(tinspector:decoratorOption): Object {
@@ -722,6 +726,7 @@ Object {
             Object {
               "info": undefined,
               "kind": "Override",
+              "target": DummyClass,
               "type": Domain,
               Symbol(tinspector:decoratorId): Symbol(override),
               Symbol(tinspector:decoratorOption): Object {
