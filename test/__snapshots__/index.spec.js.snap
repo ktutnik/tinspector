@@ -19,6 +19,7 @@ Array [
   "type",
   "array",
   "parameterProperties",
+  "generic",
   "useCache",
   "metadata",
   "reflect",

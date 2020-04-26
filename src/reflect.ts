@@ -11,6 +11,7 @@ function reflectClass(target: Class) {
         visitors.addsDesignTypes,
         visitors.addsDecorators,
         visitors.addsTypeOverridden,
+        visitors.addsGenericOverridden,
         visitors.addsTypeClassification,
         visitors.addsParameterProperties,
         visitors.removeIgnored

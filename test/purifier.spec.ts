@@ -1,5 +1,5 @@
 import { createVisitors, visitors, purifyTraversal } from "../src/purifier"
-import { noop, type, decorateClass, decorateMethod, decorateProperty, decorateParameter, array, parameterProperties, ignore, DecoratorId } from "../src"
+import { noop, type, decorateClass, decorateMethod, decorateProperty, decorateParameter, array, parameterProperties, ignore, DecoratorId, generic } from "../src"
 import { parseClass } from "../src/parser"
 
 
@@ -305,11 +305,11 @@ describe("Purifier", () => {
         it("Should able to merge multiple decorator when specified on member", () => {
             class SuperClass {
                 @decorateMethod({ [DecoratorId]: "id", timeout: 10 }, { allowMultiple: false })
-                method(){}
+                method() { }
             }
             class MyClass extends SuperClass {
                 @decorateMethod({ [DecoratorId]: "id", timeout: 11 }, { allowMultiple: false })
-                method(){}
+                method() { }
             }
             const meta = parseClass(MyClass)
             const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
@@ -534,6 +534,139 @@ describe("Purifier", () => {
             const meta = parseClass(MyClass)
             const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
             expect(result).toMatchSnapshot()
+        })
+    })
+
+    describe("Generic Type", () => {
+        const visitor = createVisitors(visitors.addSuperclassMeta, visitors.addsDesignTypes, visitors.addsDecorators, visitors.addsTypeOverridden, visitors.addsGenericOverridden)
+        it("Should able to add generic information", () => {
+            @generic.template("T")
+            class SuperClass<T> {
+                @type("T")
+                method(): T { return {} as any }
+            }
+            @generic.type(String)
+            class MyClass extends SuperClass<string>{ }
+            const meta = parseClass(MyClass)
+            const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
+            expect(result).toMatchSnapshot()
+        })
+        it("Should able to add generic information on nested class", () => {
+            @generic.template("T")
+            class GrandSuperClass<T>{
+                @type("T")
+                str(): T { return {} as any }
+            }
+            @generic.template("T")
+            @generic.type(String)
+            class SuperClass<T> extends GrandSuperClass<string>{
+                @type("T")
+                num(): T { return {} as any }
+            }
+            @generic.type(Number)
+            class MyClass extends SuperClass<number>{ }
+            const meta = parseClass(MyClass)
+            const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
+            expect(result).toMatchSnapshot()
+        })
+        it("Should able to add generic information on nested class with multiple templates", () => {
+            @generic.template("T", "U")
+            class GrandSuperClass<T, U>{
+                @type("T")
+                str(@type("U") par:U): T { return {} as any }
+            }
+            @generic.template("T", "U")
+            @generic.type(String, Number)
+            class SuperClass<T, U> extends GrandSuperClass<string, number>{
+                @type("T")
+                num(@type("U") par:U): T { return {} as any }
+            }
+            @generic.type(Number, Number)
+            class MyClass extends SuperClass<number, number>{ }
+            const meta = parseClass(MyClass)
+            const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
+            expect(result).toMatchSnapshot()
+        })
+        it("Should able to add generic array information", () => {
+            @generic.template("T")
+            class SuperClass<T> {
+                @type(["T"])
+                method(): T[] { return {} as any }
+            }
+            @generic.type(String)
+            class MyClass extends SuperClass<string>{ }
+            const meta = parseClass(MyClass)
+            const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
+            expect(result).toMatchSnapshot()
+        })
+        it("Should able to add generic info on method parameter", () => {
+            @generic.template("T")
+            class SuperClass<T> {
+                method(@type("T") par1:T) {  }
+            }
+            @generic.type(String)
+            class MyClass extends SuperClass<string>{ }
+            const meta = parseClass(MyClass)
+            const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
+            expect(result).toMatchSnapshot()
+        })
+        it("Should able to add generic info on property", () => {
+            @generic.template("T")
+            class SuperClass<T> {
+                @type("T")
+                prop:T = {} as any 
+            }
+            @generic.type(String)
+            class MyClass extends SuperClass<string>{ }
+            const meta = parseClass(MyClass)
+            const result = purifyTraversal(meta, { parent: meta, visitor, target: meta.type })
+            expect(result).toMatchSnapshot()
+        })
+    })
+
+    describe("Generic Error Message", () => {
+        const visitor = createVisitors(visitors.addSuperclassMeta, visitors.addsDesignTypes, visitors.addsDecorators, visitors.addsTypeOverridden, visitors.addsGenericOverridden)
+        it("Should throw error when @generic.type defined but @generic.template doesn't", () => {
+            class SuperClass<T> {
+                @type("T")
+                method(): T { return {} as any }
+            }
+            @generic.type(String)
+            class MyClass extends SuperClass<string>{ }
+            const meta = parseClass(MyClass)
+            expect(() =>  purifyTraversal(meta, { parent: meta, visitor, target: meta.type })).toThrowErrorMatchingSnapshot()
+        })
+        it("Should throw error when @generic.template defined but @generic.type doesn't", () => {
+            @generic.template("T")
+            class SuperClass<T> {
+                @type("T")
+                method(): T { return {} as any }
+            }
+            class MyClass extends SuperClass<string>{ }
+            const meta = parseClass(MyClass)
+            expect(() =>  purifyTraversal(meta, { parent: meta, visitor, target: meta.type })).toThrowErrorMatchingSnapshot()
+        })
+        it("Should throw error when number of parameter on generic type not specified", () => {
+            @generic.template("T", "U")
+            class SuperClass<T, U> {
+                @type("T")
+                method(@type("U") par:U): T { return {} as any }
+            }
+            @generic.type(String)
+            class MyClass extends SuperClass<string, number>{ }
+            const meta = parseClass(MyClass)
+            expect(() =>  purifyTraversal(meta, { parent: meta, visitor, target: meta.type })).toThrowErrorMatchingSnapshot()
+        })
+        it("Should throw error when number of parameter on generic template not specified", () => {
+            @generic.template("T")
+            class SuperClass<T, U> {
+                @type("T")
+                method(@type("U") par:U): T { return {} as any }
+            }
+            @generic.type(String, Number)
+            class MyClass extends SuperClass<string, number>{ }
+            const meta = parseClass(MyClass)
+            expect(() =>  purifyTraversal(meta, { parent: meta, visitor, target: meta.type })).toThrowErrorMatchingSnapshot()
         })
     })
 })
