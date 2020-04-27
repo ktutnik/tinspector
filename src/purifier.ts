@@ -241,6 +241,7 @@ namespace visitors {
         3. Get @generic.template of the target property contains list of template type string
         4. Get list of parents classes of `ctx.target`, the order is like: [... GrandParent, Parent, Class]
         5. Get class inherit the generic type (it MUST be the next class of the target - Generic class IS ALWAYS the direct child)
+        6. If the inherited class is undefined, its mean the member owned by the generic class itself, return the type (string) immediately
         6. Get @generic.type of the inherited class contains list of types
         7. Create map of <String, Class> from list step 3 and step 6 
         8. Resolve the type of step 1 using map from step 7
@@ -267,7 +268,8 @@ namespace visitors {
                 if (!templates) throw new Error(`Configuration Error: ${meta.kind} "${meta.name}" on ${decorator.target.name} uses generic type "${type}" but doesn't specify generic template @generic.template()`)
                 const parents = getParents(ctx.target)
                 const idx = parents.findIndex(x => x === decorator.target)
-                const inherited = parents[idx + 1]
+                const inherited = parents[idx + 1] as Class | undefined
+                if(!inherited) return rawType
                 const types = getGenericTypeDecorator(inherited)
                 if (!types) throw new Error(`Configuration Error: ${inherited.name} inherited from generic type ${decorator.target.name} but doesn't specify generic type @generic.type()`)
                 if (types.length !== templates.length) throw new Error(`Configuration Error: Number of parameter passed on ${decorator.target.name} @generic.template() doesn't match with inherited type ${inherited.name} @generic.type()`)

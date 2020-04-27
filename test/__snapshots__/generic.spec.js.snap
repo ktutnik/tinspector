@@ -361,3 +361,198 @@ Object {
   "typeClassification": "Class",
 }
 `;
+
+exports[`Generic Should able to inspect nested generic class with multiple templates 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        Number,
+        Date,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": SuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "num",
+      "owner": Array [
+        SuperClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "target": SuperClass,
+              "type": "U",
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
+            },
+          ],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "date",
+          "owner": Array [
+            SuperClass,
+          ],
+          "type": Date,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": Number,
+      "typeClassification": "Primitive",
+    },
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": GrandSuperClass,
+          "type": "T",
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "str",
+      "owner": Array [
+        GrandSuperClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [
+            Object {
+              "info": undefined,
+              "kind": "Override",
+              "target": GrandSuperClass,
+              "type": "U",
+              Symbol(tinspector:decoratorId): Symbol(override),
+              Symbol(tinspector:decoratorOption): Object {
+                "allowMultiple": false,
+                "inherit": true,
+              },
+            },
+          ],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "bool",
+          "owner": Array [
+            GrandSuperClass,
+          ],
+          "type": Boolean,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    GrandSuperClass,
+    SuperClass,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": SuperClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Generic Should not error inspect the generic class 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [
+          Object {
+            "info": undefined,
+            "kind": "Override",
+            "target": SuperClass,
+            "type": "T",
+            Symbol(tinspector:decoratorId): Symbol(override),
+            Symbol(tinspector:decoratorOption): Object {
+              "allowMultiple": false,
+              "inherit": true,
+            },
+          },
+        ],
+        "fields": Object {},
+        "index": 0,
+        "kind": "Parameter",
+        "name": "par",
+        "owner": Array [
+          SuperClass,
+        ],
+        "type": "T",
+        "typeClassification": "Class",
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericTemplate",
+      "target": SuperClass,
+      "templates": Array [
+        "T",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericTemplate),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "SuperClass",
+  "owner": Array [
+    Object,
+    SuperClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": SuperClass,
+  "typeClassification": "Class",
+}
+`;
