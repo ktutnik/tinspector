@@ -83,3 +83,42 @@ describe("Generic", () => {
         expect(reflect(MyClass)).toMatchSnapshot()
     })
 })
+
+describe("Create Generic", () => {
+    it("Should able to create generic class implementation", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            method():T { return {} as any}
+        }
+        const ChildClass = generic.create(SuperClass, Number)
+        const instance = new ChildClass()
+        expect(instance).toBeInstanceOf(SuperClass)
+        expect(instance).toBeInstanceOf(ChildClass)
+    })
+    it("Should add reflection properly", () => {
+        @generic.template("T", "U")
+        class SuperClass<T, U> {
+            @type("T")
+            method(@type("U") par:U):T { return {} as any}
+        }
+        const ChildClass = generic.create(SuperClass, Number, String)
+        const instance = new ChildClass()
+        expect(reflect(ChildClass)).toMatchSnapshot()
+    })
+    it("Should able to create multiple time", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            method():T { return {} as any}
+        }
+        const ChildClass = generic.create(SuperClass, Number)
+        const instance = new ChildClass()
+        expect(instance).toBeInstanceOf(SuperClass)
+        expect(instance).toBeInstanceOf(ChildClass)
+        const OtherClass = generic.create(SuperClass, String)
+        const other = new OtherClass()
+        expect(other).toBeInstanceOf(SuperClass)
+        expect(other).toBeInstanceOf(OtherClass)
+    })
+})

@@ -147,9 +147,25 @@ export namespace generic {
     const symGenericType = Symbol("genericType")
     const symGenericTemplate = Symbol("genericTemplate")
     export function template(...templates: string[]) {
-        return decorateClass(target => <GenericTemplateDecorator>{ [DecoratorId]:symGenericTemplate, kind: "GenericTemplate", templates, target }, { inherit: false, allowMultiple: false })
+        return decorateClass(target => <GenericTemplateDecorator>{ [DecoratorId]: symGenericTemplate, kind: "GenericTemplate", templates, target }, { inherit: false, allowMultiple: false })
     }
     export function type(...types: (Class | Class[])[]) {
-        return decorateClass(target => <GenericTypeDecorator>{ [DecoratorId]:symGenericType, kind: "GenericType", types, target }, { inherit: false, allowMultiple: false })
+        return decorateClass(target => <GenericTypeDecorator>{ [DecoratorId]: symGenericType, kind: "GenericType", types, target }, { inherit: false, allowMultiple: false })
+    }
+
+    /**
+     * Create generic class dynamically
+     * @param parent Super class that the class inherited from
+     * @param params List of generic type parameters
+     */
+    export function create<T extends Class>(parent: T, ...params: Class[]) {
+        const Type = (() => {
+            class DynamicType { }
+            return DynamicType as T;
+        })();
+        Object.setPrototypeOf(Type.prototype, parent.prototype)
+        Object.setPrototypeOf(Type, parent)
+        Reflect.decorate([generic.type(...params)], Type)
+        return Type
     }
 }

@@ -6,7 +6,7 @@
 export const DecoratorOptionId = Symbol("tinspector:decoratorOption")
 export const DecoratorId = Symbol("tinspector:decoratorId")
 
-export type Class = new (...arg: any[]) => any
+export type Class<T = any> = new (...arg: any[]) => T
 export type DecoratorIterator = (type: DecoratorTargetType, target: string, index?: number) => any[]
 export type DecoratorTargetType = "Method" | "Class" | "Parameter" | "Property"
 export interface NativeDecorator {
