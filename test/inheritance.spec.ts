@@ -1,4 +1,4 @@
-import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect } from "../src"
+import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect, noop } from "../src"
 import * as metadata from "../src/parser"
 
 describe("getDeepMember", () => {
@@ -190,6 +190,21 @@ describe("Inheritance", () => {
         }
 
         const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should able to get proper overridden parameter type", () => {
+        class BaseEntity {}
+        class Entity extends BaseEntity{}
+        class BaseMyClass {
+            @noop()
+            method(entity:BaseEntity){}
+        }
+        class MyClass {
+            @noop()
+            method(entity:Entity){}
+        }
+        const meta = reflect(MyClass)
         expect(meta).toMatchSnapshot()
     })
 

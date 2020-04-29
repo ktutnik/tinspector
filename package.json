@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "prepublish": "tsc && tsc -p tsconfig.build.json",
-    "clean": "rm -rf src/*.js && rm -rf test/**/*.js && rm -rf lib"
+    "clean": "rm -rf src/*.js && rm -rf test/*.js && rm -rf test/**/*.js && rm -rf lib"
   },
   "keywords": [
     "Reflection",
