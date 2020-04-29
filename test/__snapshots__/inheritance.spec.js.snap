@@ -1277,6 +1277,60 @@ Object {
 }
 `;
 
+exports[`Inheritance Should able to get proper overridden parameter type 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "method",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "entity",
+          "owner": Array [
+            MyClass,
+          ],
+          "type": Entity,
+          "typeClassification": "Class",
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Inheritance Should get base class from deep inheritance 1`] = `
 Object {
   "ctor": Object {
