@@ -231,4 +231,5 @@ describe("Class Introspection", () => {
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
     })
+
 })
