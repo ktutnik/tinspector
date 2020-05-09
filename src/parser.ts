@@ -49,15 +49,19 @@ function getNamesFromAst(nodes: any[]) {
     return nodes.map(x => getName(x)).filter((x): x is string | { [key: string]: string[] } => !!x)
 }
 
+function getCode(fn:Class|Function){
+    return fn.toString().replace("[native code]", "")
+}
+
 function getMethodParameters(fn: Class, method: string) {
-    const body = fn.toString()
+    const body = getCode(fn)
     const ast = parse(body)
     const ctor = getNode(ast, x => x.type === "MethodDefinition" && x.kind === "method" && x.key.name === method)
     return getNamesFromAst(ctor ? (ctor as any).value.params : [])
 }
 
 function getConstructorParameters(fn: Class) {
-    const body = fn.toString()
+    const body = getCode(fn)
     const ast = parse(body)
     const ctor = getNode(ast, x => x.type === "MethodDefinition" && x.kind === "constructor")
     return getNamesFromAst(ctor ? (ctor as any).value.params : [])
@@ -65,7 +69,7 @@ function getConstructorParameters(fn: Class) {
 
 function getFunctionParameters(fn: Function) {
     try {
-        const body = fn.toString()
+        const body = getCode(fn)
         const ast = parse(body)
         return getNamesFromAst((ast as any).body[0].params)
     }
