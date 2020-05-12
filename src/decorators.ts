@@ -16,6 +16,7 @@ import {
     ParameterPropertiesDecorator,
     GenericTypeDecorator,
     GenericTemplateDecorator,
+    NoopDecorator,
 } from "./types"
 
 // --------------------------------------------------------------------- //
@@ -118,14 +119,11 @@ export function mergeDecorator(...fn: (ClassDecorator | PropertyDecorator | Nati
     }
 }
 
-export function noop() {
-    return decorate({})
-}
-
 const symIgnore = Symbol("ignore")
 const symOverride = Symbol("override")
 const symArray = Symbol("array")
 const symParamProp = Symbol("paramProp")
+const symNoop = Symbol("noop")
 
 export function ignore() {
     return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
@@ -135,8 +133,12 @@ export function type(type: string | string[] | Class | Class[], info?: string) {
     return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type: type, info, target }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
+export function noop(type?: (x: any) => string | string[] | Class | Class[]) {
+    return decorate((target:any) => <NoopDecorator>{ [DecoratorId]: symNoop, kind: "Noop", type, target }, undefined, { allowMultiple: false })
+}
+
 export function array(type: Class | string) {
-    return decorate(<ArrayDecorator>{ [DecoratorId]: symArray, kind: "Array", type: type }, ["Parameter", "Method", "Property"], { allowMultiple: false })
+    return decorate((target:any) => <ArrayDecorator>{ [DecoratorId]: symArray, kind: "Array", type: type, target }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
 export function parameterProperties() {

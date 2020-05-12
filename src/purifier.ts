@@ -21,6 +21,7 @@ import {
     NativeParameterDecorator,
     GenericTypeDecorator,
     GenericTemplateDecorator,
+    NoopDecorator,
 } from "./types"
 import { metadata } from "./helpers"
 
@@ -222,14 +223,27 @@ namespace visitors {
         return meta
     }
 
+    function getOverride(decorators: any[]) {
+        const noopOverride = decorators.find((x: NoopDecorator): x is NoopDecorator => x.kind === "Noop")
+        const arrayOverride = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
+        const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
+        if(noopOverride && noopOverride.type){
+            return {type: noopOverride.type(), target: noopOverride.target}
+        }
+        else if(arrayOverride){
+            return {type: [arrayOverride.type], target: arrayOverride.target}
+        }
+        else if(override) {
+            return {type: override.type, target: override.target}
+        }
+    }
+
     export function addsTypeOverridden(meta: TypedReflection, ctx: TraverseContext): TypedReflection {
         if (meta.kind === "Constructor" || meta.kind === "Class") return meta
-        const arrayOverride = meta.decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
-        const override = meta.decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
-        const overridden = override?.type || arrayOverride && [arrayOverride.type]
+        const overridden = getOverride(meta.decorators)
         if (meta.kind === "Method")
-            return { ...meta, returnType: overridden ?? meta.returnType }
-        return { ...meta, type: overridden ?? meta.type }
+            return { ...meta, returnType: overridden?.type ?? meta.returnType }
+        return { ...meta, type: overridden?.type ?? meta.type }
     }
 
 
@@ -258,21 +272,21 @@ namespace visitors {
         const isString = (type: any): type is string | string[] => {
             return typeof type === "string" || (Array.isArray(type) && typeof type[0] === "string")
         }
-        const getConversion = (decorators: any[], original:any) => {
-            const decorator = decorators.find((x:TypeDecorator):x is TypeDecorator => x.kind === "Override")
-            if(!decorator) return original
-            const rawType = decorator.type;
+        const getConversion = (decorators: any[], original: any) => {
+            const overridden = getOverride(decorators)
+            if (!overridden) return original
+            const rawType = overridden.type;
             if (isString(rawType)) {
                 const type = Array.isArray(rawType) ? rawType[0] : rawType
-                const templates = getGenericTemplateDecorator(decorator.target)
-                if (!templates) throw new Error(`Configuration Error: ${meta.kind} "${meta.name}" on ${decorator.target.name} uses generic type "${type}" but doesn't specify generic template @generic.template()`)
+                const templates = getGenericTemplateDecorator(overridden.target)
+                if (!templates) throw new Error(`Configuration Error: ${meta.kind} "${meta.name}" on ${overridden.target.name} uses generic type "${type}" but doesn't specify generic template @generic.template()`)
                 const parents = getParents(ctx.target)
-                const idx = parents.findIndex(x => x === decorator.target)
+                const idx = parents.findIndex(x => x === overridden.target)
                 const inherited = parents[idx + 1] as Class | undefined
-                if(!inherited) return rawType
+                if (!inherited) return rawType
                 const types = getGenericTypeDecorator(inherited)
-                if (!types) throw new Error(`Configuration Error: ${inherited.name} inherited from generic type ${decorator.target.name} but doesn't specify generic type @generic.type()`)
-                if (types.length !== templates.length) throw new Error(`Configuration Error: Number of parameter passed on ${decorator.target.name} @generic.template() doesn't match with inherited type ${inherited.name} @generic.type()`)
+                if (!types) throw new Error(`Configuration Error: ${inherited.name} inherited from generic type ${overridden.target.name} but doesn't specify generic type @generic.type()`)
+                if (types.length !== templates.length) throw new Error(`Configuration Error: Number of parameter passed on ${overridden.target.name} @generic.template() doesn't match with inherited type ${inherited.name} @generic.type()`)
                 const map = new Map(templates.map((x, i) => ([x, types[i]])))
                 const conversion = map.get(type)
                 return Array.isArray(rawType) ? [conversion] : conversion

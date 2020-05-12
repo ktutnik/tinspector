@@ -119,6 +119,7 @@ Object {
         "decorators": Array [
           Object {
             "kind": "Array",
+            "target": DummyClass,
             "type": EmptyClass,
             Symbol(tinspector:decoratorId): Symbol(array),
             Symbol(tinspector:decoratorOption): Object {
@@ -192,6 +193,7 @@ Object {
           "decorators": Array [
             Object {
               "kind": "Array",
+              "target": DummyClass,
               "type": EmptyClass,
               Symbol(tinspector:decoratorId): Symbol(array),
               Symbol(tinspector:decoratorOption): Object {
@@ -888,8 +890,12 @@ Object {
     Object {
       "decorators": Array [
         Object {
+          "kind": "Noop",
+          "target": DummyClass,
+          "type": undefined,
+          Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": true,
+            "allowMultiple": false,
             "inherit": true,
           },
         },
@@ -1081,8 +1087,12 @@ Object {
     Object {
       "decorators": Array [
         Object {
+          "kind": "Noop",
+          "target": DummyClass,
+          "type": undefined,
+          Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": true,
+            "allowMultiple": false,
             "inherit": true,
           },
         },
@@ -1100,8 +1110,12 @@ Object {
     Object {
       "decorators": Array [
         Object {
+          "kind": "Noop",
+          "target": DummyClass,
+          "type": undefined,
+          Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": true,
+            "allowMultiple": false,
             "inherit": true,
           },
         },

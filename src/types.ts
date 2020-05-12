@@ -45,11 +45,11 @@ export interface PropertyReflection extends ReflectionBase {
     get?: any,
     set?: any,
     typeClassification?: "Class" | "Array" | "Primitive"
-    owner: Class[], 
+    owner: Class[],
 }
 export interface ParameterPropertyReflection extends PropertyReflection {
-    index:number,
-    isParameter:boolean
+    index: number,
+    isParameter: boolean
 }
 export interface MethodReflection extends ReflectionBase {
     kind: "Method",
@@ -85,7 +85,13 @@ export interface ObjectReflection extends ReflectionBase {
 }
 export interface ArrayDecorator {
     kind: "Array",
-    type: Class | string
+    type: Class | string,
+    target: Class
+}
+export interface NoopDecorator {
+    kind: "Noop",
+    type?: () => string | string[] | Class | Class[],
+    target: Class
 }
 export interface TypeDecorator {
     kind: "Override",
@@ -101,13 +107,13 @@ export interface ParameterPropertiesDecorator {
 }
 export interface GenericTypeDecorator {
     kind: "GenericType",
-    types: (Class|Class[])[]
-    target:Class
+    types: (Class | Class[])[]
+    target: Class
 }
 export interface GenericTemplateDecorator {
     kind: "GenericTemplate",
     templates: string[]
-    target:Class
+    target: Class
 }
 export interface DecoratorOption {
     inherit?: boolean,
