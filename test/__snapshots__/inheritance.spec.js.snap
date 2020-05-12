@@ -1290,8 +1290,12 @@ Object {
     Object {
       "decorators": Array [
         Object {
+          "kind": "Noop",
+          "target": MyClass,
+          "type": undefined,
+          Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": true,
+            "allowMultiple": false,
             "inherit": true,
           },
         },
@@ -1974,8 +1978,12 @@ Object {
     Object {
       "decorators": Array [
         Object {
+          "kind": "Noop",
+          "target": ChildClass,
+          "type": undefined,
+          Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": true,
+            "allowMultiple": false,
             "inherit": true,
           },
         },

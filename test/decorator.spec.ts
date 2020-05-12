@@ -6,6 +6,9 @@ import {
     decorateProperty,
     reflect,
     mergeDecorator,
+    noop,
+    type,
+    generic,
 } from "../src"
 
 describe("Decorator", () => {
@@ -313,6 +316,56 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should able to override method return type with @noop()", () => {
+        class MyClass {
+            @noop(x => Number)
+            myMethod() { }
+        }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+
+    it("Should able to override array type with @noop()", () => {
+        class MyClass {
+            @noop(x => [Number])
+            arr: Number[] = [1]
+        }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+
+    it("Should not cause cross reference error on circular dependency", () => {
+        class OtherClass {
+            @noop(x => [MyClass])
+            my: MyClass[] = []
+        }
+        class MyClass {
+            @noop(x => [OtherClass])
+            other: OtherClass[] = []
+        }
+        expect(reflect(MyClass)).toMatchSnapshot()
+        expect(reflect(OtherClass)).toMatchSnapshot()
+    })
+
+    it("Should not cause issue when decorated with @noop()", () => {
+        class MyClass {
+            @noop()
+            data:number = 123
+        }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+
+    it("Should able to mark generic type with @noop()", () => {
+
+        @generic.template("T")
+        class MyOtherClass<T> {
+            @noop(x => "T")
+            data:T = {} as any
+        }
+        
+        @generic.type(Number)
+        class MyClass extends MyOtherClass<Number> {}
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+
     describe("Error Handling", () => {
         const DecoratorIdError = 'Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in DummyClass'
         function error(callback: () => void) {
@@ -421,7 +474,7 @@ describe("Decorator", () => {
             const err = error(() => {
                 class DummyClass {
                     @decorateProperty({ hello: "world" }, { allowMultiple: false })
-                    myProp:number = 1
+                    myProp: number = 1
                 }
             })
             expect(err.message).toBe(DecoratorIdError)
@@ -431,10 +484,11 @@ describe("Decorator", () => {
             const err = error(() => {
                 class DummyClass {
                     @decorateProperty(target => ({ hello: "world" }), { allowMultiple: false })
-                    myProp:number = 1
+                    myProp: number = 1
                 }
             })
             expect(err.message).toBe(DecoratorIdError)
         })
     })
+
 })
