@@ -18,8 +18,23 @@ function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R
 }
 
 namespace metadata {
-    export function isConstructor(value: Function) {
-        return ("" + value).indexOf("class") == 0
+    export function isPrimitive(type: any){
+        switch (type) {
+            case Boolean:
+            case String:
+            case Array:
+            case Number:
+            case Object:
+            case Date:
+            case Promise:
+                return true
+            default:
+                return false
+        }
+    }
+
+    export function isConstructor(value: any) {
+        return isPrimitive(value) || ("" + value).indexOf("class") == 0
     }
 
     export function isCustomClass(type: Function | Function[]) {

@@ -95,7 +95,7 @@ export interface NoopDecorator {
 }
 export interface TypeDecorator {
     kind: "Override",
-    type: Class[] | Class | string | string[],
+    type: Class[] | Class | string | string[] | ((x:any) => Class[] | Class | string | string[]),
     info?: string,
     target: Class
 }

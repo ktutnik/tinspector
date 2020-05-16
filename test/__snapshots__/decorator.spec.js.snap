@@ -477,66 +477,6 @@ Object {
 }
 `;
 
-exports[`Decorator Should able to mark generic type with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [
-    Object {
-      "kind": "GenericType",
-      "target": MyClass,
-      "types": Array [
-        Number,
-      ],
-      Symbol(tinspector:decoratorId): Symbol(genericType),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "inherit": false,
-      },
-    },
-  ],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyOtherClass,
-    MyClass,
-  ],
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyOtherClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "data",
-      "owner": Array [
-        MyOtherClass,
-      ],
-      "set": undefined,
-      "type": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "super": MyOtherClass,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Decorator Should able to merge decorator 1`] = `
 Object {
   "ctor": Object {
@@ -599,99 +539,6 @@ Object {
   ],
   "super": Object,
   "type": DummyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Should able to override array type with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "arr",
-      "owner": Array [
-        MyClass,
-      ],
-      "set": undefined,
-      "type": Array [
-        Number,
-      ],
-      "typeClassification": "Array",
-    },
-  ],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Should able to override method return type with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
-      "kind": "Method",
-      "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
-      "parameters": Array [],
-      "returnType": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
-  "properties": Array [],
-  "super": Object,
-  "type": MyClass,
   "typeClassification": "Class",
 }
 `;
@@ -1669,148 +1516,6 @@ Object {
 }
 `;
 
-exports[`Decorator Should not cause cross reference error on circular dependency 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "other",
-      "owner": Array [
-        MyClass,
-      ],
-      "set": undefined,
-      "type": Array [
-        OtherClass,
-      ],
-      "typeClassification": "Array",
-    },
-  ],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Should not cause cross reference error on circular dependency 2`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "OtherClass",
-  "owner": Array [
-    Object,
-    OtherClass,
-  ],
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": OtherClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "my",
-      "owner": Array [
-        OtherClass,
-      ],
-      "set": undefined,
-      "type": Array [
-        MyClass,
-      ],
-      "typeClassification": "Array",
-    },
-  ],
-  "super": Object,
-  "type": OtherClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Should not cause issue when decorated with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": undefined,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "data",
-      "owner": Array [
-        MyClass,
-      ],
-      "set": undefined,
-      "type": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Decorator Should not inspect private constructor property 1`] = `
 Object {
   "ctor": Object {
@@ -1887,6 +1592,877 @@ Object {
   ],
   "super": Object,
   "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override noop Should able to mark generic type with @noop() 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        Number,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyOtherClass,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "kind": "Noop",
+          "target": MyOtherClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(noop),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "data",
+      "owner": Array [
+        MyOtherClass,
+      ],
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": MyOtherClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override noop Should able to override array type with @noop() 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "kind": "Noop",
+          "target": MyClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(noop),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "arr",
+      "owner": Array [
+        MyClass,
+      ],
+      "set": undefined,
+      "type": Array [
+        Number,
+      ],
+      "typeClassification": "Array",
+    },
+  ],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override noop Should able to override method return type with @noop() 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "kind": "Noop",
+          "target": MyClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(noop),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override noop Should not cause cross reference error on circular dependency 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "kind": "Noop",
+          "target": MyClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(noop),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "other",
+      "owner": Array [
+        MyClass,
+      ],
+      "set": undefined,
+      "type": Array [
+        OtherClass,
+      ],
+      "typeClassification": "Array",
+    },
+  ],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override noop Should not cause cross reference error on circular dependency 2`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "OtherClass",
+  "owner": Array [
+    Object,
+    OtherClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "kind": "Noop",
+          "target": OtherClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(noop),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "my",
+      "owner": Array [
+        OtherClass,
+      ],
+      "set": undefined,
+      "type": Array [
+        MyClass,
+      ],
+      "typeClassification": "Array",
+    },
+  ],
+  "super": Object,
+  "type": OtherClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override noop Should not cause issue when decorated with @noop() 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "kind": "Noop",
+          "target": MyClass,
+          "type": undefined,
+          Symbol(tinspector:decoratorId): Symbol(noop),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "data",
+      "owner": Array [
+        MyClass,
+      ],
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to mark generic type with @type() 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [
+    Object {
+      "kind": "GenericType",
+      "target": MyClass,
+      "types": Array [
+        Number,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "inherit": false,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyOtherClass,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyOtherClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "data",
+      "owner": Array [
+        MyOtherClass,
+      ],
+      "set": undefined,
+      "type": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": MyOtherClass,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override array type with @type() 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "arr",
+      "owner": Array [
+        MyClass,
+      ],
+      "set": undefined,
+      "type": Array [
+        Number,
+      ],
+      "typeClassification": "Array",
+    },
+  ],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type Array 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": Array,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Array,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type Boolean 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": Boolean,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Boolean,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type Date 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": Date,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Date,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type Number 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": Number,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Number,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type Object 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": Object,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Object,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type Promise 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": Promise,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Promise,
+      "typeClassification": "Class",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() of type String 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": String,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should able to override method return type with @type() with callback 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "owner": Array [
+        MyClass,
+      ],
+      "parameters": Array [],
+      "returnType": Object,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should not cause cross reference error on circular dependency 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "MyClass",
+  "owner": Array [
+    Object,
+    MyClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": MyClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "other",
+      "owner": Array [
+        MyClass,
+      ],
+      "set": undefined,
+      "type": Array [
+        OtherClass,
+      ],
+      "typeClassification": "Array",
+    },
+  ],
+  "super": Object,
+  "type": MyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator Type Override type Should not cause cross reference error on circular dependency 2`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "OtherClass",
+  "owner": Array [
+    Object,
+    OtherClass,
+  ],
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "info": undefined,
+          "kind": "Override",
+          "target": OtherClass,
+          "type": ,
+          Symbol(tinspector:decoratorId): Symbol(override),
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "inherit": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "kind": "Property",
+      "name": "my",
+      "owner": Array [
+        OtherClass,
+      ],
+      "set": undefined,
+      "type": Array [
+        MyClass,
+      ],
+      "typeClassification": "Array",
+    },
+  ],
+  "super": Object,
+  "type": OtherClass,
   "typeClassification": "Class",
 }
 `;
