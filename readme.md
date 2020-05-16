@@ -161,14 +161,14 @@ To get type information of an Array and Generic type its required to use `@refle
 import reflect from "tinspector"
 
 class Awesome {
-    @reflect.type(x => [Number])
+    @reflect.type([Number])
     awesome(multiply:number): Array<number> {}
 }
 
 const metadata = reflect(Awesome)
 ```
 
-Above code showing that we able to get method's return type information by providing `@reflect.type(x => [Number])`. Note that the `[Number]` is an array of `Number`. 
+Above code showing that we able to get method's return type information by providing `@reflect.type([Number])`. Note that the `[Number]` is an array of `Number`. 
 
 ```typescript 
 import reflect from "tinspector"
@@ -178,7 +178,7 @@ class Option {
 }
 
 class Awesome {
-    @reflect.type(x => Option)
+    @reflect.type(Option)
     awesome(multiply:number): Partial<Option> {}
 }
 
@@ -187,13 +187,15 @@ const metadata = reflect(Awesome)
 
 We will be able to get generic type information such as `Partial`, `Required` etc by applying `@reflect.type()` like above. 
 
+> If you receive `ReferenceError: <type name> is not defined` error, thats mean you use `@reflect.type(MyType)` prior than its declaration. To solve this issue you can use callback `@reflect.type(x => MyType)` or `@reflect.type(x => [MyType])` for array type.
+
 ## Inspect Generic Class Information
 With above trick its possible to get generic type information in a generic class members with some extra configuration below
 
 ```typescript
 @generic.template("T", "U")
 class SuperAwesome<T, U> {
-    awesome(@reflect.type(x => "T") par: T, @reflect.type(x => "U") par2: U) {}
+    awesome(@reflect.type("T") par: T, @reflect.type("U") par2: U) {}
 }
 
 @generic.type(Number, String)
