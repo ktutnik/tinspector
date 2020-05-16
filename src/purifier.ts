@@ -235,7 +235,7 @@ namespace visitors {
         }
         else if (override) {
             const result = Array.isArray(override.type) || typeof override.type === "string" ? override.type :
-                metadata.isConstructor(override.type) ? override.type : (override.type as any)()
+                metadata.isCallback(override.type) ? override.type({}) : override.type
             return { type: result, target: override.target }
         }
     }
