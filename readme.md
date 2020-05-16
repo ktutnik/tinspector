@@ -155,20 +155,20 @@ const metadata = reflect(Awesome)
 Above code showing that we able to get type information of parameters of the constructor, by applying decorator on the class level. 
 
 ## Inspect Array and Generic Type
-To get type information of an Array and Generic type its required to use `@reflect.noop()` decorator and provide the type on the callback parameter.
+To get type information of an Array and Generic type its required to use `@reflect.type()` decorator and provide the type on the callback parameter.
 
 ```typescript 
 import reflect from "tinspector"
 
 class Awesome {
-    @reflect.noop(x => [Number])
+    @reflect.type(x => [Number])
     awesome(multiply:number): Array<number> {}
 }
 
 const metadata = reflect(Awesome)
 ```
 
-Above code showing that we able to get method's return type information by providing `@reflect.noop(x => [Number])`. Note that the `[Number]` is an array of `Number`. 
+Above code showing that we able to get method's return type information by providing `@reflect.type(x => [Number])`. Note that the `[Number]` is an array of `Number`. 
 
 ```typescript 
 import reflect from "tinspector"
@@ -178,14 +178,14 @@ class Option {
 }
 
 class Awesome {
-    @reflect.noop(x => Option)
+    @reflect.type(x => Option)
     awesome(multiply:number): Partial<Option> {}
 }
 
 const metadata = reflect(Awesome)
 ```
 
-We will be able to get generic type information such as `Partial`, `Required` etc by applying `@reflect.noop()` like above. 
+We will be able to get generic type information such as `Partial`, `Required` etc by applying `@reflect.type()` like above. 
 
 ## Inspect Generic Class Information
 With above trick its possible to get generic type information in a generic class members with some extra configuration below
@@ -193,7 +193,7 @@ With above trick its possible to get generic type information in a generic class
 ```typescript
 @generic.template("T", "U")
 class SuperAwesome<T, U> {
-    awesome(@reflect.noop(x => "T") par: T, @reflect.noop(x => "U") par2: U) {}
+    awesome(@reflect.type(x => "T") par: T, @reflect.type(x => "U") par2: U) {}
 }
 
 @generic.type(Number, String)
@@ -202,7 +202,7 @@ class Awesome extends SuperAwesome<Number, String> { }
 const metadata = reflect(Awesome)
 ```
 
-Above code showing that we add a specialized decorator `@generic.template()` to define generic template type. We also defined data type of the generic parameters using `@reflect.noop()` decorator. Next on the inherited class we specify `@generic.type()` to define types replace the generic template. Note that the order of the parameter on `@generic.template()` and `@generic.type()` is important.
+Above code showing that we add a specialized decorator `@generic.template()` to define generic template type. We also defined data type of the generic parameters using `@reflect.type()` decorator. Next on the inherited class we specify `@generic.type()` to define types replace the generic template. Note that the order of the parameter on `@generic.template()` and `@generic.type()` is important.
 
 
 ## Inspect Parameter Properties

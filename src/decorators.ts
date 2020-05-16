@@ -129,7 +129,7 @@ export function ignore() {
     return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
-export function type(type: string | string[] | Class | Class[], info?: string) {
+export function type(type: Class[] | Class | string | string[] | ((x:any) => Class[] | Class | string | string[]), info?: string) {
     return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type: type, info, target }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 

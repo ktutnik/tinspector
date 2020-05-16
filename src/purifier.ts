@@ -227,14 +227,16 @@ namespace visitors {
         const noopOverride = decorators.find((x: NoopDecorator): x is NoopDecorator => x.kind === "Noop")
         const arrayOverride = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
         const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
-        if(noopOverride && noopOverride.type){
-            return {type: noopOverride.type(), target: noopOverride.target}
+        if (noopOverride && noopOverride.type) {
+            return { type: noopOverride.type(), target: noopOverride.target }
         }
-        else if(arrayOverride){
-            return {type: [arrayOverride.type], target: arrayOverride.target}
+        else if (arrayOverride) {
+            return { type: [arrayOverride.type], target: arrayOverride.target }
         }
-        else if(override) {
-            return {type: override.type, target: override.target}
+        else if (override) {
+            const result = Array.isArray(override.type) || typeof override.type === "string" ? override.type :
+                metadata.isConstructor(override.type) ? override.type : (override.type as any)()
+            return { type: result, target: override.target }
         }
     }
 
