@@ -1,5 +1,7 @@
 import reflect, { generic, type, parameterProperties } from "../src"
 
+
+
 describe("Generic", () => {
     it("Should able to inspect generic type on method", () => {
         @generic.template("T")
@@ -91,7 +93,7 @@ describe("Create Generic", () => {
             @type("T")
             method():T { return {} as any}
         }
-        const ChildClass = generic.create(SuperClass, Number)
+        const ChildClass = generic.create(SuperClass, [Number)
         const instance = new ChildClass()
         expect(instance).toBeInstanceOf(SuperClass)
         expect(instance).toBeInstanceOf(ChildClass)
@@ -120,5 +122,19 @@ describe("Create Generic", () => {
         const other = new OtherClass()
         expect(other).toBeInstanceOf(SuperClass)
         expect(other).toBeInstanceOf(OtherClass)
+    })
+    it("Should execute super class controller", () => {
+        const fn = jest.fn()
+        @generic.template("T")
+        class SuperClass<T> {
+            constructor(){
+                fn()
+            }
+            @type("T")
+            method():T { return {} as any}
+        }
+        const ChildClass = generic.create(SuperClass, Number)
+        const instance = new ChildClass()
+        expect(fn).toBeCalledTimes(1)
     })
 })
