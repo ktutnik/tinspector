@@ -93,7 +93,7 @@ describe("Create Generic", () => {
             @type("T")
             method():T { return {} as any}
         }
-        const ChildClass = generic.create(SuperClass, [Number)
+        const ChildClass = generic.create(SuperClass, Number)
         const instance = new ChildClass()
         expect(instance).toBeInstanceOf(SuperClass)
         expect(instance).toBeInstanceOf(ChildClass)
