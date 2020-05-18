@@ -162,11 +162,9 @@ export namespace generic {
      */
     export function create<T extends Class>(parent: T, ...params: Class[]) {
         const Type = (() => {
-            class DynamicType { }
+            class DynamicType extends parent { }
             return DynamicType as T;
         })();
-        Object.setPrototypeOf(Type.prototype, parent.prototype)
-        Object.setPrototypeOf(Type, parent)
         Reflect.decorate([generic.type(...params)], Type)
         return Type
     }
