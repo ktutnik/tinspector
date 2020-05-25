@@ -110,7 +110,7 @@ function printDestruct(params: any[]) {
 // ------------------------------- PARSER ------------------------------ //
 // --------------------------------------------------------------------- //
 
-function parseParameter(name: string | { [key: string]: string[] }, index: number, owner?: Class): ParameterReflection {
+function parseParameter(name: string | { [key: string]: string[] }, index: number): ParameterReflection {
     let parName
     let fields: { [key: string]: any[] } = {}
     if (typeof name === "object") {
@@ -120,7 +120,7 @@ function parseParameter(name: string | { [key: string]: string[] }, index: numbe
     else {
         parName = name
     }
-    return { kind: "Parameter", name: parName, decorators: [], fields, owner: owner ? [owner] : undefined as any, index, type: undefined }
+    return { kind: "Parameter", name: parName, decorators: [], fields, index, type: undefined }
 }
 
 function parseFunction(fn: Function): FunctionReflection {
@@ -134,8 +134,8 @@ function parseMethods(owner: Class): MethodReflection[] {
     for (const name of members) {
         const des = Reflect.getOwnPropertyDescriptor(owner.prototype, name)
         if (des && typeof des.value === "function" && !des.get && !des.set) {
-            const parameters = getMethodParameters(owner, name).map((x, i) => parseParameter(x, i, owner))
-            result.push({ kind: "Method", name, parameters, decorators: [], returnType: undefined, owner: [owner] })
+            const parameters = getMethodParameters(owner, name).map((x, i) => parseParameter(x, i))
+            result.push({ kind: "Method", name, parameters, decorators: [], returnType: undefined })
         }
     }
     return result
@@ -147,13 +147,13 @@ function parseProperties(owner: Class): PropertyReflection[] {
     for (const name of members) {
         const des = Reflect.getOwnPropertyDescriptor(owner.prototype, name)
         if (!des || des.get || des.set) {
-            result.push({ kind: "Property", name, decorators: [], owner: [owner], get: des?.get, set: des?.set })
+            result.push({ kind: "Property", name, decorators: [], get: des?.get, set: des?.set })
         }
     }
     // include constructor parameter
     const params = getConstructorParameters(owner)
     for (const [i, name] of params.entries()) {
-        const { fields, ...par } = parseParameter(name, i, owner)
+        const { fields, ...par } = parseParameter(name, i)
         result.push(<ParameterPropertyReflection>{ ...par, kind: "Property", isParameter: true, get: undefined, set: undefined })
     }
     return result
@@ -164,14 +164,14 @@ function parseConstructor(fn: Class): ConstructorReflection {
     return {
         kind: "Constructor",
         name: "constructor",
-        parameters: params.map((x, i) => parseParameter(x, i, fn)),
+        parameters: params.map((x, i) => parseParameter(x, i)),
     }
 }
 
 function parseClass(fn: Class): ClassReflection {
     const proto = Object.getPrototypeOf(fn)
     return {
-        kind: "Class", name: fn.name, type: fn, decorators: [], owner: [fn],
+        kind: "Class", name: fn.name, type: fn, decorators: [], 
         methods: parseMethods(fn),
         properties: parseProperties(fn),
         ctor: parseConstructor(fn),

@@ -1,23 +1,21 @@
 import { array, ignore, noop, parameterProperties, type } from "./decorators"
 import { metadata, useCache } from "./helpers"
-import { parseClass, parseFunction } from "./parser"
-import { createVisitors, purifyTraversal, visitors } from "./purifier"
+import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
+import { walkClass, visitors, WalkVisitor, GenericMap } from "./walker"
 
-
-function reflectClass(target: Class) {
-    const visitor = createVisitors(
-        visitors.addSuperclassMeta,
+function reflectClass(target: Class): ClassReflection {
+    const visitorOrder = [
         visitors.addsDesignTypes,
         visitors.addsDecorators,
         visitors.addsTypeOverridden,
+        visitors.addsParameterProperties,
         visitors.addsGenericOverridden,
         visitors.addsTypeClassification,
-        visitors.addsParameterProperties,
-        visitors.removeIgnored
-    )
-    const meta = parseClass(target)
-    return purifyTraversal(meta, { visitor, parent: meta, target: meta.type })
+        visitors.removeIgnored,
+    ]
+    const visitor: WalkVisitor = (value, ctx) => visitorOrder.reduce((a, b) => !!a ? b(a, ctx) : a, value as any)
+    return walkClass(target, { visitor, classPath: [] })
 }
 
 function traverseObject(fn: any, name: string): Reflection | undefined {

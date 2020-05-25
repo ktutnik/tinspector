@@ -207,6 +207,8 @@ const metadata = reflect(Awesome)
 Above code showing that we add a specialized decorator `@generic.template()` to define generic template type. We also defined data type of the generic parameters using `@reflect.type()` decorator. Next on the inherited class we specify `@generic.type()` to define types replace the generic template. Note that the order of the parameter on `@generic.template()` and `@generic.type()` is important.
 
 
+
+
 ## Inspect Parameter Properties
 TypeScript has parameter properties feature, which make it possible to use constructor parameter as property. tinspector able to extract parameter properties type information by using `@reflect.parameterProperties()` decorator.
 

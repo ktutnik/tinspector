@@ -22,8 +22,6 @@ export interface NativeParameterDecorator extends NativeDecorator {
 }
 
 export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection | ConstructorReflection
-export type WithOwnerReflection = MethodReflection | PropertyReflection | ParameterReflection
-export type TypedReflection = ClassReflection | MethodReflection | PropertyReflection | ParameterReflection | ConstructorReflection | ParameterPropertyReflection
 
 export interface ReflectionBase {
     kind: string,
@@ -35,7 +33,6 @@ export interface ParameterReflection extends ReflectionBase {
     decorators: any[],
     type?: any,
     typeClassification?: "Class" | "Array" | "Primitive"
-    owner: Class[],
     index: number
 }
 export interface PropertyReflection extends ReflectionBase {
@@ -45,7 +42,6 @@ export interface PropertyReflection extends ReflectionBase {
     get?: any,
     set?: any,
     typeClassification?: "Class" | "Array" | "Primitive"
-    owner: Class[],
 }
 export interface ParameterPropertyReflection extends PropertyReflection {
     index: number,
@@ -57,7 +53,6 @@ export interface MethodReflection extends ReflectionBase {
     returnType: any,
     decorators: any[],
     typeClassification?: "Class" | "Array" | "Primitive"
-    owner: Class[]
 }
 export interface ConstructorReflection extends ReflectionBase {
     kind: "Constructor",
@@ -77,7 +72,6 @@ export interface ClassReflection extends ReflectionBase {
     type: Class,
     super: Class,
     typeClassification?: "Class" | "Array" | "Primitive",
-    owner: Class[]
 }
 export interface ObjectReflection extends ReflectionBase {
     kind: "Object",
@@ -107,7 +101,7 @@ export interface ParameterPropertiesDecorator {
 }
 export interface GenericTypeDecorator {
     kind: "GenericType",
-    types: (Class | Class[])[]
+    types: (Class[] | Class | string | string[])[]
     target: Class
 }
 export interface GenericTemplateDecorator {

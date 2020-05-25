@@ -4,7 +4,7 @@
 /* --------------------------- HELPERS ---------------------------- */
 /* ---------------------------------------------------------------- */
 
-import { Class } from "./types"
+import { Class, ParameterPropertyReflection, ClassReflection } from "./types"
 
 function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R, getKey: (...args: P) => K) {
     return (...args: P) => {
@@ -20,8 +20,12 @@ function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R
 }
 
 namespace metadata {
-    export function isCallback(type: Function) : type is ((x:any) => Class[] | Class | string | string[]){
-        return typeof type === "function" && !type.prototype 
+    export function isParameterProperties(meta: any): meta is ParameterPropertyReflection {
+        return meta && meta.kind === "Property" && (meta as ParameterPropertyReflection).isParameter
+    }
+
+    export function isCallback(type: Function): type is ((x: any) => Class[] | Class | string | string[]) {
+        return typeof type === "function" && !type.prototype
     }
 
     export function isConstructor(value: any) {
@@ -40,6 +44,22 @@ namespace metadata {
             default:
                 return true
         }
+    }
+
+    export function getMethods(meta: ClassReflection) {
+        return meta.methods.map(x => ({
+            name: x.name,
+            type: x.returnType,
+            pars: x.parameters
+                .map(p => ({ name: p.name, type: p.type }))
+        }))
+    }
+
+    export function getProperties(meta: ClassReflection) {
+        return meta.properties.map(x => ({
+            name: x.name,
+            type: x.type
+        }))
     }
 }
 

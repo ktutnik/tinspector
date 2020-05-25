@@ -1,4 +1,4 @@
-import reflect, { generic, type, parameterProperties } from "../src"
+import reflect, { generic, type, parameterProperties, metadata } from "../src"
 
 
 
@@ -52,13 +52,14 @@ describe("Generic", () => {
         class MyClass extends SuperClass<string>{ }
         expect(reflect(MyClass)).toMatchSnapshot()
     })
-    it("Should able to inspect generic on constructor parameters", () => {
+    it("Should able to inspect generic with array type implementation", () => {
         @generic.template("T")
+        @parameterProperties()
         class SuperClass<T> {
-            constructor(@type("T") par: T) { }
+            constructor(@type("T") public prop: T) { }
         }
-        @generic.type(String)
-        class MyClass extends SuperClass<string>{ }
+        @generic.type([String])
+        class MyClass extends SuperClass<string[]>{ }
         expect(reflect(MyClass)).toMatchSnapshot()
     })
     it("Should not error inspect the generic class", () => {
@@ -68,7 +69,25 @@ describe("Generic", () => {
         }
         expect(reflect(SuperClass)).toMatchSnapshot()
     })
-    it("Should able to inspect nested generic class with multiple templates", () => {
+    it("Should able to inspect properties on deep inheritance", () => {
+        @generic.template("T")
+        class Grand<T> {
+            @type("T")
+            grand: T = {} as any
+        }
+        @generic.template("B")
+        @generic.type(Number)
+        class Super<B> extends Grand<Number> {
+            @type("B")
+            super: B = {} as any
+        }
+        @generic.type(String)
+        class MyClass extends Super<String> { }
+        const meta = reflect(MyClass)
+        expect(metadata.getProperties(meta)).toMatchSnapshot()
+        expect(meta).toMatchSnapshot()
+    })
+    it("Should able to inspect inherited generic type", () => {
         @generic.template("T", "U")
         class GrandSuperClass<T, U>{
             @type("T")
@@ -82,7 +101,73 @@ describe("Generic", () => {
         }
         @generic.type(Number, Date)
         class MyClass extends SuperClass<number, Date>{ }
-        expect(reflect(MyClass)).toMatchSnapshot()
+        const meta = reflect(MyClass)
+        expect(metadata.getMethods(meta)).toMatchSnapshot()
+        expect(meta).toMatchSnapshot()
+    })
+    it("Should able to inspect nested generic class with multiple template", () => {
+        @generic.template("T", "U")
+        class GrandSuperClass<T, U>{
+            @type("T")
+            grandSuper(@type("U") par: U): T { return {} as any }
+        }
+        @generic.template("A", "B")
+        @generic.type("A", "B")
+        class SuperClass<A, B> extends GrandSuperClass<A, B>{
+            @type("B")
+            super(@type("A") par: A): B { return {} as any }
+        }
+        @generic.type(Number, Date)
+        class MyClass extends SuperClass<number, Date>{ }
+        const meta = reflect(MyClass)
+        expect(metadata.getMethods(meta)).toMatchSnapshot()
+        expect(meta).toMatchSnapshot()
+    })
+})
+
+describe("Error Handling", () => {
+    it("Should show proper error when no @generic.types() provided", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            method(): T { return {} as any }
+        }
+        class MyClass extends SuperClass<string>{ }
+        expect(() => reflect(MyClass)).toThrowErrorMatchingSnapshot()
+    })
+    it("Should show proper error when no @generic.types() provided in deep inheritance", () => {
+        @generic.template("T", "U")
+        class GrandSuperClass<T, U>{
+            @type("T")
+            grandSuper(@type("U") par: U): T { return {} as any }
+        }
+        @generic.template("A", "B")
+        class SuperClass<A, B> extends GrandSuperClass<A, B>{
+            @type("B")
+            super(@type("A") par: A): B { return {} as any }
+        }
+        @generic.type(Number, Date)
+        class MyClass extends SuperClass<number, Date>{ }
+        expect(() => reflect(MyClass)).toThrowErrorMatchingSnapshot()
+    })
+    it("Should show proper error when number of types provided mismatch", () => {
+        @generic.template("A", "B")
+        class SuperClass<A, B> {
+            @type("B")
+            super(@type("A") par: A): B { return {} as any }
+        }
+        @generic.type(Number)
+        class MyClass extends SuperClass<number, Date>{ }
+        expect(() => reflect(MyClass)).toThrowErrorMatchingSnapshot()
+    })
+    it("Should show proper error when specify template on type but doesn't specify @generic.template()", () => {
+        class SuperClass<A, B> {
+            @type("B")
+            super(@type("A") par: A): B { return {} as any }
+        }
+        @generic.type(Number)
+        class MyClass extends SuperClass<number, Date>{ }
+        expect(() => reflect(MyClass)).toThrowErrorMatchingSnapshot()
     })
 })
 
@@ -91,7 +176,7 @@ describe("Create Generic", () => {
         @generic.template("T")
         class SuperClass<T> {
             @type("T")
-            method():T { return {} as any}
+            method(): T { return {} as any }
         }
         const ChildClass = generic.create(SuperClass, Number)
         const instance = new ChildClass()
@@ -102,7 +187,7 @@ describe("Create Generic", () => {
         @generic.template("T", "U")
         class SuperClass<T, U> {
             @type("T")
-            method(@type("U") par:U):T { return {} as any}
+            method(@type("U") par: U): T { return {} as any }
         }
         const ChildClass = generic.create(SuperClass, Number, String)
         const instance = new ChildClass()
@@ -112,7 +197,7 @@ describe("Create Generic", () => {
         @generic.template("T")
         class SuperClass<T> {
             @type("T")
-            method():T { return {} as any}
+            method(): T { return {} as any }
         }
         const ChildClass = generic.create(SuperClass, Number)
         const instance = new ChildClass()
@@ -127,11 +212,11 @@ describe("Create Generic", () => {
         const fn = jest.fn()
         @generic.template("T")
         class SuperClass<T> {
-            constructor(){
+            constructor() {
                 fn()
             }
             @type("T")
-            method():T { return {} as any}
+            method(): T { return {} as any }
         }
         const ChildClass = generic.create(SuperClass, Number)
         const instance = new ChildClass()

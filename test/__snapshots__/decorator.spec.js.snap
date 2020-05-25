@@ -26,10 +26,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -56,10 +52,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -87,9 +79,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "id",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": Number,
         "typeClassification": "Primitive",
       },
@@ -99,10 +88,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -132,9 +117,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "id",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": Number,
         "typeClassification": "Primitive",
       },
@@ -144,10 +126,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -182,9 +160,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "id",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": Number,
         "typeClassification": "Primitive",
       },
@@ -194,10 +169,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -234,19 +205,12 @@ Object {
       ],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -283,19 +247,12 @@ Object {
       ],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -317,9 +274,6 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -335,9 +289,6 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "id",
-          "owner": Array [
-            DummyClass,
-          ],
           "type": Number,
           "typeClassification": "Primitive",
         },
@@ -347,10 +298,6 @@ Object {
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -372,9 +319,6 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -397,9 +341,6 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "id",
-          "owner": Array [
-            DummyClass,
-          ],
           "type": Number,
           "typeClassification": "Primitive",
         },
@@ -409,10 +350,6 @@ Object {
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -434,9 +371,6 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -454,9 +388,6 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "id",
-          "owner": Array [
-            DummyClass,
-          ],
           "type": Number,
           "typeClassification": "Primitive",
         },
@@ -466,10 +397,6 @@ Object {
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -489,9 +416,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -517,10 +441,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -529,9 +449,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -562,10 +479,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -601,9 +514,6 @@ Object {
       ],
       "kind": "Method",
       "name": "myFunction",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [
         Object {
           "decorators": Array [
@@ -618,9 +528,6 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "par",
-          "owner": Array [
-            DummyClass,
-          ],
           "type": String,
           "typeClassification": "Primitive",
         },
@@ -630,10 +537,6 @@ Object {
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -647,9 +550,6 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "myProp",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": Object,
       "typeClassification": "Primitive",
@@ -683,19 +583,12 @@ Object {
       ],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -725,19 +618,12 @@ Object {
       ],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -768,19 +654,12 @@ Object {
       ],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -811,19 +690,12 @@ Object {
       ],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        DummyClass,
-      ],
       "parameters": Array [],
       "returnType": undefined,
       "typeClassification": undefined,
     },
   ],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -842,19 +714,12 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [],
       "get": get data,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": set data,
       "type": undefined,
       "typeClassification": undefined,
@@ -877,10 +742,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -894,9 +755,6 @@ Object {
       "get": get data,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": set data,
       "type": Number,
       "typeClassification": "Primitive",
@@ -919,10 +777,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -938,9 +792,6 @@ Object {
       "get": get data,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": set data,
       "type": Number,
       "typeClassification": "Primitive",
@@ -963,10 +814,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -988,9 +835,6 @@ Object {
       "get": get data,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": set data,
       "type": Number,
       "typeClassification": "Primitive",
@@ -1013,10 +857,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1030,9 +870,6 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "dummyProp",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1055,10 +892,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1080,9 +913,6 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "dummyProp",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1105,10 +935,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1125,9 +951,6 @@ Object {
       "get": undefined,
       "kind": "Property",
       "name": "dummyProp",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1161,9 +984,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "dummyProp",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1182,10 +1002,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1204,9 +1020,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "dummyProp",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1230,9 +1043,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1251,10 +1061,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -1263,9 +1069,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1296,9 +1099,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1317,10 +1117,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1336,9 +1132,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1371,9 +1164,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1392,10 +1182,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1413,9 +1199,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1454,9 +1237,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1475,10 +1255,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1502,9 +1278,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1528,9 +1301,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1549,9 +1319,6 @@ Object {
         "index": 1,
         "kind": "Parameter",
         "name": "myPrivateField",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -1570,10 +1337,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -1582,9 +1345,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",
@@ -1620,31 +1380,12 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyOtherClass,
-    MyClass,
-  ],
   "properties": Array [
     Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyOtherClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
+      "decorators": Array [],
       "get": undefined,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        MyOtherClass,
-      ],
       "set": undefined,
       "type": Number,
       "typeClassification": "Primitive",
@@ -1667,10 +1408,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1681,16 +1418,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "arr",
-      "owner": Array [
-        MyClass,
-      ],
       "set": undefined,
       "type": Array [
         Number,
@@ -1723,25 +1457,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Number,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -1760,10 +1487,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1774,16 +1497,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "other",
-      "owner": Array [
-        MyClass,
-      ],
       "set": undefined,
       "type": Array [
         OtherClass,
@@ -1808,10 +1528,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "OtherClass",
-  "owner": Array [
-    Object,
-    OtherClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1822,16 +1538,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "my",
-      "owner": Array [
-        OtherClass,
-      ],
       "set": undefined,
       "type": Array [
         MyClass,
@@ -1856,10 +1569,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1870,16 +1579,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        MyClass,
-      ],
       "set": undefined,
       "type": Number,
       "typeClassification": "Primitive",
@@ -1915,32 +1621,12 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyOtherClass,
-    MyClass,
-  ],
   "properties": Array [
     Object {
-      "decorators": Array [
-        Object {
-          "info": undefined,
-          "kind": "Override",
-          "target": MyOtherClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(override),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": true,
-          },
-        },
-      ],
+      "decorators": Array [],
       "get": undefined,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        MyOtherClass,
-      ],
       "set": undefined,
       "type": Number,
       "typeClassification": "Primitive",
@@ -1963,10 +1649,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -1978,16 +1660,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "arr",
-      "owner": Array [
-        MyClass,
-      ],
       "set": undefined,
       "type": Array [
         Number,
@@ -2021,25 +1700,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Array,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2067,25 +1739,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Boolean,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2113,25 +1778,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Date,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2159,25 +1817,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Number,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2205,25 +1856,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Object,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2251,25 +1895,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Promise,
       "typeClassification": "Class",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2297,25 +1934,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": String,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2343,25 +1973,18 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "kind": "Method",
       "name": "myMethod",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [],
       "returnType": Object,
       "typeClassification": "Primitive",
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -2380,10 +2003,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -2395,16 +2014,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "other",
-      "owner": Array [
-        MyClass,
-      ],
       "set": undefined,
       "type": Array [
         OtherClass,
@@ -2429,10 +2045,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "OtherClass",
-  "owner": Array [
-    Object,
-    OtherClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [
@@ -2444,16 +2056,13 @@ Object {
           Symbol(tinspector:decoratorId): Symbol(override),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
-            "inherit": true,
+            "inherit": false,
           },
         },
       ],
       "get": undefined,
       "kind": "Property",
       "name": "my",
-      "owner": Array [
-        OtherClass,
-      ],
       "set": undefined,
       "type": Array [
         MyClass,

@@ -22,9 +22,6 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
@@ -32,9 +29,6 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "par",
-          "owner": Array [
-            MyClass,
-          ],
           "type": undefined,
           "typeClassification": undefined,
         },
@@ -44,10 +38,6 @@ Object {
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
@@ -77,9 +67,6 @@ Object {
       "decorators": Array [],
       "kind": "Method",
       "name": "method",
-      "owner": Array [
-        MyClass,
-      ],
       "parameters": Array [
         Object {
           "decorators": Array [],
@@ -87,9 +74,6 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "par",
-          "owner": Array [
-            MyClass,
-          ],
           "type": undefined,
           "typeClassification": undefined,
         },
@@ -99,10 +83,6 @@ Object {
     },
   ],
   "name": "MyClass",
-  "owner": Array [
-    Object,
-    MyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": MyClass,
