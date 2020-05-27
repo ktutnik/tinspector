@@ -23,9 +23,12 @@ Object {
   "ignore": ignore,
   "mergeDecorator": mergeDecorator,
   "metadata": Object {
+    "getMethods": getMethods,
+    "getProperties": getProperties,
     "isCallback": isCallback,
     "isConstructor": isConstructor,
     "isCustomClass": isCustomClass,
+    "isParameterProperties": isParameterProperties,
   },
   "noop": noop,
   "parameterProperties": parameterProperties,

@@ -11,10 +11,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -33,10 +29,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [],
   "super": Object,
   "type": DummyClass,
@@ -56,9 +48,6 @@ Object {
         "index": 0,
         "kind": "Parameter",
         "name": "data",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -77,9 +66,6 @@ Object {
         "index": 1,
         "kind": "Parameter",
         "name": "id",
-        "owner": Array [
-          DummyClass,
-        ],
         "type": String,
         "typeClassification": "Primitive",
       },
@@ -98,10 +84,6 @@ Object {
   "kind": "Class",
   "methods": Array [],
   "name": "DummyClass",
-  "owner": Array [
-    Object,
-    DummyClass,
-  ],
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -110,9 +92,6 @@ Object {
       "isParameter": true,
       "kind": "Property",
       "name": "data",
-      "owner": Array [
-        DummyClass,
-      ],
       "set": undefined,
       "type": String,
       "typeClassification": "Primitive",

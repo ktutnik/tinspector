@@ -1,5 +1,6 @@
 import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect, noop } from "../src"
 import * as metadata from "../src/parser"
+import { metadata as metadataHelper} from "../src/helpers"
 
 describe("getDeepMember", () => {
 
@@ -147,11 +148,11 @@ describe("Inheritance", () => {
     it("Should not override private property", () => {
         class BaseClass {
             @reflect.ignore()
-            baseProp:number = 1
+            baseProp: number = 1
         }
         class ChildClass extends BaseClass {
             @reflect.noop()
-            childProp:number = 2
+            childProp: number = 2
         }
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
@@ -194,15 +195,15 @@ describe("Inheritance", () => {
     })
 
     it("Should able to get proper overridden parameter type", () => {
-        class BaseEntity {}
-        class Entity extends BaseEntity{}
+        class BaseEntity { }
+        class Entity extends BaseEntity { }
         class BaseMyClass {
             @noop()
-            method(entity:BaseEntity){}
+            method(entity: BaseEntity) { }
         }
         class MyClass {
             @noop()
-            method(entity:Entity){}
+            method(entity: Entity) { }
         }
         const meta = reflect(MyClass)
         expect(meta).toMatchSnapshot()
@@ -382,8 +383,7 @@ describe("Inheritance", () => {
                     @decorateMethod({ value: 1 }, { inherit: false })
                     myMethod(a: string): string { return "" }
                 }
-                class ChildClass extends BaseClass {
-                }
+                class ChildClass extends BaseClass { }
                 const meta = reflect(ChildClass)
                 expect(meta).toMatchSnapshot()
             })
@@ -466,20 +466,6 @@ describe("Inheritance", () => {
                 const meta = reflect(ChildClass)
                 expect(meta).toMatchSnapshot()
             })
-
-            // it("Should not merge decorator if the same name", () => {
-            //     class BaseClass {
-            //         constructor(@decorateParameter({ value: 1 }) a: string) { }
-            //     }
-            //     class ChildClass extends BaseClass {
-            //         constructor(@decorateParameter({ value: 2 }) a: string) {
-            //             super(a)
-            //         }
-            //     }
-            //     const meta = reflect(ChildClass)
-            //     expect(meta).toMatchSnapshot()
-            // })
-
         })
     })
 })
