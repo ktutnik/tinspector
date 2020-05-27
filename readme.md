@@ -1,6 +1,6 @@
 # tinspector
 
-[![Build Status](https://travis-ci.org/plumier/tinspector.svg?branch=master)](https://travis-ci.org/plumier/tinspector)
+![ubuntu](https://github.com/plumier/tinspector/workflows/ubuntu/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/plumier/tinspector/badge.svg?branch=master)](https://coveralls.io/github/plumier/tinspector?branch=master) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/plumier/tinspector.svg)](https://greenkeeper.io/)
 
