@@ -109,12 +109,15 @@ class GenericMap {
             .find((x: GenericTypeDecorator): x is GenericTypeDecorator => x.kind === "GenericType")
         return decorator?.types
     }
-    get(type: string) {
-        return this.maps.reduce((val, map) => {
+    get(rawType: string | string[]) {
+        const isArray = Array.isArray(rawType)
+        const type = isArray ? rawType[0] : rawType
+        const result = this.maps.reduce((val, map) => {
             // keep looking at the real type
             // if it is string then it still a generic type template
             return typeof val === "string" ? map.get(val) : val
         }, type as TypeOverride | undefined)
+        return isArray ? [result] : result
     }
 }
 
@@ -171,19 +174,22 @@ namespace visitors {
     }
 
     export function addsGenericOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
-        const getType = (x: any) => Array.isArray(x) ? x[0] : x
+        const isGenericTemplate = (x: MethodReflection | PropertyReflection | ParameterReflection) => {
+            const decorator = getTypeOverrideFromDecorator(x.decorators)
+            if (!decorator) return false
+            const type = Array.isArray(decorator.type) ? decorator.type[0] : decorator.type
+            return typeof type === "string"
+        }
         if (meta.kind === "Constructor" || meta.kind === "Class") return meta
         // if current class has @generic.template() then process
         if (meta.kind === "Method") {
-            const typeDef = getType(meta.returnType)
-            // if type is not string then its not a template type then return immediately
-            if (!(typeof typeDef === "string")) return meta
+            // if type is not a generic template type then return immediately
+            if (!isGenericTemplate(meta)) return meta
             const returnType = new GenericMap(ctx.classPath).get(meta.returnType)
             return { ...meta, returnType }
         }
-        const typeDef = getType(meta.type)
-        if (!(typeof typeDef === "string")) return meta
-        const type = new GenericMap(ctx.classPath).get(typeDef)
+        if (!isGenericTemplate(meta)) return meta
+        const type = new GenericMap(ctx.classPath).get(meta.type)
         return { ...meta, type }
     }
 

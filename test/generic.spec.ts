@@ -52,16 +52,6 @@ describe("Generic", () => {
         class MyClass extends SuperClass<string>{ }
         expect(reflect(MyClass)).toMatchSnapshot()
     })
-    it("Should able to inspect generic with array type implementation", () => {
-        @generic.template("T")
-        @parameterProperties()
-        class SuperClass<T> {
-            constructor(@type("T") public prop: T) { }
-        }
-        @generic.type([String])
-        class MyClass extends SuperClass<string[]>{ }
-        expect(reflect(MyClass)).toMatchSnapshot()
-    })
     it("Should not error inspect the generic class", () => {
         @generic.template("T")
         class SuperClass<T> {
@@ -122,6 +112,90 @@ describe("Generic", () => {
         const meta = reflect(MyClass)
         expect(metadata.getMethods(meta)).toMatchSnapshot()
         expect(meta).toMatchSnapshot()
+    })
+})
+
+describe("Array Generic Template", () => {
+    it("Should able to inspect array generic type on method", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type(["T"])
+            method(): T[] { return {} as any }
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on method parameter", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            method(@type(["T"]) par: T[]) { return {} as any }
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on property", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type(["T"])
+            prop: T[] = []
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on getter", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type(["T"])
+            get prop(): T[] { return {} as any }
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+})
+
+describe("Array Type", () => {
+    it("Should able to inspect array generic type on method", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            method(): T { return {} as any }
+        }
+        @generic.type([String])
+        class MyClass extends SuperClass<string[]>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on method parameter", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            method(@type("T") par: T) { return {} as any }
+        }
+        @generic.type([String])
+        class MyClass extends SuperClass<string[]>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on property", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            prop: T = {} as any
+        }
+        @generic.type([String])
+        class MyClass extends SuperClass<string[]>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on getter", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            get prop(): T { return {} as any }
+        }
+        @generic.type([String])
+        class MyClass extends SuperClass<string[]>{ }
+        expect(reflect(MyClass)).toMatchSnapshot()
     })
 })
 
