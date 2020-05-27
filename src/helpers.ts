@@ -24,7 +24,7 @@ namespace metadata {
         return meta && meta.kind === "Property" && (meta as ParameterPropertyReflection).isParameter
     }
 
-    export function isCallback(type: Function): type is ((x: any) => Class[] | Class | string | string[]) {
+    export function isCallback(type: any): type is ((x: any) => Class[] | Class | string | string[]) {
         return typeof type === "function" && !type.prototype
     }
 

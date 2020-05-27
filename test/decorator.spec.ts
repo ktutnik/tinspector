@@ -442,57 +442,7 @@ describe("Decorator", () => {
     })
 
     describe("Type Override", () => {
-        describe("noop", () => {
-            it("Should able to override method return type with @noop()", () => {
-                class MyClass {
-                    @noop(x => Number)
-                    myMethod() { }
-                }
-                expect(reflect(MyClass)).toMatchSnapshot()
-            })
-
-            it("Should able to override array type with @noop()", () => {
-                class MyClass {
-                    @noop(x => [Number])
-                    arr: Number[] = [1]
-                }
-                expect(reflect(MyClass)).toMatchSnapshot()
-            })
-
-            it("Should not cause cross reference error on circular dependency", () => {
-                class OtherClass {
-                    @noop(x => [MyClass])
-                    my: MyClass[] = []
-                }
-                class MyClass {
-                    @noop(x => [OtherClass])
-                    other: OtherClass[] = []
-                }
-                expect(reflect(MyClass)).toMatchSnapshot()
-                expect(reflect(OtherClass)).toMatchSnapshot()
-            })
-
-            it("Should not cause issue when decorated with @noop()", () => {
-                class MyClass {
-                    @noop()
-                    data: number = 123
-                }
-                expect(reflect(MyClass)).toMatchSnapshot()
-            })
-
-            it("Should able to mark generic type with @noop()", () => {
-
-                @generic.template("T")
-                class MyOtherClass<T> {
-                    @noop(x => "T")
-                    data: T = {} as any
-                }
-
-                @generic.type(Number)
-                class MyClass extends MyOtherClass<Number> { }
-                expect(reflect(MyClass)).toMatchSnapshot()
-            })
-        })
+        
         describe("type", () => {
             it("Should able to override method return type with @type() of type Number", () => {
                 class MyClass {

@@ -1356,247 +1356,6 @@ Object {
 }
 `;
 
-exports[`Decorator Type Override noop Should able to mark generic type with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [
-    Object {
-      "kind": "GenericType",
-      "target": MyClass,
-      "types": Array [
-        Number,
-      ],
-      Symbol(tinspector:decoratorId): Symbol(genericType),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "inherit": false,
-      },
-    },
-  ],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [],
-      "get": undefined,
-      "kind": "Property",
-      "name": "data",
-      "set": undefined,
-      "type": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "super": MyOtherClass,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Type Override noop Should able to override array type with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": false,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "arr",
-      "set": undefined,
-      "type": Array [
-        Number,
-      ],
-      "typeClassification": "Array",
-    },
-  ],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Type Override noop Should able to override method return type with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": false,
-          },
-        },
-      ],
-      "kind": "Method",
-      "name": "myMethod",
-      "parameters": Array [],
-      "returnType": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "name": "MyClass",
-  "properties": Array [],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Type Override noop Should not cause cross reference error on circular dependency 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": false,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "other",
-      "set": undefined,
-      "type": Array [
-        OtherClass,
-      ],
-      "typeClassification": "Array",
-    },
-  ],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Type Override noop Should not cause cross reference error on circular dependency 2`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "OtherClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": OtherClass,
-          "type": ,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": false,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "my",
-      "set": undefined,
-      "type": Array [
-        MyClass,
-      ],
-      "typeClassification": "Array",
-    },
-  ],
-  "super": Object,
-  "type": OtherClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Decorator Type Override noop Should not cause issue when decorated with @noop() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [
-        Object {
-          "kind": "Noop",
-          "target": MyClass,
-          "type": undefined,
-          Symbol(tinspector:decoratorId): Symbol(noop),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "inherit": false,
-          },
-        },
-      ],
-      "get": undefined,
-      "kind": "Property",
-      "name": "data",
-      "set": undefined,
-      "type": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "super": Object,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Decorator Type Override type Should able to mark generic type with @type() 1`] = `
 Object {
   "ctor": Object {
@@ -1653,7 +1412,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": ,
@@ -1693,7 +1452,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": Array,
@@ -1732,7 +1491,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": Boolean,
@@ -1771,7 +1530,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": Date,
@@ -1810,7 +1569,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": Number,
@@ -1849,7 +1608,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": Object,
@@ -1888,7 +1647,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": Promise,
@@ -1927,7 +1686,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": String,
@@ -1966,7 +1725,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": ,
@@ -2007,7 +1766,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": MyClass,
           "type": ,
@@ -2049,7 +1808,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": OtherClass,
           "type": ,

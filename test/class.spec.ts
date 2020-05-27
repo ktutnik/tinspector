@@ -21,7 +21,7 @@ describe("Class Introspection", () => {
         class EmptyClass { }
         @decorateClass({})
         class DummyClass {
-            constructor(@reflect.array(EmptyClass) empty: EmptyClass[]) { }
+            constructor(@reflect.type([EmptyClass]) empty: EmptyClass[]) { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
@@ -104,7 +104,7 @@ describe("Class Introspection", () => {
         class EmptyClass { }
         class DummyClass {
             @decorateMethod({})
-            dummyMethod(@reflect.array(EmptyClass) empty: EmptyClass[]) { }
+            dummyMethod(@reflect.type([EmptyClass]) empty: EmptyClass[]) { }
         }
         const meta = reflect(DummyClass)
         expect(meta.methods[0].parameters[0].type).toEqual([EmptyClass])
@@ -163,17 +163,6 @@ describe("Class Introspection", () => {
             dummyMethod(@reflect.type(Domain) { a, b, child: { c, d, child: { e, f } } }: Domain) { }
         }
         const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
-
-    it("Should able to override type with other type", () => {
-        class OtherDummyClass { }
-        class DummyClass {
-            method(@reflect.type(OtherDummyClass, "Readonly") dummy: Readonly<OtherDummyClass>) { }
-        }
-        const meta = reflect(DummyClass)
-        expect(meta.methods[0].parameters[0].decorators[0].type).toEqual(OtherDummyClass)
-        expect(meta.methods[0].parameters[0].decorators[0].info).toEqual("Readonly")
         expect(meta).toMatchSnapshot()
     })
 

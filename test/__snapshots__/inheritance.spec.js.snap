@@ -1047,7 +1047,6 @@ Object {
         Object {
           "kind": "Noop",
           "target": MyClass,
-          "type": undefined,
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
@@ -1593,7 +1592,6 @@ Object {
         Object {
           "kind": "Noop",
           "target": ChildClass,
-          "type": undefined,
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,

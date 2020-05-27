@@ -1,4 +1,4 @@
-import { array, ignore, noop, parameterProperties, type } from "./decorators"
+import { ignore, noop, parameterProperties, type } from "./decorators"
 import { metadata, useCache } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
@@ -91,12 +91,6 @@ reflect.ignore = ignore
  * @param info Additional information about type (readonly, partial etc)
  */
 reflect.type = type
-
-/**
- * Add type information for array element
- * @param type Data type of array element
- */
-reflect.array = array
 
 /**
  * Mark all constructor parameters as properties

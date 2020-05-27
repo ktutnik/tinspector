@@ -7,6 +7,7 @@ export const DecoratorOptionId = Symbol("tinspector:decoratorOption")
 export const DecoratorId = Symbol("tinspector:decoratorId")
 
 export type Class<T = any> = new (...arg: any[]) => T
+export type TypeOverride = string | string[] | Class | Class[]
 export type DecoratorIterator = (type: DecoratorTargetType, target: string, index?: number) => any[]
 export type DecoratorTargetType = "Method" | "Class" | "Parameter" | "Property"
 export interface NativeDecorator {
@@ -19,6 +20,9 @@ export interface NativeDecorator {
 export interface NativeParameterDecorator extends NativeDecorator {
     targetType: "Parameter",
     targetIndex: number
+}
+export interface TypeOverrideOption {
+    genericType: TypeOverride[]
 }
 
 export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection | ConstructorReflection
@@ -77,20 +81,14 @@ export interface ObjectReflection extends ReflectionBase {
     kind: "Object",
     members: Reflection[]
 }
-export interface ArrayDecorator {
-    kind: "Array",
-    type: Class | string,
-    target: Class
-}
 export interface NoopDecorator {
     kind: "Noop",
-    type?: () => string | string[] | Class | Class[],
     target: Class
 }
 export interface TypeDecorator {
     kind: "Override",
-    type: Class[] | Class | string | string[] | ((x:any) => Class[] | Class | string | string[]),
-    info?: string,
+    type: TypeOverride | ((x: any) => TypeOverride),
+    genericParams: (string | string[])[]
     target: Class
 }
 export interface PrivateDecorator {
@@ -101,7 +99,7 @@ export interface ParameterPropertiesDecorator {
 }
 export interface GenericTypeDecorator {
     kind: "GenericType",
-    types: (Class[] | Class | string | string[])[]
+    types: (TypeOverride)[]
     target: Class
 }
 export interface GenericTemplateDecorator {

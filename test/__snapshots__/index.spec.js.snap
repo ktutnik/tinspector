@@ -8,7 +8,6 @@ Object {
   "DESIGN_TYPE": "design:type",
   "DecoratorId": Symbol(tinspector:decoratorId),
   "DecoratorOptionId": Symbol(tinspector:decoratorOption),
-  "array": array,
   "decorate": decorate,
   "decorateClass": decorateClass,
   "decorateMethod": decorateMethod,
