@@ -125,23 +125,23 @@ class GenericMap {
 namespace visitors {
     export function addsDesignTypes(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
         const getType = (type: any, i: number) => type[i] === Array ? [Object] : type[i]
-        if (meta.kind === "Method" && !meta.returnType) {
+        if (meta.kind === "Method") {
             const returnType: any = Reflect.getOwnMetadata(DESIGN_RETURN_TYPE, ctx.target.prototype, meta.name)
             return { ...meta, returnType }
         }
-        else if (metadata.isParameterProperties(meta) && !meta.type) {
+        else if (metadata.isParameterProperties(meta)) {
             const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, ctx.target) || []
             return { ...meta, type: getType(parTypes, meta.index) }
         }
-        else if (meta.kind === "Property" && !meta.type) {
+        else if (meta.kind === "Property") {
             const type: any = Reflect.getOwnMetadata(DESIGN_TYPE, ctx.target.prototype, meta.name)
             return { ...meta, type }
         }
-        else if (meta.kind === "Parameter" && ctx.parent.kind === "Constructor" && !meta.type) {
+        else if (meta.kind === "Parameter" && ctx.parent.kind === "Constructor") {
             const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, ctx.target) || []
             return { ...meta, type: getType(parTypes, meta.index) }
         }
-        else if (meta.kind === "Parameter" && ctx.parent.kind === "Method" && !meta.type) {
+        else if (meta.kind === "Parameter" && ctx.parent.kind === "Method") {
             const parTypes: any[] = Reflect.getOwnMetadata(DESIGN_PARAMETER_TYPE, ctx.target.prototype, ctx.parent.name) || []
             return { ...meta, type: getType(parTypes, meta.index) }
         }
