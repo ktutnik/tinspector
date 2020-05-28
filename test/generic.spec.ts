@@ -199,6 +199,61 @@ describe("Array Type", () => {
     })
 })
 
+describe("Generic Type as Template Type", () => {
+    @generic.template("T")
+    class CustomGeneric<T> {
+        @type("T")
+        prop: T = {} as any
+    }
+    it("Should able to inspect array generic type on method", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type(CustomGeneric, "T")
+            method(): CustomGeneric<T> { return {} as any }
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        const meta = reflect(MyClass)
+        const par = reflect(meta.methods[0].returnType)
+        expect(par).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on method parameter", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            method(@type(CustomGeneric, "T") par: CustomGeneric<T>) { return {} as any }
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        const meta = reflect(MyClass)
+        const par = reflect(meta.methods[0].parameters[0].type)
+        expect(par).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on property", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type(CustomGeneric, "T")
+            prop: CustomGeneric<T> = {} as any
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        const meta = reflect(MyClass)
+        const par = reflect(meta.properties[0].type)
+        expect(par).toMatchSnapshot()
+    })
+    it("Should able to inspect array generic on getter", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type(CustomGeneric, "T")
+            get prop(): CustomGeneric<T> { return {} as any }
+        }
+        @generic.type(String)
+        class MyClass extends SuperClass<string>{ }
+        const meta = reflect(MyClass)
+        const par = reflect(meta.properties[0].type)
+        expect(par).toMatchSnapshot()
+    })
+})
+
 describe("Error Handling", () => {
     it("Should show proper error when no @generic.types() provided", () => {
         @generic.template("T")

@@ -2,21 +2,22 @@ import "reflect-metadata"
 
 import { metadata } from "./helpers"
 import {
-    ArrayDecorator,
     Class,
     CustomPropertyDecorator,
     DECORATOR_KEY,
     DecoratorId,
     DecoratorOption,
     DecoratorTargetType,
+    GenericTemplateDecorator,
+    GenericTypeDecorator,
     NativeDecorator,
     NativeParameterDecorator,
+    NoopDecorator,
+    ParameterPropertiesDecorator,
     PrivateDecorator,
     TypeDecorator,
-    ParameterPropertiesDecorator,
-    GenericTypeDecorator,
-    GenericTemplateDecorator,
-    NoopDecorator,
+    TypeOverride,
+    TypeOverrideOption,
 } from "./types"
 
 // --------------------------------------------------------------------- //
@@ -130,19 +131,14 @@ export function ignore() {
     return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
-export function type(type: Class[] | Class | string | string[] | ((x: any) => Class[] | Class | string | string[]), info?: string) {
+export function type(type: TypeOverride | ((x: any) => TypeOverride), ...genericParams:(string|string[])[]) {
     // type is not inheritable because derived class can define their own type override
-    return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type: type, info, target }, ["Parameter", "Method", "Property"], { inherit: false, allowMultiple: false })
+    return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type, genericParams, target }, ["Parameter", "Method", "Property"], { inherit: false, allowMultiple: false })
 }
 
-export function noop(type?: (x: any) => string | string[] | Class | Class[]) {
+export function noop() {
     // type is not inheritable because derived class can define their own type override
-    return decorate((target: any) => <NoopDecorator>{ [DecoratorId]: symNoop, kind: "Noop", type, target }, undefined, { inherit: false, allowMultiple: false })
-}
-
-export function array(type: Class | string) {
-    // type is not inheritable because derived class can define their own type override
-    return decorate((target: any) => <ArrayDecorator>{ [DecoratorId]: symArray, kind: "Array", type: type, target }, ["Parameter", "Method", "Property"], { inherit: false, allowMultiple: false })
+    return decorate((target: any) => <NoopDecorator>{ [DecoratorId]: symNoop, kind: "Noop", target }, undefined, { inherit: false, allowMultiple: false })
 }
 
 export function parameterProperties() {
@@ -155,7 +151,7 @@ export namespace generic {
     export function template(...templates: string[]) {
         return decorateClass(target => <GenericTemplateDecorator>{ [DecoratorId]: symGenericTemplate, kind: "GenericTemplate", templates, target }, { inherit: false, allowMultiple: false })
     }
-    export function type(...types: (Class[] | Class | string | string[])[]) {
+    export function type(...types: TypeOverride[]) {
         return decorateClass(target => <GenericTypeDecorator>{ [DecoratorId]: symGenericType, kind: "GenericType", types, target }, { inherit: false, allowMultiple: false })
     }
     /**
@@ -163,7 +159,7 @@ export namespace generic {
      * @param parent Super class that the class inherited from
      * @param params List of generic type parameters
      */
-    export function create<T extends Class>(parent: T, ...params: Class[]) {
+    export function create<T extends Class>(parent: T, ...params: TypeOverride[]) {
         const Type = (() => {
             class DynamicType extends parent { }
             return DynamicType as T;

@@ -2,7 +2,6 @@ import { extendsMetadata } from "./extends"
 import { metadata } from "./helpers"
 import { parseClass } from "./parser"
 import {
-    ArrayDecorator,
     Class,
     ClassReflection,
     ConstructorReflection,
@@ -18,7 +17,6 @@ import {
     MethodReflection,
     NativeDecorator,
     NativeParameterDecorator,
-    NoopDecorator,
     ParameterPropertiesDecorator,
     ParameterPropertyReflection,
     ParameterReflection,
@@ -26,7 +24,9 @@ import {
     PropertyReflection,
     Reflection,
     TypeDecorator,
+    TypeOverride,
 } from "./types"
+import { generic } from "./decorators"
 
 // --------------------------------------------------------------------- //
 // ------------------------------- TYPES ------------------------------- //
@@ -34,7 +34,6 @@ import {
 
 type TypedReflection = ClassReflection | MethodReflection | PropertyReflection | ParameterReflection | ConstructorReflection | ParameterPropertyReflection
 type WalkVisitor = (value: TypedReflection, ctx: WalkMemberContext) => TypedReflection | undefined
-type TypeOverride = string | string[] | Class | Class[]
 
 interface WalkMemberContext {
     target: Class
@@ -65,20 +64,11 @@ function getDecorators(targetClass: Class, targetType: DecoratorTargetType, targ
 }
 
 function getTypeOverrideFromDecorator(decorators: any[]) {
-    const noopOverride = decorators.find((x: NoopDecorator): x is NoopDecorator => x.kind === "Noop")
-    const arrayOverride = decorators.find((x: ArrayDecorator): x is ArrayDecorator => x.kind === "Array")
     const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
-    if (noopOverride && noopOverride.type) {
-        return { type: noopOverride.type(), target: noopOverride.target }
-    }
-    else if (arrayOverride) {
-        return { type: [arrayOverride.type], target: arrayOverride.target }
-    }
-    else if (override) {
-        const result = Array.isArray(override.type) || typeof override.type === "string" ? override.type :
-            metadata.isCallback(override.type) ? override.type({}) : override.type
-        return { type: result, target: override.target }
-    }
+    if (!override) return
+    // extract type from the callback
+    const type = metadata.isCallback(override.type) ? override.type({}) : override.type
+    return { type, genericParams: override.genericParams }
 }
 
 class GenericMap {
@@ -115,8 +105,8 @@ class GenericMap {
         const result = this.maps.reduce((val, map) => {
             // keep looking at the real type
             // if it is string then it still a generic type template
-            return typeof val === "string" ? map.get(val) : val
-        }, type as TypeOverride | undefined)
+            return typeof val === "string" ? map.get(val)! : val
+        }, type as TypeOverride) as Class
         return isArray ? [result] : result
     }
 }
@@ -168,28 +158,38 @@ namespace visitors {
     export function addsTypeOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
         if (meta.kind === "Constructor" || meta.kind === "Class") return meta
         const overridden = getTypeOverrideFromDecorator(meta.decorators)
+        if (!overridden) return meta
         if (meta.kind === "Method")
-            return { ...meta, returnType: overridden?.type ?? meta.returnType }
-        return { ...meta, type: overridden?.type ?? meta.type }
+            return { ...meta, returnType: overridden.type }
+        return { ...meta, type: overridden.type }
     }
 
     export function addsGenericOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
-        const isGenericTemplate = (x: MethodReflection | PropertyReflection | ParameterReflection) => {
-            const decorator = getTypeOverrideFromDecorator(x.decorators)
-            if (!decorator) return false
-            const type = Array.isArray(decorator.type) ? decorator.type[0] : decorator.type
-            return typeof type === "string"
+        const isGeneric = (decorator: any): decorator is { type: TypeOverride[], genericParams: (string | string[])[] } => {
+            const singleType = Array.isArray(decorator.type) ? decorator.type[0] : decorator.type
+            return typeof singleType === "string" || decorator.genericParams.length > 0
+        }
+        const isString = (decorator: any): decorator is { type: (string | string[])[], genericParams: (string | string[])[] } => {
+            const singleType = Array.isArray(decorator.type) ? decorator.type[0] : decorator.type
+            return typeof singleType === "string"
+        }
+        const getGenericType = (map: GenericMap, decorator: any) => {
+            const converted = []
+            for (const param of decorator.genericParams) {
+                converted.push(map.get(param))
+            }
+            return generic.create(decorator.type as Class, ...converted)
         }
         if (meta.kind === "Constructor" || meta.kind === "Class") return meta
+        const decorator = getTypeOverrideFromDecorator(meta.decorators)
+        if (!decorator || !decorator.type || !isGeneric(decorator)) return meta
+        const map = new GenericMap(ctx.classPath)
+        const type = isString(decorator) ? map.get(decorator.type as any) : getGenericType(map, decorator)
         // if current class has @generic.template() then process
         if (meta.kind === "Method") {
             // if type is not a generic template type then return immediately
-            if (!isGenericTemplate(meta)) return meta
-            const returnType = new GenericMap(ctx.classPath).get(meta.returnType)
-            return { ...meta, returnType }
+            return { ...meta, returnType: type }
         }
-        if (!isGenericTemplate(meta)) return meta
-        const type = new GenericMap(ctx.classPath).get(meta.type)
         return { ...meta, type }
     }
 

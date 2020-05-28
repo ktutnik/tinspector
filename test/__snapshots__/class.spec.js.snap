@@ -13,7 +13,7 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "info": undefined,
+          "genericParams": Array [],
           "kind": "Override",
           "target": DummyClass,
           "type": Array [
@@ -43,55 +43,6 @@ Object {
 }
 `;
 
-exports[`Class Introspection Should able to override type with other type 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [
-    Object {
-      "decorators": Array [],
-      "kind": "Method",
-      "name": "method",
-      "parameters": Array [
-        Object {
-          "decorators": Array [
-            Object {
-              "info": "Readonly",
-              "kind": "Override",
-              "target": DummyClass,
-              "type": OtherDummyClass,
-              Symbol(tinspector:decoratorId): Symbol(override),
-              Symbol(tinspector:decoratorOption): Object {
-                "allowMultiple": false,
-                "inherit": false,
-              },
-            },
-          ],
-          "fields": Object {},
-          "index": 0,
-          "kind": "Parameter",
-          "name": "dummy",
-          "type": OtherDummyClass,
-          "typeClassification": "Class",
-        },
-      ],
-      "returnType": undefined,
-      "typeClassification": undefined,
-    },
-  ],
-  "name": "DummyClass",
-  "properties": Array [],
-  "super": Object,
-  "type": DummyClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Class Introspection Should inspect array on constructor parameters 1`] = `
 Object {
   "ctor": Object {
@@ -101,10 +52,13 @@ Object {
       Object {
         "decorators": Array [
           Object {
-            "kind": "Array",
+            "genericParams": Array [],
+            "kind": "Override",
             "target": DummyClass,
-            "type": EmptyClass,
-            Symbol(tinspector:decoratorId): Symbol(array),
+            "type": Array [
+              EmptyClass,
+            ],
+            Symbol(tinspector:decoratorId): Symbol(override),
             Symbol(tinspector:decoratorOption): Object {
               "allowMultiple": false,
               "inherit": false,
@@ -165,10 +119,13 @@ Object {
         Object {
           "decorators": Array [
             Object {
-              "kind": "Array",
+              "genericParams": Array [],
+              "kind": "Override",
               "target": DummyClass,
-              "type": EmptyClass,
-              Symbol(tinspector:decoratorId): Symbol(array),
+              "type": Array [
+                EmptyClass,
+              ],
+              Symbol(tinspector:decoratorId): Symbol(override),
               Symbol(tinspector:decoratorOption): Object {
                 "allowMultiple": false,
                 "inherit": false,
@@ -268,7 +225,7 @@ Object {
         Object {
           "decorators": Array [
             Object {
-              "info": undefined,
+              "genericParams": Array [],
               "kind": "Override",
               "target": DummyClass,
               "type": Array [
@@ -535,7 +492,7 @@ Object {
         Object {
           "decorators": Array [
             Object {
-              "info": undefined,
+              "genericParams": Array [],
               "kind": "Override",
               "target": DummyClass,
               "type": Domain,
@@ -606,7 +563,7 @@ Object {
         Object {
           "decorators": Array [
             Object {
-              "info": undefined,
+              "genericParams": Array [],
               "kind": "Override",
               "target": DummyClass,
               "type": Domain,
@@ -741,7 +698,6 @@ Object {
         Object {
           "kind": "Noop",
           "target": DummyClass,
-          "type": undefined,
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
@@ -902,7 +858,6 @@ Object {
         Object {
           "kind": "Noop",
           "target": DummyClass,
-          "type": undefined,
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
@@ -922,7 +877,6 @@ Object {
         Object {
           "kind": "Noop",
           "target": DummyClass,
-          "type": undefined,
           Symbol(tinspector:decoratorId): Symbol(noop),
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
