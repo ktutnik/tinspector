@@ -160,7 +160,7 @@ export namespace generic {
      * @param params List of generic type parameters
      */
     export function create<T extends Class>(parent: T | { parent: T, name: string }, ...params: TypeOverride[]) {
-        const opt = (typeof parent === "object") ? parent : { parent: parent, name: parent.name }
+        const opt = (typeof parent === "object") ? parent : { parent: parent, name: "DynamicType" }
         const Type = metadata.createClass(opt.parent, opt.name)
         Reflect.decorate([generic.type(...params)], Type)
         return Type

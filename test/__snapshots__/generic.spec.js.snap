@@ -378,7 +378,7 @@ Object {
   "decorators": Array [
     Object {
       "kind": "GenericType",
-      "target": SuperClass,
+      "target": DynamicType,
       "types": Array [
         Number,
         String,
@@ -411,10 +411,10 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
-  "name": "SuperClass",
+  "name": "DynamicType",
   "properties": Array [],
   "super": SuperClass,
-  "type": SuperClass,
+  "type": DynamicType,
   "typeClassification": "Class",
 }
 `;
@@ -964,7 +964,7 @@ Object {
   "decorators": Array [
     Object {
       "kind": "GenericType",
-      "target": CustomGeneric,
+      "target": DynamicType,
       "types": Array [
         String,
       ],
@@ -977,7 +977,7 @@ Object {
   ],
   "kind": "Class",
   "methods": Array [],
-  "name": "CustomGeneric",
+  "name": "DynamicType",
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -990,7 +990,7 @@ Object {
     },
   ],
   "super": CustomGeneric,
-  "type": CustomGeneric,
+  "type": DynamicType,
   "typeClassification": "Class",
 }
 `;
@@ -1005,7 +1005,7 @@ Object {
   "decorators": Array [
     Object {
       "kind": "GenericType",
-      "target": CustomGeneric,
+      "target": DynamicType,
       "types": Array [
         String,
       ],
@@ -1018,7 +1018,7 @@ Object {
   ],
   "kind": "Class",
   "methods": Array [],
-  "name": "CustomGeneric",
+  "name": "DynamicType",
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -1031,7 +1031,7 @@ Object {
     },
   ],
   "super": CustomGeneric,
-  "type": CustomGeneric,
+  "type": DynamicType,
   "typeClassification": "Class",
 }
 `;
@@ -1046,7 +1046,7 @@ Object {
   "decorators": Array [
     Object {
       "kind": "GenericType",
-      "target": CustomGeneric,
+      "target": DynamicType,
       "types": Array [
         String,
       ],
@@ -1059,7 +1059,7 @@ Object {
   ],
   "kind": "Class",
   "methods": Array [],
-  "name": "CustomGeneric",
+  "name": "DynamicType",
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -1072,7 +1072,7 @@ Object {
     },
   ],
   "super": CustomGeneric,
-  "type": CustomGeneric,
+  "type": DynamicType,
   "typeClassification": "Class",
 }
 `;
@@ -1087,7 +1087,7 @@ Object {
   "decorators": Array [
     Object {
       "kind": "GenericType",
-      "target": CustomGeneric,
+      "target": DynamicType,
       "types": Array [
         String,
       ],
@@ -1100,7 +1100,7 @@ Object {
   ],
   "kind": "Class",
   "methods": Array [],
-  "name": "CustomGeneric",
+  "name": "DynamicType",
   "properties": Array [
     Object {
       "decorators": Array [],
@@ -1113,7 +1113,7 @@ Object {
     },
   ],
   "super": CustomGeneric,
-  "type": CustomGeneric,
+  "type": DynamicType,
   "typeClassification": "Class",
 }
 `;
