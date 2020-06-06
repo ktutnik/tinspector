@@ -20,6 +20,10 @@ function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R
 }
 
 namespace metadata {
+    export function createClass(parent: Class, name: string): Class {
+        return { [name]: class extends parent { } }[name];
+    }
+
     export function isParameterProperties(meta: any): meta is ParameterPropertyReflection {
         return meta && meta.kind === "Property" && (meta as ParameterPropertyReflection).isParameter
     }
