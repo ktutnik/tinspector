@@ -312,6 +312,15 @@ describe("Create Generic", () => {
         expect(instance).toBeInstanceOf(SuperClass)
         expect(instance).toBeInstanceOf(ChildClass)
     })
+    it("Should able to change class name", () => {
+        @generic.template("T")
+        class SuperClass<T> {
+            @type("T")
+            method(): T { return {} as any }
+        }
+        const ChildClass = generic.create({ parent: SuperClass, name: "MyDynamicClass" }, Number)
+        expect(ChildClass.name).toBe("MyDynamicClass")
+    })
     it("Should add reflection properly", () => {
         @generic.template("T", "U")
         class SuperClass<T, U> {
@@ -319,7 +328,6 @@ describe("Create Generic", () => {
             method(@type("U") par: U): T { return {} as any }
         }
         const ChildClass = generic.create(SuperClass, Number, String)
-        const instance = new ChildClass()
         expect(reflect(ChildClass)).toMatchSnapshot()
     })
     it("Should able to create multiple time", () => {

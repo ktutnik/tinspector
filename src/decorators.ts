@@ -131,7 +131,7 @@ export function ignore() {
     return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
 
-export function type(type: TypeOverride | ((x: any) => TypeOverride), ...genericParams:(string|string[])[]) {
+export function type(type: TypeOverride | ((x: any) => TypeOverride), ...genericParams: (string | string[])[]) {
     // type is not inheritable because derived class can define their own type override
     return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type, genericParams, target }, ["Parameter", "Method", "Property"], { inherit: false, allowMultiple: false })
 }
@@ -159,11 +159,9 @@ export namespace generic {
      * @param parent Super class that the class inherited from
      * @param params List of generic type parameters
      */
-    export function create<T extends Class>(parent: T, ...params: TypeOverride[]) {
-        const Type = (() => {
-            class DynamicType extends parent { }
-            return DynamicType as T;
-        })();
+    export function create<T extends Class>(parent: T | { parent: T, name: string }, ...params: TypeOverride[]) {
+        const opt = (typeof parent === "object") ? parent : { parent: parent, name: parent.name }
+        const Type = metadata.createClass(opt.parent, opt.name)
         Reflect.decorate([generic.type(...params)], Type)
         return Type
     }

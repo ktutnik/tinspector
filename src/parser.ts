@@ -50,7 +50,14 @@ function getNamesFromAst(nodes: any[]) {
 }
 
 function getCode(fn:Class|Function){
-    return fn.toString().replace("[native code]", "")
+    const code = fn.toString()
+    if(code === "class extends parent {}") {
+        const token = code.split(" ")
+        token.splice(1, 0, "DynamicClass")
+        return token.join(" ")
+    }
+    else 
+        return code.replace("[native code]", "")
 }
 
 function getMethodParameters(fn: Class, method: string) {
