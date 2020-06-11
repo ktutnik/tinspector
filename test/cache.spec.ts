@@ -43,10 +43,10 @@ describe("Cache Function", () => {
         class MyClass {
             method(par: string) { }
         }
-        const meta1 = reflect(MyClass, { flushCache: true })
+        const meta1 = reflect(MyClass)
         expect(meta1).toMatchSnapshot()
         Reflect.decorate([decorateClass({ lorem: "ipsum" })], MyClass)
-        const meta2 = reflect(MyClass)
+        const meta2 = reflect(MyClass, { flushCache: true })
         expect(meta2).toMatchSnapshot()
     })
 })
