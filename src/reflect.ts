@@ -35,33 +35,45 @@ function reflectObject(object: any, name: string = "module"): ObjectReflection {
     }
 }
 
+function reflectModuleOrClass(opt: string | Class) {
+    if (typeof opt === "string") {
+        return reflectObject(require(opt))
+    }
+    else {
+        return reflectClass(opt)
+    }
+}
+
 // --------------------------------------------------------------------- //
 // ------------------------------- CACHE ------------------------------- //
 // --------------------------------------------------------------------- //
 
+interface ReflectOption {
+    /**
+     * Flush cached current module/class metadata before processing. 
+     */
+    flushCache?: true
+}
 
-const cacheStore = new Map<string | Class, Reflection>()
-const reflectObjectCached = useCache(cacheStore, reflectObject, x => x)
-const reflectClassRecursiveCached = useCache(cacheStore, reflectClass, x => x)
+const cacheStore = new Map<string | Class, ClassReflection | ObjectReflection>()
+const reflectCached = useCache(cacheStore, reflectModuleOrClass, x => x)
 
 /**
  * Reflect module
  * @param path module name
  */
-function reflect(path: string): ObjectReflection
+function reflect(path: string, opt?: Partial<ReflectOption>): ObjectReflection
 
 /**
  * Reflect class
  * @param classType Class 
  */
-function reflect(classType: Class): ClassReflection
-function reflect(option: string | Class) {
-    if (typeof option === "string") {
-        return reflectObjectCached(require(option))
-    }
-    else {
-        return reflectClassRecursiveCached(option)
-    }
+function reflect(classType: Class, opt?: Partial<ReflectOption>): ClassReflection
+
+function reflect(pathOrClass: string | Class, opt?: Partial<ReflectOption>): ClassReflection | ObjectReflection {
+    if(opt?.flushCache)
+        cacheStore.delete(pathOrClass)
+    return reflectCached(pathOrClass)    
 }
 
 // --------------------------------------------------------------------- //

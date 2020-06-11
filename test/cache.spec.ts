@@ -38,4 +38,15 @@ describe("Cache Function", () => {
         expect(firstMeta).toMatchSnapshot()
         expect(secondMeta).toMatchSnapshot()
     })
+
+    it("Should able to modify decorator if not use cache", () => {
+        class MyClass {
+            method(par: string) { }
+        }
+        const meta1 = reflect(MyClass, { flushCache: true })
+        expect(meta1).toMatchSnapshot()
+        Reflect.decorate([decorateClass({ lorem: "ipsum" })], MyClass)
+        const meta2 = reflect(MyClass)
+        expect(meta2).toMatchSnapshot()
+    })
 })

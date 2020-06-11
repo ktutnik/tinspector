@@ -206,6 +206,18 @@ const metadata = reflect(Awesome)
 
 Above code showing that we add a specialized decorator `@generic.template()` to define generic template type. We also defined data type of the generic parameters using `@reflect.type()` decorator. Next on the inherited class we specify `@generic.type()` to define types replace the generic template. Note that the order of the parameter on `@generic.template()` and `@generic.type()` is important.
 
+<!-- tinspector support more complex scenario regarding generic data type, for example if your property or parameter uses generic data type type which its parameter uses its class generic parameter like below: 
+
+```typescript
+@generic.template("T")
+class MyPropertyType {
+
+}
+@generic.template("T", "U")
+class SuperAwesome<T, U> {
+    
+}
+``` -->
 
 
 
@@ -323,4 +335,11 @@ class Awesome {
 // guaranteed derived class only have single decorator with specific ID
 @log()
 class IamAwesome extends Awesome{ }
+```
+
+## Flush Cache 
+By default reflect process cached globally for performance reason. But in some case if you modify the class preferences by adding a new decorator etc, your new update will not returned until you flush the cache.
+
+```typescript
+const metadata = reflect(MyAwesomeClass, { flushCache: true })
 ```
