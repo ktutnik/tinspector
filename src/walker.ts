@@ -1,5 +1,7 @@
+import { type } from "os"
+
 import { extendsMetadata } from "./extends"
-import { metadata, createClass, CustomTypeDefinition } from "./helpers"
+import { createClass, CustomTypeDefinition, metadata } from "./helpers"
 import { parseClass } from "./parser"
 import {
     Class,
@@ -26,9 +28,6 @@ import {
     TypeDecorator,
     TypeOverride,
 } from "./types"
-import { generic } from "./decorators"
-import reflect from "../lib"
-import { type } from "os"
 
 // --------------------------------------------------------------------- //
 // ------------------------------- TYPES ------------------------------- //
