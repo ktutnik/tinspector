@@ -1,6 +1,4 @@
-import reflect, { generic, type } from "../src"
-import { metadata } from "../lib"
-
+import reflect, { generic, type, metadata } from "../src"
 
 
 describe("Create Class", () => {
