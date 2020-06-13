@@ -1,8 +1,9 @@
 import { ignore, noop, parameterProperties, type } from "./decorators"
-import { metadata, useCache } from "./helpers"
+import * as decorate from "./decorators"
+import { metadata, useCache, createClass } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
-import { walkClass, visitors, WalkVisitor, GenericMap } from "./walker"
+import { visitors, walkClass, WalkVisitor } from "./walker"
 
 function reflectClass(target: Class): ClassReflection {
     const visitorOrder = [
@@ -43,6 +44,7 @@ function reflectModuleOrClass(opt: string | Class) {
         return reflectClass(opt)
     }
 }
+
 
 // --------------------------------------------------------------------- //
 // ------------------------------- CACHE ------------------------------- //
@@ -103,6 +105,11 @@ reflect.ignore = ignore
  * @param info Additional information about type (readonly, partial etc)
  */
 reflect.type = type
+
+/**
+ * Create class dynamically
+ */
+reflect.create = createClass
 
 /**
  * Mark all constructor parameters as properties

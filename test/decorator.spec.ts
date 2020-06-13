@@ -442,7 +442,7 @@ describe("Decorator", () => {
     })
 
     describe("Type Override", () => {
-        
+
         describe("type", () => {
             it("Should able to override method return type with @type() of type Number", () => {
                 class MyClass {
@@ -483,7 +483,6 @@ describe("Decorator", () => {
                 }
                 expect(reflect(MyClass)).toMatchSnapshot()
             })
-
 
             it("Should able to override method return type with @type() of type String", () => {
                 class MyClass {
@@ -540,6 +539,27 @@ describe("Decorator", () => {
                 @generic.type(Number)
                 class MyClass extends MyOtherClass<Number> { }
                 expect(reflect(MyClass)).toMatchSnapshot()
+            })
+
+            it("Should able to define inline type definition on @type()", () => {
+                class User {
+                    @type({ id: String, name: String })
+                    data() { }
+                }
+                const meta = reflect(User)
+                const methodReturn = meta.methods[0].returnType
+                expect(meta).toMatchSnapshot()
+                expect(reflect(methodReturn)).toMatchSnapshot()
+            })
+            it("Should able to define inline array type definition on @type()", () => {
+                class User {
+                    @type([{ id: String, name: String }])
+                    data() { }
+                }
+                const meta = reflect(User)
+                const methodReturn = meta.methods[0].returnType
+                expect(meta).toMatchSnapshot()
+                expect(reflect(methodReturn[0])).toMatchSnapshot()
             })
         })
     })

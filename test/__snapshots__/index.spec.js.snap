@@ -8,6 +8,7 @@ Object {
   "DESIGN_TYPE": "design:type",
   "DecoratorId": Symbol(tinspector:decoratorId),
   "DecoratorOptionId": Symbol(tinspector:decoratorOption),
+  "createClass": createClass,
   "decorate": decorate,
   "decorateClass": decorateClass,
   "decorateMethod": decorateMethod,
@@ -22,7 +23,6 @@ Object {
   "ignore": ignore,
   "mergeDecorator": mergeDecorator,
   "metadata": Object {
-    "createClass": createClass,
     "getMethods": getMethods,
     "getProperties": getProperties,
     "isCallback": isCallback,

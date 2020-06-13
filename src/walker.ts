@@ -1,5 +1,5 @@
 import { extendsMetadata } from "./extends"
-import { metadata } from "./helpers"
+import { metadata, createClass, CustomTypeDefinition } from "./helpers"
 import { parseClass } from "./parser"
 import {
     Class,
@@ -27,6 +27,8 @@ import {
     TypeOverride,
 } from "./types"
 import { generic } from "./decorators"
+import reflect from "../lib"
+import { type } from "os"
 
 // --------------------------------------------------------------------- //
 // ------------------------------- TYPES ------------------------------- //
@@ -64,11 +66,12 @@ function getDecorators(targetClass: Class, targetType: DecoratorTargetType, targ
 }
 
 function getTypeOverrideFromDecorator(decorators: any[]) {
+    const getType = (type: string | Class | CustomTypeDefinition) => typeof type === "object" ? createClass({ definition: type }) : type
     const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
     if (!override) return
     // extract type from the callback
-    const type = metadata.isCallback(override.type) ? override.type({}) : override.type
-    return { type, genericParams: override.genericParams }
+    const rawType = metadata.isCallback(override.type) ? override.type({}) : override.type
+    return { type: Array.isArray(rawType) ? [getType(rawType[0])] : getType(rawType), genericParams: override.genericParams }
 }
 
 class GenericMap {
@@ -178,7 +181,7 @@ namespace visitors {
             for (const param of decorator.genericParams) {
                 converted.push(map.get(param))
             }
-            return generic.create(decorator.type as Class, ...converted)
+            return createClass({ parent: decorator.type as Class, genericParams: converted })
         }
         if (meta.kind === "Constructor" || meta.kind === "Class") return meta
         const decorator = getTypeOverrideFromDecorator(meta.decorators)

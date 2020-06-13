@@ -51,7 +51,7 @@ function getNamesFromAst(nodes: any[]) {
 
 function getCode(fn:Class|Function){
     const code = fn.toString()
-    if(code.search(/^class(\s*)extends\s*parent\s*{\s*}/gm) > -1) {
+    if(code.search(/^class(\s*)extends\s*option.parent\s*{\s*}/gm) > -1) {
         return "class DynamicClass extends parent {}"
     }
     else 

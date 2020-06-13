@@ -4,7 +4,8 @@
 /* --------------------------- HELPERS ---------------------------- */
 /* ---------------------------------------------------------------- */
 
-import { Class, ParameterPropertyReflection, ClassReflection } from "./types"
+import { Class, ParameterPropertyReflection, ClassReflection, TypeOverride } from "./types"
+import * as decorate from "./decorators"
 
 function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R, getKey: (...args: P) => K) {
     return (...args: P) => {
@@ -19,16 +20,13 @@ function useCache<K, P extends any[], R>(cache: Map<K, R>, fn: (...args: P) => R
     }
 }
 
-namespace metadata {
-    export function createClass(parent: Class, name: string): Class {
-        return { [name]: class extends parent { } }[name];
-    }
 
+namespace metadata {
     export function isParameterProperties(meta: any): meta is ParameterPropertyReflection {
         return meta && meta.kind === "Property" && (meta as ParameterPropertyReflection).isParameter
     }
 
-    export function isCallback(type: any): type is ((x: any) => Class[] | Class | string | string[]) {
+    export function isCallback(type: any): type is ((x: any) => TypeOverride) {
         return typeof type === "function" && !type.prototype
     }
 
@@ -67,6 +65,30 @@ namespace metadata {
     }
 }
 
+// --------------------------------------------------------------------- //
+// ---------------------------- CREATE CLASS --------------------------- //
+// --------------------------------------------------------------------- //
+
+type CustomTypeDefinition = { [key: string]: Class | Class[] }
+interface CreateClassOption {
+    parent: Class,
+    definition: CustomTypeDefinition,
+    name: string,
+    genericParams: TypeOverride[]
+}
 
 
-export { useCache, metadata }
+function createClass(opt?: Partial<CreateClassOption>): Class {
+    const option: CreateClassOption = { parent: Object, name: "DynamicType", definition: {}, genericParams: [], ...opt }
+    const type = { [option.name]: class extends option.parent { } }[option.name];
+    for (const key in option.definition) {
+        Reflect.decorate([decorate.type(option.definition[key])], type.prototype, key)
+    }
+    Reflect.decorate([decorate.generic.type(...option.genericParams)], type)
+    return type
+}
+
+
+
+
+export { useCache, metadata, createClass, CustomTypeDefinition, CreateClassOption }

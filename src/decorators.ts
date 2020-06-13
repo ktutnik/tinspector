@@ -1,6 +1,6 @@
 import "reflect-metadata"
 
-import { metadata } from "./helpers"
+import { metadata, createClass } from "./helpers"
 import {
     Class,
     CustomPropertyDecorator,
@@ -127,6 +127,8 @@ const symArray = Symbol("array")
 const symParamProp = Symbol("paramProp")
 const symNoop = Symbol("noop")
 
+
+
 export function ignore() {
     return decorate(<PrivateDecorator>{ [DecoratorId]: symIgnore, kind: "Ignore" }, ["Parameter", "Method", "Property"], { allowMultiple: false })
 }
@@ -161,8 +163,7 @@ export namespace generic {
      */
     export function create<T extends Class>(parent: T | { parent: T, name: string }, ...params: TypeOverride[]) {
         const opt = (typeof parent === "object") ? parent : { parent: parent, name: "DynamicType" }
-        const Type = metadata.createClass(opt.parent, opt.name)
-        Reflect.decorate([generic.type(...params)], Type)
+        const Type = createClass({ ...opt, genericParams: params })
         return Type
     }
 }
