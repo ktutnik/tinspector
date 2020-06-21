@@ -21,7 +21,7 @@ describe("Module Introspection", () => {
         expect(meta.members[0]).toMatchSnapshot()
     })
 
-    it.only("Should inspect class inside namespace", async () => {
+    it("Should inspect class inside namespace", async () => {
         const meta = await reflect(join(__dirname, "./mocks/mock.class-in-namespace"))
         expect(meta.members[0]).toMatchSnapshot()
     })
