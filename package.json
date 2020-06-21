@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "prepublish": "tsc && tsc -p tsconfig.build.json",
+    "compile": "tsc -p tsconfig.build.json",
     "clean": "rm -rf src/*.js && rm -rf test/*.js && rm -rf test/**/*.js && rm -rf lib"
   },
   "keywords": [
