@@ -5,6 +5,10 @@ import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
 import { visitors, walkClass, WalkVisitor } from "./walker"
 
+interface TraverseContext {
+    path: any[]
+}
+
 function reflectClass(target: Class): ClassReflection {
     const visitorOrder = [
         visitors.addsDesignTypes,
@@ -19,26 +23,29 @@ function reflectClass(target: Class): ClassReflection {
     return walkClass(target, { visitor, classPath: [] })
 }
 
-function traverseObject(fn: any, name: string): Reflection | undefined {
+function traverseObject(fn: any, name: string, ctx: TraverseContext): Reflection | undefined {
     if (Array.isArray(fn)) return
-    if (typeof fn === "object")
-        return reflectObject(fn, name)
+    if (typeof fn === "object") {
+        // CIRCULAR: return immediately
+        if (ctx.path.some(x => x === fn)) return
+        return reflectObject(fn, name, { path: ctx.path.concat(fn) })
+    }
     if (typeof fn === "function" && metadata.isConstructor(fn))
         return reflectClass(fn)
     if (typeof fn === "function")
         return parseFunction(fn)
 }
 
-function reflectObject(object: any, name: string = "module"): ObjectReflection {
+function reflectObject(object: any, name: string, ctx: TraverseContext): ObjectReflection {
     return {
         kind: "Object", name,
-        members: Object.keys(object).map(x => traverseObject(object[x], x)).filter((x): x is Reflection => !!x)
+        members: Object.keys(object).map(x => traverseObject(object[x], x, ctx)).filter((x): x is Reflection => !!x)
     }
 }
 
 function reflectModuleOrClass(opt: string | Class) {
     if (typeof opt === "string") {
-        return reflectObject(require(opt))
+        return reflectObject(require(opt), "module", { path: [] })
     }
     else {
         return reflectClass(opt)
@@ -73,9 +80,9 @@ function reflect(path: string, opt?: Partial<ReflectOption>): ObjectReflection
 function reflect(classType: Class, opt?: Partial<ReflectOption>): ClassReflection
 
 function reflect(pathOrClass: string | Class, opt?: Partial<ReflectOption>): ClassReflection | ObjectReflection {
-    if(opt?.flushCache)
+    if (opt?.flushCache)
         cacheStore.delete(pathOrClass)
-    return reflectCached(pathOrClass)    
+    return reflectCached(pathOrClass)
 }
 
 // --------------------------------------------------------------------- //
