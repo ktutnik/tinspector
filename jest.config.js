@@ -1,10 +1,17 @@
 module.exports = {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.js?$",
-    "snapshotSerializers": [
-      "./scripts/function-snapshot-serializer.js"
-    ]
-}
+  preset: 'ts-jest',
+  //testEnvironment: 'node',
+  collectCoverage:true,
+  collectCoverageFrom: ["src/*"],
+  snapshotSerializers: [
+    "<rootDir>scripts/function-snapshot-serializer.js",
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100
+    }
+  }
+};
