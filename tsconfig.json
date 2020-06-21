@@ -1,13 +1,14 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
     "inlineSourceMap": true,
-    "baseUrl": "./packages",
-    "paths": {
-      "@plumier/*": ["*/src"],
-      "plumier": ["plumier/src/index"],
-      "tinspector": ["tinspector/src/index"],
-      "typedconverter": ["typedconverter/src/index"]
-    }
-  }
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true       
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
