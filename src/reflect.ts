@@ -24,6 +24,7 @@ function reflectClass(target: Class): ClassReflection {
 }
 
 function traverseObject(fn: any, name: string, ctx: TraverseContext): Reflection | undefined {
+    if (fn === undefined || fn === null) return
     if (Array.isArray(fn)) return
     if (typeof fn === "object") {
         // CIRCULAR: return immediately
