@@ -5,3 +5,4 @@ test/**/*.js
 .DS_Store
 lib
 npm-debug.log
+yarn.lock
