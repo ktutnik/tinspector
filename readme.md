@@ -341,5 +341,5 @@ class IamAwesome extends Awesome{ }
 By default reflect process cached globally for performance reason. But in some case if you modify the class preferences by adding a new decorator etc, your new update will not returned until you flush the cache.
 
 ```typescript
-const metadata = reflect(MyAwesomeClass, { flushCache: true })
+reflect.flush(Type)
 ```

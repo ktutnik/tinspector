@@ -49,4 +49,32 @@ describe("Cache Function", () => {
         const meta2 = reflect(MyClass, { flushCache: true })
         expect(meta2).toMatchSnapshot()
     })
+
+    it("Should able to clear cache to specific type", () => {
+        class MyClass {
+            method(par: string) { }
+        }
+        const meta1 = reflect(MyClass)
+        reflect.flush(MyClass)
+        expect(meta1).toMatchSnapshot()
+        Reflect.decorate([decorateClass({ lorem: "ipsum" })], MyClass)
+        const meta2 = reflect(MyClass)
+        expect(meta2).toMatchSnapshot()
+    })
+
+    it("Should able to clear cache all cache", () => {
+        class MyClass {
+            method(par: string) { }
+        }
+        class MyOther { }
+        reflect(MyClass)
+        reflect(MyOther)
+        reflect.flush()
+        Reflect.decorate([decorateClass({ lorem: "ipsum" })], MyClass)
+        Reflect.decorate([decorateClass({ lorem: "ipsum" })], MyOther)
+        const meta1 = reflect(MyClass)
+        const meta2 = reflect(MyOther)
+        expect(meta1).toMatchSnapshot()
+        expect(meta2).toMatchSnapshot()
+    })
 })
