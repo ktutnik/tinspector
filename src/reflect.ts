@@ -86,6 +86,13 @@ function reflect(pathOrClass: string | Class, opt?: Partial<ReflectOption>): Cla
     return reflectCached(pathOrClass)
 }
 
+function flush(pathOrClass?: string | Class ) {
+    if (pathOrClass)
+        cacheStore.delete(pathOrClass)
+    else 
+        cacheStore.clear()
+}
+
 // --------------------------------------------------------------------- //
 // ----------------------------- DECORATORS ---------------------------- //
 // --------------------------------------------------------------------- //
@@ -123,5 +130,10 @@ reflect.create = createClass
  * Mark all constructor parameters as properties
  */
 reflect.parameterProperties = parameterProperties
+
+/**
+ * Flush metadata cache, call without parameter to clear all
+ */
+reflect.flush = flush
 
 export { reflect }
