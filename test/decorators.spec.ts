@@ -317,7 +317,7 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it.only("Should able to apply decorator into method from class", () => {
+    it("Should able to apply decorator into method from class", () => {
         @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
         class DummyClass {
             myFunction() { }
@@ -326,7 +326,7 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it.only("Should able to apply decorator into property from class", () => {
+    it("Should able to apply decorator into property from class", () => {
         @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
         class DummyClass {
             @noop()
@@ -336,7 +336,7 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it.only("Should able to apply decorator into parameterProperties from class", () => {
+    it("Should able to apply decorator into parameterProperties from class", () => {
         @parameterProperties()
         @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
         class DummyClass {
@@ -348,7 +348,7 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it.only("Should able to apply decorator into multiple members from class", () => {
+    it("Should able to apply decorator into multiple members from class", () => {
         @parameterProperties()
         @decorateClass({ lorem: "ipsum" }, { applyTo: ["myProp", "myFunction"] })
         class DummyClass {
