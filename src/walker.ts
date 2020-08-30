@@ -55,10 +55,10 @@ interface WalkClassContext {
 function getDecorators(targetClass: Class, targetType: DecoratorTargetType, target: string, index?: number) {
     const natives: NativeDecorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, targetClass) || []
     const result = []
-    for (const { allowMultiple, inherit, ...item } of natives) {
+    for (const { allowMultiple, inherit, applyTo, ...item } of natives) {
         const par = item as NativeParameterDecorator
         if (item.targetType === targetType && item.target === target && (index == undefined || par.targetIndex === index)) {
-            result.push({ ...item.value, [DecoratorOptionId]: <DecoratorOption>{ allowMultiple, inherit } })
+            result.push({ ...item.value, [DecoratorOptionId]: <DecoratorOption>{ allowMultiple, inherit, applyTo } })
         }
     }
     return result
@@ -155,6 +155,27 @@ namespace visitors {
             return { ...meta, decorators: meta.decorators.concat(decorators) }
         }
         return meta
+    }
+
+    export function addsDecoratorsWithApplyTo(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
+        if (meta.kind === "Class") {
+            const decorators = []
+            for (const decorator of meta.decorators) {
+                const option: DecoratorOption = decorator[DecoratorOptionId]
+                if (!option.applyTo || (Array.isArray(option.applyTo) && option.applyTo.length === 0)) {
+                    decorators.push(decorator)
+                    continue;
+                }
+                const targets = Array.isArray(option.applyTo) ? option.applyTo : [option.applyTo]
+                for (const member of [...meta.properties, ...meta.methods]) {
+                    if (!targets.some(x => member.name === x)) continue
+                    member.decorators.push(decorator)
+                }
+            }
+            return { ...meta, decorators }
+        }
+        else 
+            return meta
     }
 
     export function addsTypeOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {

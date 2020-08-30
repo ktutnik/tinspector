@@ -13,6 +13,7 @@ function reflectClass(target: Class): ClassReflection {
     const visitorOrder = [
         visitors.addsDesignTypes,
         visitors.addsDecorators,
+        visitors.addsDecoratorsWithApplyTo,
         visitors.addsTypeOverridden,
         visitors.addsParameterProperties,
         visitors.addsGenericOverridden,

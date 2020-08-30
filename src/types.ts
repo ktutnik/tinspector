@@ -17,7 +17,8 @@ export interface NativeDecorator {
     target: string,
     value: any,
     inherit: boolean,
-    allowMultiple: boolean
+    allowMultiple: boolean,
+    applyTo: string | string[]
 }
 export interface NativeParameterDecorator extends NativeDecorator {
     targetType: "Parameter",
@@ -111,7 +112,8 @@ export interface GenericTemplateDecorator {
 }
 export interface DecoratorOption {
     inherit?: boolean,
-    allowMultiple?: boolean
+    allowMultiple?: boolean,
+    applyTo?: string | string[]
 }
 
 export type CustomPropertyDecorator = (target: Object, propertyKey: string | symbol, ...index: any[]) => void;

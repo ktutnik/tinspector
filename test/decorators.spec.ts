@@ -9,6 +9,7 @@ import {
     noop,
     type,
     generic,
+    parameterProperties,
 } from "../src"
 
 describe("Decorator", () => {
@@ -311,6 +312,50 @@ describe("Decorator", () => {
         @cacheAndProps()
         class DummyClass {
             constructor(public data: string) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it.only("Should able to apply decorator into method from class", () => {
+        @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
+        class DummyClass {
+            myFunction() { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it.only("Should able to apply decorator into property from class", () => {
+        @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
+        class DummyClass {
+            @noop()
+            myProp: number = 1
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it.only("Should able to apply decorator into parameterProperties from class", () => {
+        @parameterProperties()
+        @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
+        class DummyClass {
+            constructor(
+                public myProp: number = 1
+            ) { }
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it.only("Should able to apply decorator into multiple members from class", () => {
+        @parameterProperties()
+        @decorateClass({ lorem: "ipsum" }, { applyTo: ["myProp", "myFunction"] })
+        class DummyClass {
+            constructor(
+                public myProp: number = 1
+            ) { }
+            myFunction() { }
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
