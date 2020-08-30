@@ -321,6 +321,7 @@ describe("Decorator", () => {
         @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
         class DummyClass {
             myFunction() { }
+            myOtherFunction(){}
         }
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
