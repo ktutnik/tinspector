@@ -12,6 +12,7 @@ Object {
       "lorem": "ipsum",
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": true,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
@@ -57,6 +58,7 @@ Object {
       "lorem": "ipsum",
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": true,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
@@ -120,6 +122,7 @@ Object {
       "lorem": "ipsum",
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": true,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
@@ -202,6 +205,7 @@ Object {
       "lorem": "ipsum",
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": true,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
@@ -247,6 +251,7 @@ Object {
       "name": "first",
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": true,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
@@ -292,6 +297,7 @@ Object {
       "name": "second",
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": true,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
