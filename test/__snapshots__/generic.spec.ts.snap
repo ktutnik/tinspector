@@ -17,6 +17,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -60,6 +61,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -112,6 +114,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -155,6 +158,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -199,6 +203,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -244,6 +249,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -298,6 +304,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -343,6 +350,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -386,6 +394,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -444,6 +453,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -485,6 +495,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -535,6 +546,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -543,6 +555,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(paramProp),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": true,
       },
     },
@@ -586,6 +599,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -627,6 +641,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -693,6 +708,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -787,6 +803,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -868,6 +885,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -917,6 +935,7 @@ Object {
             Symbol(tinspector:decoratorId): Symbol(override),
             Symbol(tinspector:decoratorOption): Object {
               "allowMultiple": false,
+              "applyTo": Array [],
               "inherit": false,
             },
           },
@@ -940,6 +959,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericTemplate),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -971,6 +991,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -1012,6 +1033,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -1053,6 +1075,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
@@ -1094,6 +1117,7 @@ Object {
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
         "allowMultiple": false,
+        "applyTo": Array [],
         "inherit": false,
       },
     },
