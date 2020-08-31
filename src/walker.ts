@@ -55,10 +55,10 @@ interface WalkClassContext {
 function getDecorators(targetClass: Class, targetType: DecoratorTargetType, target: string, index?: number) {
     const natives: NativeDecorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, targetClass) || []
     const result = []
-    for (const { allowMultiple, inherit, applyTo, ...item } of natives) {
+    for (const { allowMultiple, inherit, applyTo, removeApplied, ...item } of natives) {
         const par = item as NativeParameterDecorator
         if (item.targetType === targetType && item.target === target && (index == undefined || par.targetIndex === index)) {
-            result.push({ ...item.value, [DecoratorOptionId]: <DecoratorOption>{ allowMultiple, inherit, applyTo } })
+            result.push({ ...item.value, [DecoratorOptionId]: <DecoratorOption>{ allowMultiple, inherit, applyTo, removeApplied } })
         }
     }
     return result
@@ -170,6 +170,8 @@ namespace visitors {
                 for (const member of [...meta.properties, ...meta.methods]) {
                     if (!targets.some(x => member.name === x)) continue
                     member.decorators.push(decorator)
+                    if(!option.removeApplied)
+                        decorators.push(decorator)
                 }
             }
             return { ...meta, decorators }

@@ -63,7 +63,7 @@ export function decorate(data: any | ((...args: any[]) => any), targetTypes: Dec
         if (targetTypes.length > 0 && !targetTypes.some(x => x === target))
             throw new Error(`Reflect Error: Decorator of type ${targetTypes.join(", ")} applied into ${target}`)
     }
-    const opt: Required<DecoratorOption> = { allowMultiple: true, inherit: true, applyTo: [], ...option }
+    const opt: Required<DecoratorOption> = { allowMultiple: true, inherit: true, applyTo: [], removeApplied: true, ...option }
     return (...args: any[]) => {
         const theData = typeof data === "function" ? data(...args) : data
         if (!opt.allowMultiple && !theData[DecoratorId]) {

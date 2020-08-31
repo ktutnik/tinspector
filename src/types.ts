@@ -18,7 +18,8 @@ export interface NativeDecorator {
     value: any,
     inherit: boolean,
     allowMultiple: boolean,
-    applyTo: string | string[]
+    applyTo: string | string[],
+    removeApplied: boolean
 }
 export interface NativeParameterDecorator extends NativeDecorator {
     targetType: "Parameter",
@@ -111,9 +112,24 @@ export interface GenericTemplateDecorator {
     target: Class
 }
 export interface DecoratorOption {
+    /**
+     * If `false` decorator will not be merged on the derived class. Default `true` 
+     */
     inherit?: boolean,
+    /**
+     * If `false` throw error when multiple decorator applied on class. Also when set `false` will prevent super class decorator being merged into derived class when already exists. When set `false`, decorator required to have `DecoratorId` property to identify the similar decorator
+     */
     allowMultiple?: boolean,
+
+    /**
+     * Apply decorator into the specified properties or methods
+     */
     applyTo?: string | string[]
+
+    /**
+     * Remove applied decorator using `applyTo` on the class scope. Default `true`
+     */
+    removeApplied?:boolean
 }
 
 export type CustomPropertyDecorator = (target: Object, propertyKey: string | symbol, ...index: any[]) => void;
