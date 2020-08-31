@@ -1,6 +1,6 @@
 import { type } from "os"
 
-import { extendsMetadata } from "./extends"
+import { extendsMetadata, getAppliedDecorator } from "./extends"
 import { createClass, CustomTypeDefinition, metadata } from "./helpers"
 import { parseClass } from "./parser"
 import {
@@ -159,24 +159,13 @@ namespace visitors {
 
     export function addsDecoratorsWithApplyTo(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
         if (meta.kind === "Class") {
-            const decorators = []
-            for (const decorator of meta.decorators) {
-                const option: DecoratorOption = decorator[DecoratorOptionId]
-                if (!option.applyTo || (Array.isArray(option.applyTo) && option.applyTo.length === 0)) {
-                    decorators.push(decorator)
-                    continue;
-                }
-                const targets = Array.isArray(option.applyTo) ? option.applyTo : [option.applyTo]
-                for (const member of [...meta.properties, ...meta.methods]) {
-                    if (!targets.some(x => member.name === x)) continue
-                    member.decorators.push(decorator)
-                    if(!option.removeApplied)
-                        decorators.push(decorator)
-                }
+            for (const member of [...meta.properties, ...meta.methods]) {
+                const decorators = getAppliedDecorator(meta, member.name)
+                member.decorators.push(...decorators)
             }
-            return { ...meta, decorators }
+            return meta
         }
-        else 
+        else
             return meta
     }
 
@@ -290,20 +279,22 @@ function walkMembers(type: Class, visitor: WalkVisitor, classPath: Class[]) {
  * Walk into type super class
  * @param type type to reflect
  */
-function walkClass(type: Class, ctx: WalkClassContext): ClassReflection {
+function walkParents(type: Class, ctx: WalkClassContext): ClassReflection {
+    const defaultRef: ClassReflection = {
+        super: Object,
+        kind: "Class", type: Object, name: "Object",
+        ctor: {} as ConstructorReflection,
+        methods: [], properties: [], decorators: []
+    }
     // walk first into the parent members
     const parent: Class = Object.getPrototypeOf(type)
-    if (parent.prototype) {
-        // walk the super class member first
-        const parentMeta = walkClass(parent, { ...ctx, classPath: ctx.classPath.concat(type) })
-        // then walk the current type members
-        const childMeta = walkMembers(type, ctx.visitor, ctx.classPath)
-        // merge current type and super class members
-        return extendsMetadata(childMeta, parentMeta)
-    }
-    else {
-        return walkMembers(type, ctx.visitor, ctx.classPath)
-    }
+    // walk the super class member first
+    const parentMeta = !!parent.prototype ?
+        walkParents(parent, { ...ctx, classPath: ctx.classPath.concat(type) }) : defaultRef
+    // then walk the current type members
+    const childMeta = walkMembers(type, ctx.visitor, ctx.classPath)
+    // merge current type and super class members
+    return extendsMetadata(childMeta, parentMeta)
 }
 
-export { walkClass, visitors, WalkVisitor, GenericMap }
+export { walkParents, visitors, WalkVisitor, GenericMap }

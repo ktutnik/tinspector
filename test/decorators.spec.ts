@@ -371,6 +371,17 @@ describe("Decorator", () => {
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
     })
+
+    it("Should able to apply decorator into inherited members from class", () => {
+        class DummyClass {
+            myFunction() { }
+            myOtherFunction(){}
+        }
+        @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
+        class DummyChild extends DummyClass {}
+        const meta = reflect(DummyChild)
+        expect(meta).toMatchSnapshot()
+    })
     
 
     describe("Error Handling", () => {
