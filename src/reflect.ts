@@ -3,7 +3,7 @@ import * as decorate from "./decorators"
 import { metadata, useCache, createClass } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
-import { visitors, walkClass, WalkVisitor } from "./walker"
+import { visitors, walkParents, WalkVisitor } from "./walker"
 
 interface TraverseContext {
     path: any[]
@@ -21,7 +21,7 @@ function reflectClass(target: Class): ClassReflection {
         visitors.removeIgnored,
     ]
     const visitor: WalkVisitor = (value, ctx) => visitorOrder.reduce((a, b) => !!a ? b(a, ctx) : a, value as any)
-    return walkClass(target, { visitor, classPath: [] })
+    return walkParents(target, { visitor, classPath: [] })
 }
 
 function traverseObject(fn: any, name: string, ctx: TraverseContext): Reflection | undefined {
