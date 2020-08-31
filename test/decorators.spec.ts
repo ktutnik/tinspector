@@ -327,6 +327,16 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should able to apply decorator into method from class but keep decorator on class", () => {
+        @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction", removeApplied: false })
+        class DummyClass {
+            myFunction() { }
+            myOtherFunction(){}
+        }
+        const meta = reflect(DummyClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should able to apply decorator into property from class", () => {
         @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
         class DummyClass {
@@ -361,6 +371,7 @@ describe("Decorator", () => {
         const meta = reflect(DummyClass)
         expect(meta).toMatchSnapshot()
     })
+    
 
     describe("Error Handling", () => {
         const DecoratorIdError = 'Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in DummyClass'

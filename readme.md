@@ -303,6 +303,8 @@ Option is a simple object with properties:
 
 * `inherit` `Boolean` If `false` decorator will not be merged on the derived class. Default `true` 
 * `allowMultiple` `Boolean` If `false` throw error when multiple decorator applied on class. Also when set `false` will prevent super class decorator being merged into derived class when already exists. When set `false`, decorator required to have `DecoratorId` property to identify the similar decorator.
+* `applyTo` `String` or `String[]` apply decorator into the specified properties or methods.
+* `removeApplied` `Boolean` Remove applied decorator using `applyTo` on the class scope. Default `true`.
 
 
 Example disable decorator inheritance
@@ -336,6 +338,32 @@ class Awesome {
 @log()
 class IamAwesome extends Awesome{ }
 ```
+
+## Apply Decorator from Class
+Sometime its required to add decorator into specific methods or properties from class. This is useful when you want to decorate specific super class method from derived class. Use `applyTo` and `removeApplied` properties on decorator option to control decorator to be copied into the properties or methods.
+
+
+```typescript
+import { decorateClass } from "tinspector"
+
+@decorateClass({ message: "hello world" }, { applyTo: "myMethod" })
+class Awesome {
+    myMethod(){}
+}
+```
+
+By specifying `{ applyTo: "myMethod" }` on the decorator option will make the decorator copied into the `myMethod` method, while the decorator removed from the class. 
+
+```typescript
+import { decorateClass } from "tinspector"
+
+@decorateClass({ message: "hello world" }, { applyTo: "myMethod", removeApplied: false })
+class Awesome {
+    myMethod(){}
+}
+```
+
+Above code will copy decorator into `myMethod` method but keep the decorator on the class.
 
 ## Flush Cache 
 By default reflect process cached globally for performance reason. But in some case if you modify the class preferences by adding a new decorator etc, your new update will not returned until you flush the cache.
