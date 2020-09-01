@@ -77,6 +77,7 @@ export interface ClassReflection extends ReflectionBase {
     methods: MethodReflection[],
     properties: PropertyReflection[],
     decorators: any[],
+    removedDecorators?:any[]
     type: Class,
     super: Class,
     typeClassification?: "Class" | "Array" | "Primitive",

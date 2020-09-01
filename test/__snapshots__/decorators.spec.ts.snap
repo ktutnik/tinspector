@@ -39,6 +39,17 @@ Object {
   ],
   "name": "DummyChild",
   "properties": Array [],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "ipsum",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": "myFunction",
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
   "super": DummyClass,
   "type": DummyChild,
   "typeClassification": "Class",
@@ -84,6 +95,17 @@ Object {
   ],
   "name": "DummyClass",
   "properties": Array [],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "ipsum",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": "myFunction",
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
   "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
@@ -225,6 +247,20 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "ipsum",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [
+          "myProp",
+          "myFunction",
+        ],
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
   "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
@@ -286,6 +322,17 @@ Object {
       "typeClassification": "Primitive",
     },
   ],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "ipsum",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": "myProp",
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
   "super": Object,
   "type": DummyClass,
   "typeClassification": "Class",
@@ -307,15 +354,6 @@ Object {
     Object {
       "decorators": Array [
         Object {
-          "lorem": "ipsum",
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": true,
-            "applyTo": "myProp",
-            "inherit": true,
-            "removeApplied": true,
-          },
-        },
-        Object {
           "kind": "Noop",
           "target": DummyClass,
           Symbol(tinspector:decoratorId): Symbol(noop),
@@ -326,6 +364,15 @@ Object {
             "removeApplied": true,
           },
         },
+        Object {
+          "lorem": "ipsum",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "applyTo": "myProp",
+            "inherit": true,
+            "removeApplied": true,
+          },
+        },
       ],
       "get": undefined,
       "kind": "Property",
@@ -333,6 +380,17 @@ Object {
       "set": undefined,
       "type": Number,
       "typeClassification": "Primitive",
+    },
+  ],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "ipsum",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": "myProp",
+        "inherit": true,
+        "removeApplied": true,
+      },
     },
   ],
   "super": Object,
