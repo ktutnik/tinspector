@@ -1,27 +1,38 @@
 import { ignore, noop, parameterProperties, type } from "./decorators"
-import * as decorate from "./decorators"
-import { metadata, useCache, createClass } from "./helpers"
+import { createClass, metadata, useCache } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
-import { visitors, walkParents, WalkVisitor } from "./walker"
+import { memberVisitors, parentVisitors, walkParents, WalkMemberVisitor } from "./walker"
 
 interface TraverseContext {
     path: any[]
 }
 
+type Visitor<Ref, Ctx, Ret> = (r: Ref, c: Ctx) => Ret
+
+function pipe<Ref, Ctx, Ret>(visitors: Visitor<Ref, Ctx, Ret>[]): Visitor<Ref, Ctx, Ret> {
+    return (value, ctx) => visitors.reduce((a, b) => !!a ? b(a, ctx) : a, value as any)
+}
+
 function reflectClass(target: Class): ClassReflection {
     const visitorOrder = [
-        visitors.addsDesignTypes,
-        visitors.addsDecorators,
-        visitors.addsDecoratorsWithApplyTo,
-        visitors.addsTypeOverridden,
-        visitors.addsParameterProperties,
-        visitors.addsGenericOverridden,
-        visitors.addsTypeClassification,
-        visitors.removeIgnored,
+        memberVisitors.addsDesignTypes,
+        memberVisitors.addsDecorators,
+        memberVisitors.addsTypeOverridden,
+        memberVisitors.addsParameterProperties,
+        memberVisitors.addsGenericOverridden,
+        memberVisitors.addsTypeClassification,
+        memberVisitors.removeIgnored,
     ]
-    const visitor: WalkVisitor = (value, ctx) => visitorOrder.reduce((a, b) => !!a ? b(a, ctx) : a, value as any)
-    return walkParents(target, { visitor, classPath: [] })
+    const parentVisitorOrder = [
+        parentVisitors.processApplyTo
+    ]
+    return walkParents(target, {
+        target,
+        parentVisitor: pipe(parentVisitorOrder),
+        memberVisitor: pipe(visitorOrder),
+        classPath: []
+    })
 }
 
 function traverseObject(fn: any, name: string, ctx: TraverseContext): Reflection | undefined {
@@ -87,10 +98,10 @@ function reflect(pathOrClass: string | Class, opt?: Partial<ReflectOption>): Cla
     return reflectCached(pathOrClass)
 }
 
-function flush(pathOrClass?: string | Class ) {
+function flush(pathOrClass?: string | Class) {
     if (pathOrClass)
         cacheStore.delete(pathOrClass)
-    else 
+    else
         cacheStore.clear()
 }
 

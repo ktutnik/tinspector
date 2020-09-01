@@ -1,6 +1,6 @@
 import { type } from "os"
 
-import { extendsMetadata, getAppliedDecorator } from "./extends"
+import { extendsMetadata } from "./extends"
 import { createClass, CustomTypeDefinition, metadata } from "./helpers"
 import { parseClass } from "./parser"
 import {
@@ -34,17 +34,20 @@ import {
 // --------------------------------------------------------------------- //
 
 type TypedReflection = ClassReflection | MethodReflection | PropertyReflection | ParameterReflection | ConstructorReflection | ParameterPropertyReflection
-type WalkVisitor = (value: TypedReflection, ctx: WalkMemberContext) => TypedReflection | undefined
+type WalkMemberVisitor = (value: TypedReflection, ctx: WalkMemberContext) => TypedReflection | undefined
+type WalkParentVisitor = (current: ClassReflection, ctx: WalkParentContext) => ClassReflection
 
 interface WalkMemberContext {
     target: Class
     classPath: Class[]
     parent: Reflection
-    visitor: WalkVisitor
+    memberVisitor: WalkMemberVisitor
 }
 
-interface WalkClassContext {
-    visitor: WalkVisitor
+interface WalkParentContext {
+    target: Class
+    memberVisitor: WalkMemberVisitor
+    parentVisitor: WalkParentVisitor
     classPath: Class[]
 }
 
@@ -117,7 +120,7 @@ class GenericMap {
 // ------------------------- PURIFIER VISITORS ------------------------- //
 // --------------------------------------------------------------------- //
 
-namespace visitors {
+namespace memberVisitors {
     export function addsDesignTypes(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
         const getType = (type: any, i: number) => type[i] === Array ? [Object] : type[i]
         if (meta.kind === "Method") {
@@ -155,18 +158,6 @@ namespace visitors {
             return { ...meta, decorators: meta.decorators.concat(decorators) }
         }
         return meta
-    }
-
-    export function addsDecoratorsWithApplyTo(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
-        if (meta.kind === "Class") {
-            for (const member of [...meta.properties, ...meta.methods]) {
-                const decorators = getAppliedDecorator(meta, member.name)
-                member.decorators.push(...decorators)
-            }
-            return meta
-        }
-        else
-            return meta
     }
 
     export function addsTypeOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
@@ -240,6 +231,33 @@ namespace visitors {
     }
 }
 
+namespace parentVisitors {
+    export function processApplyTo(current: ClassReflection, ctx: WalkParentContext): ClassReflection {
+        if (current.type === ctx.target) {
+            const decorators = []
+            const removed = []
+            for (const decorator of current.decorators) {
+                const option: DecoratorOption = decorator[DecoratorOptionId]
+                const applyTo = Array.isArray(option.applyTo) ? option.applyTo : [option.applyTo]
+                // copy decorator to member
+                for (const member of [...current.properties, ...current.methods]) {
+                    if (applyTo.some(x => x === member.name)) {
+                        member.decorators.push(decorator)
+                    }
+                }
+                if (option.removeApplied && applyTo.length > 0)
+                    removed.push(decorator)
+                else
+                    decorators.push(decorator)
+            }
+            current.decorators = decorators
+            if (removed.length > 0)
+                current.removedDecorators = removed
+        }
+        return current
+    }
+}
+
 // --------------------------------------------------------------------- //
 // ------------------------------ WALKERS ------------------------------ //
 // --------------------------------------------------------------------- //
@@ -252,7 +270,7 @@ namespace visitors {
  */
 function walkMetadataMembers(meta: TypedReflection, ctx: WalkMemberContext) {
     // apply visitor for each metadata traversed
-    const result = ctx.visitor(meta, ctx)
+    const result = ctx.memberVisitor(meta, ctx)
     for (const key in result) {
         // walk into type metadata members specified
         if (["parameters", "properties", "methods", "ctor"].some(x => x === key)) {
@@ -270,16 +288,16 @@ function walkMetadataMembers(meta: TypedReflection, ctx: WalkMemberContext) {
     return result as ClassReflection
 }
 
-function walkMembers(type: Class, visitor: WalkVisitor, classPath: Class[]) {
+function walkMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[]) {
     const rawMeta = parseClass(type)
-    return walkMetadataMembers(rawMeta, { visitor, parent: rawMeta, target: type, classPath })
+    return walkMetadataMembers(rawMeta, { memberVisitor, parent: rawMeta, target: type, classPath })
 }
 
 /**
  * Walk into type super class
  * @param type type to reflect
  */
-function walkParents(type: Class, ctx: WalkClassContext): ClassReflection {
+function walkParents(type: Class, ctx: WalkParentContext): ClassReflection {
     const defaultRef: ClassReflection = {
         super: Object,
         kind: "Class", type: Object, name: "Object",
@@ -292,9 +310,10 @@ function walkParents(type: Class, ctx: WalkClassContext): ClassReflection {
     const parentMeta = !!parent.prototype ?
         walkParents(parent, { ...ctx, classPath: ctx.classPath.concat(type) }) : defaultRef
     // then walk the current type members
-    const childMeta = walkMembers(type, ctx.visitor, ctx.classPath)
+    const childMeta = walkMembers(type, ctx.memberVisitor, ctx.classPath)
     // merge current type and super class members
-    return extendsMetadata(childMeta, parentMeta)
+    const merged = extendsMetadata(childMeta, parentMeta)
+    return ctx.parentVisitor(merged, ctx)
 }
 
-export { walkParents, visitors, WalkVisitor, GenericMap }
+export { walkParents, memberVisitors, parentVisitors, WalkMemberVisitor, GenericMap }
