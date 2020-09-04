@@ -49,25 +49,25 @@ function getNamesFromAst(nodes: any[]) {
     return nodes.map(x => getName(x)).filter((x): x is string | { [key: string]: string[] } => !!x)
 }
 
-function getCode(fn:Class|Function){
+function getCode(fn: Class | Function) {
     const code = fn.toString()
-    if(code.search(/^class(\s*)extends\s*option.parent\s*{\s*}/gm) > -1) {
+    if (code.search(/^class(\s*)extends\s*option.parent\s*{\s*}/gm) > -1) {
         return "class DynamicClass extends parent {}"
     }
-    else 
+    else
         return code.replace("[native code]", "")
 }
 
 function getMethodParameters(fn: Class, method: string) {
     const body = getCode(fn)
-    const ast = parse(body)
+    const ast = parse(body, { ecmaVersion: 2020 })
     const ctor = getNode(ast, x => x.type === "MethodDefinition" && x.kind === "method" && x.key.name === method)
     return getNamesFromAst(ctor ? (ctor as any).value.params : [])
 }
 
 function getConstructorParameters(fn: Class) {
     const body = getCode(fn)
-    const ast = parse(body)
+    const ast = parse(body, { ecmaVersion: 2020 })
     const ctor = getNode(ast, x => x.type === "MethodDefinition" && x.kind === "constructor")
     return getNamesFromAst(ctor ? (ctor as any).value.params : [])
 }
@@ -75,7 +75,7 @@ function getConstructorParameters(fn: Class) {
 function getFunctionParameters(fn: Function) {
     try {
         const body = getCode(fn)
-        const ast = parse(body)
+        const ast = parse(body, { ecmaVersion: 2020 })
         return getNamesFromAst((ast as any).body[0].params)
     }
     catch {
@@ -176,7 +176,7 @@ function parseConstructor(fn: Class): ConstructorReflection {
 function parseClass(fn: Class): ClassReflection {
     const proto = Object.getPrototypeOf(fn)
     return {
-        kind: "Class", name: fn.name, type: fn, decorators: [], 
+        kind: "Class", name: fn.name, type: fn, decorators: [],
         methods: parseMethods(fn),
         properties: parseProperties(fn),
         ctor: parseConstructor(fn),
