@@ -395,6 +395,18 @@ describe("Decorator", () => {
             const meta = reflect(ChildClass)
             expect(meta).toMatchSnapshot()
         })
+
+        it("Should work when allowMultiple is false", () => {
+            const id = "decorator-id"
+            class DummyClass {
+                myFunction() { }
+            }
+            @decorateClass({ [DecoratorId]: id, lorem: "from child" }, { applyTo: "myFunction", allowMultiple: false })
+            class ChildClass extends DummyClass { }
+            const meta = reflect(ChildClass)
+            expect(meta).toMatchSnapshot()
+        })
+
         it("Should work with decorator merge with more decorators", () => {
             const id = "decorator-id"
             class DummyClass {
