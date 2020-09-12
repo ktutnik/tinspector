@@ -449,6 +449,65 @@ Object {
 }
 `;
 
+exports[`Decorator ApplyTo Should work with decorator merge with more decorators 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "lorem": "from child",
+          Symbol(tinspector:decoratorId): "decorator-id",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "applyTo": "myFunction",
+            "inherit": true,
+            "removeApplied": true,
+          },
+        },
+        Object {
+          "other": "decorator",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "applyTo": Array [],
+            "inherit": true,
+            "removeApplied": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myFunction",
+      "parameters": Array [],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "from child",
+      Symbol(tinspector:decoratorId): "decorator-id",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "applyTo": "myFunction",
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
+  "super": DummyClass,
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Decorator Should able to decorate class multiple 1`] = `
 Object {
   "ctor": Object {
