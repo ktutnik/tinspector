@@ -232,16 +232,21 @@ namespace memberVisitors {
 }
 
 namespace parentVisitors {
-    function appendDecorators(members:any[], copied:any){
-        const option:DecoratorOption = copied[DecoratorOptionId]
-        if(option.allowMultiple) return members.concat(copied)
+    function appendDecorators(members: any[], copied: any) {
+        const option: DecoratorOption = copied[DecoratorOptionId]
+        if (option.allowMultiple) return members.concat(copied)
         const result = []
+        let merged = false;
         for (const member of members) {
-            if(member[DecoratorId] === copied[DecoratorId]) 
+            if (member[DecoratorId] === copied[DecoratorId]){
+                merged = true
                 result.push(copied)
-            else 
+            }
+            else
                 result.push(member)
         }
+        if(!merged)
+            result.push(copied)
         return result
     }
     export function processApplyTo(current: ClassReflection, ctx: WalkParentContext): ClassReflection {
