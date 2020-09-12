@@ -9,7 +9,7 @@ import {
     noop,
     type,
     generic,
-    parameterProperties,
+    parameterProperties, DecoratorId
 } from "../src"
 
 describe("Decorator", () => {
@@ -317,72 +317,97 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    it("Should able to apply decorator into method from class", () => {
-        @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
-        class DummyClass {
-            myFunction() { }
-            myOtherFunction(){}
-        }
-        const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
+    describe("ApplyTo", () => {
+        it("Should able to apply decorator into method from class", () => {
+            @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
+            class DummyClass {
+                myFunction() { }
+                myOtherFunction() { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
 
-    it("Should able to apply decorator into method from class but keep decorator on class", () => {
-        @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction", removeApplied: false })
-        class DummyClass {
-            myFunction() { }
-            myOtherFunction(){}
-        }
-        const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
+        it("Should able to apply decorator into method from class but keep decorator on class", () => {
+            @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction", removeApplied: false })
+            class DummyClass {
+                myFunction() { }
+                myOtherFunction() { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
 
-    it("Should able to apply decorator into property from class", () => {
-        @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
-        class DummyClass {
-            @noop()
-            myProp: number = 1
-        }
-        const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
+        it("Should able to apply decorator into property from class", () => {
+            @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
+            class DummyClass {
+                @noop()
+                myProp: number = 1
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
 
-    it("Should able to apply decorator into parameterProperties from class", () => {
-        @parameterProperties()
-        @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
-        class DummyClass {
-            constructor(
-                public myProp: number = 1
-            ) { }
-        }
-        const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
+        it("Should able to apply decorator into parameterProperties from class", () => {
+            @parameterProperties()
+            @decorateClass({ lorem: "ipsum" }, { applyTo: "myProp" })
+            class DummyClass {
+                constructor(
+                    public myProp: number = 1
+                ) { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
 
-    it("Should able to apply decorator into multiple members from class", () => {
-        @parameterProperties()
-        @decorateClass({ lorem: "ipsum" }, { applyTo: ["myProp", "myFunction"] })
-        class DummyClass {
-            constructor(
-                public myProp: number = 1
-            ) { }
-            myFunction() { }
-        }
-        const meta = reflect(DummyClass)
-        expect(meta).toMatchSnapshot()
-    })
+        it("Should able to apply decorator into multiple members from class", () => {
+            @parameterProperties()
+            @decorateClass({ lorem: "ipsum" }, { applyTo: ["myProp", "myFunction"] })
+            class DummyClass {
+                constructor(
+                    public myProp: number = 1
+                ) { }
+                myFunction() { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
 
-    it("Should able to apply decorator into inherited members from class", () => {
-        class DummyClass {
-            myFunction() { }
-            myOtherFunction(){}
-        }
-        @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
-        class DummyChild extends DummyClass {}
-        const meta = reflect(DummyChild)
-        expect(meta).toMatchSnapshot()
+        it("Should able to apply decorator into inherited members from class", () => {
+            class DummyClass {
+                myFunction() { }
+                myOtherFunction() { }
+            }
+            @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
+            class DummyChild extends DummyClass { }
+            const meta = reflect(DummyChild)
+            expect(meta).toMatchSnapshot()
+        })
+
+        it("Should work with decorator merge", () => {
+            const id = "decorator-id"
+            class DummyClass {
+                @decorateMethod({ [DecoratorId]: id, lorem: "from parent" }, { allowMultiple: false })
+                myFunction() { }
+            }
+            @decorateClass({ [DecoratorId]: id, lorem: "from child" }, { applyTo: "myFunction", allowMultiple: false })
+            class ChildClass extends DummyClass { }
+            const meta = reflect(ChildClass)
+            expect(meta).toMatchSnapshot()
+        })
+        it("Should work with decorator merge with more decorators", () => {
+            const id = "decorator-id"
+            class DummyClass {
+                @decorateMethod({ other: "decorator" })
+                @decorateMethod({ [DecoratorId]: id, lorem: "from parent" }, { allowMultiple: false })
+                myFunction() { }
+            }
+            @decorateClass({ [DecoratorId]: id, lorem: "from child" }, { applyTo: "myFunction", allowMultiple: false })
+            class ChildClass extends DummyClass { }
+            const meta = reflect(ChildClass)
+            expect(meta).toMatchSnapshot()
+        })
     })
-    
 
     describe("Error Handling", () => {
         const DecoratorIdError = 'Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in DummyClass'
@@ -510,7 +535,6 @@ describe("Decorator", () => {
     })
 
     describe("Type Override", () => {
-
         describe("type", () => {
             it("Should able to override method return type with @type() of type Number", () => {
                 class MyClass {
