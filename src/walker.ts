@@ -1,6 +1,6 @@
 import { type } from "os"
 
-import { extendsMetadata } from "./extends"
+import { extendsMetadata, mergeDecorators } from "./extends"
 import { createClass, CustomTypeDefinition, metadata } from "./helpers"
 import { parseClass } from "./parser"
 import {
@@ -26,7 +26,7 @@ import {
     PropertyReflection,
     Reflection,
     TypeDecorator,
-    TypeOverride,
+    TypeOverride, DecoratorId
 } from "./types"
 
 // --------------------------------------------------------------------- //
@@ -232,17 +232,30 @@ namespace memberVisitors {
 }
 
 namespace parentVisitors {
+    function appendDecorators(members:any[], copied:any){
+        const option:DecoratorOption = copied[DecoratorOptionId]
+        if(option.allowMultiple) return members.concat(copied)
+        const result = []
+        for (const member of members) {
+            if(member[DecoratorId] === copied[DecoratorId]) 
+                result.push(copied)
+            else 
+                result.push(member)
+        }
+        return result
+    }
     export function processApplyTo(current: ClassReflection, ctx: WalkParentContext): ClassReflection {
         if (current.type === ctx.target) {
             const decorators = []
             const removed = []
+            // loop through class decorators
             for (const decorator of current.decorators) {
                 const option: DecoratorOption = decorator[DecoratorOptionId]
                 const applyTo = Array.isArray(option.applyTo) ? option.applyTo : [option.applyTo]
                 // copy decorator to member
                 for (const member of [...current.properties, ...current.methods]) {
                     if (applyTo.some(x => x === member.name)) {
-                        member.decorators.push(decorator)
+                        member.decorators = appendDecorators(member.decorators, decorator)
                     }
                 }
                 if (option.removeApplied && applyTo.length > 0)

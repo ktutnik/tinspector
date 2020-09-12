@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Decorator Should able to apply decorator into inherited members from class 1`] = `
+exports[`Decorator ApplyTo Should able to apply decorator into inherited members from class 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -56,7 +56,7 @@ Object {
 }
 `;
 
-exports[`Decorator Should able to apply decorator into method from class 1`] = `
+exports[`Decorator ApplyTo Should able to apply decorator into method from class 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -112,7 +112,7 @@ Object {
 }
 `;
 
-exports[`Decorator Should able to apply decorator into method from class but keep decorator on class 1`] = `
+exports[`Decorator ApplyTo Should able to apply decorator into method from class but keep decorator on class 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -167,7 +167,7 @@ Object {
 }
 `;
 
-exports[`Decorator Should able to apply decorator into multiple members from class 1`] = `
+exports[`Decorator ApplyTo Should able to apply decorator into multiple members from class 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -267,7 +267,7 @@ Object {
 }
 `;
 
-exports[`Decorator Should able to apply decorator into parameterProperties from class 1`] = `
+exports[`Decorator ApplyTo Should able to apply decorator into parameterProperties from class 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -339,7 +339,7 @@ Object {
 }
 `;
 
-exports[`Decorator Should able to apply decorator into property from class 1`] = `
+exports[`Decorator ApplyTo Should able to apply decorator into property from class 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -395,6 +395,56 @@ Object {
   ],
   "super": Object,
   "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Decorator ApplyTo Should work with decorator merge 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "lorem": "from child",
+          Symbol(tinspector:decoratorId): "decorator-id",
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": false,
+            "applyTo": "myFunction",
+            "inherit": true,
+            "removeApplied": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myFunction",
+      "parameters": Array [],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "removedDecorators": Array [
+    Object {
+      "lorem": "from child",
+      Symbol(tinspector:decoratorId): "decorator-id",
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "applyTo": "myFunction",
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
+  "super": DummyClass,
+  "type": ChildClass,
   "typeClassification": "Class",
 }
 `;

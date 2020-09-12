@@ -14,12 +14,12 @@ type MemberReflection = PropertyReflection | MethodReflection | ParameterReflect
 // ------------------------------ EXTENDER ----------------------------- //
 // --------------------------------------------------------------------- //
 
-function mergeDecorators(ownDecorators: any[], parentDecorators: any[]) {
+function mergeDecorators(ownDecorators: any[], parentDecorators: any[], inherit = true) {
     const result = [...ownDecorators]
     for (const decorator of parentDecorators) {
         const options: DecoratorOption = decorator[DecoratorOptionId]!
         // continue, if the decorator is not inheritable
-        if (!options.inherit) continue
+        if (inherit && !options.inherit) continue
         // continue, if allow multiple and already has decorator with the same ID
         if (!options.allowMultiple && ownDecorators.some(x => x[DecoratorId] === decorator[DecoratorId])) continue
         result.push(decorator)
@@ -73,4 +73,4 @@ function extendsMetadata(child: ClassReflection, parent: ClassReflection): Class
     }
 }
 
-export { extendsMetadata }
+export { extendsMetadata, mergeDecorators }
