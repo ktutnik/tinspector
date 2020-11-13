@@ -17,7 +17,6 @@ import {
     PrivateDecorator,
     TypeDecorator,
     TypeOverride,
-    TypeOverrideOption,
 } from "./types"
 
 // --------------------------------------------------------------------- //
