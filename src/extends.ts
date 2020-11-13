@@ -35,11 +35,15 @@ function mergeMember(ref: ClassReflection, child: MemberReflection | undefined, 
         // copy parent parameters if number of current parameters = 0, else just merge existing parameters with parent
         const copyParentParameters = childParameters.length === 0
         const parameters = mergeMembers(ref, childParameters, parent.parameters, copyParentParameters) as ParameterReflection[]
-        return { ...merged, returnType: parent.returnType, typeClassification: parent.typeClassification, decorators, parameters }
+        const returnType = merged.returnType ?? parent.returnType
+        const typeClassification = merged.typeClassification ?? parent.typeClassification
+        return { ...merged, returnType, typeClassification, decorators, parameters }
     }
     else {
         const merged = (child ?? parent) as PropertyReflection | ParameterReflection
-        return { ...merged, type: parent.type, typeClassification: parent.typeClassification, decorators }
+        const type = merged.type ?? parent.type
+        const typeClassification = merged.typeClassification ?? parent.typeClassification
+        return { ...merged, type, typeClassification, decorators }
     }
 }
 

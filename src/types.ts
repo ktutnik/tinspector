@@ -25,9 +25,6 @@ export interface NativeParameterDecorator extends NativeDecorator {
     targetType: "Parameter",
     targetIndex: number
 }
-export interface TypeOverrideOption {
-    genericType: TypeOverride[]
-}
 
 export type Reflection = ParameterReflection | FunctionReflection | PropertyReflection | MethodReflection | ClassReflection | ObjectReflection | ConstructorReflection
 

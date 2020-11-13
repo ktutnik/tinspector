@@ -1,4 +1,4 @@
-import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect, noop } from "../src"
+import { decorateClass, decorateMethod, decorateParameter, decorateProperty, DecoratorId, reflect, noop, type } from "../src"
 import * as metadata from "../src/parser"
 import { metadata as metadataHelper} from "../src/helpers"
 
@@ -128,6 +128,19 @@ describe("Inheritance", () => {
         }
         class ChildClass extends BaseClass {
             myMethod(a: string): string { return "Hello" }
+        }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should able to specify method return type on overridden method", () => {
+        class BaseClass {
+            @type(String)
+            myMethod(a: string) { return "" }
+        }
+        class ChildClass extends BaseClass {
+            @type(Number)
+            myMethod(a: string) { return "Hello" }
         }
         const meta = reflect(ChildClass)
         expect(meta).toMatchSnapshot()
