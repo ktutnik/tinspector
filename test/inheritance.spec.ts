@@ -315,7 +315,7 @@ describe("Inheritance", () => {
                 expect(meta).toMatchSnapshot()
             })
 
-            it("Should not inherit on non overridden property", () => {
+            it("Should inherit on non overridden property", () => {
                 class BaseClass {
                     @decorateProperty({ value: 1 }, { inherit: false })
                     get parentProp() { return 1 }
@@ -378,7 +378,7 @@ describe("Inheritance", () => {
                 expect(meta).toMatchSnapshot()
             })
 
-            it("Should not inherit decorator on non overridden method", () => {
+            it("Should inherit decorator on non overridden method", () => {
                 class BaseClass {
                     @decorateMethod({ value: 1 }, { inherit: false })
                     myMethod(a: string): string { return "" }

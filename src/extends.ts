@@ -14,32 +14,19 @@ type MemberReflection = PropertyReflection | MethodReflection | ParameterReflect
 // ------------------------------ EXTENDER ----------------------------- //
 // --------------------------------------------------------------------- //
 
-function mergeDecorators(ownDecorators: any[], parentDecorators: any[], inherit = true) {
-    const result = [...ownDecorators]
-    for (const decorator of parentDecorators) {
-        const options: DecoratorOption = decorator[DecoratorOptionId]!
-        // continue, if the decorator is not inheritable
-        if (inherit && !options.inherit) continue
-        // continue, if allow multiple and already has decorator with the same ID
-        if (!options.allowMultiple && ownDecorators.some(x => x[DecoratorId] === decorator[DecoratorId])) continue
-        result.push(decorator)
-    }
-    return result
-}
 
 function mergeMember(ref: ClassReflection, child: MemberReflection | undefined, parent: MemberReflection): MemberReflection {
-    const decorators = mergeDecorators(child?.decorators ?? [], parent.decorators)
     if (parent.kind === "Method") {
         const childParameters = (child as MethodReflection)?.parameters ?? []
         const merged = (child ?? parent) as MethodReflection
         // copy parent parameters if number of current parameters = 0, else just merge existing parameters with parent
         const copyParentParameters = childParameters.length === 0
         const parameters = mergeMembers(ref, childParameters, parent.parameters, copyParentParameters) as ParameterReflection[]
-        return { ...merged, returnType: parent.returnType, typeClassification: parent.typeClassification, decorators, parameters }
+        return { ...merged, returnType: parent.returnType, typeClassification: parent.typeClassification, parameters }
     }
     else {
         const merged = (child ?? parent) as PropertyReflection | ParameterReflection
-        return { ...merged, type: parent.type, typeClassification: parent.typeClassification, decorators }
+        return { ...merged, type: parent.type, typeClassification: parent.typeClassification }
     }
 }
 
@@ -67,10 +54,9 @@ function mergeMembers(ref: ClassReflection, children: MemberReflection[], parent
 function extendsMetadata(child: ClassReflection, parent: ClassReflection): ClassReflection {
     return {
         ...child,
-        decorators:  mergeDecorators(child.decorators, parent.decorators),
         methods: mergeMembers(child, child.methods, parent.methods) as MethodReflection[],
         properties: mergeMembers(child, child.properties, parent.properties) as PropertyReflection[]
     }
 }
 
-export { extendsMetadata, mergeDecorators }
+export { extendsMetadata }

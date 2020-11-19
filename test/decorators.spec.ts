@@ -633,18 +633,6 @@ describe("Decorator", () => {
                 expect(reflect(OtherClass)).toMatchSnapshot()
             })
 
-            it("Should able to mark generic type with @type()", () => {
-                @generic.template("T")
-                class MyOtherClass<T> {
-                    @type(x => "T")
-                    data: T = {} as any
-                }
-
-                @generic.type(Number)
-                class MyClass extends MyOtherClass<Number> { }
-                expect(reflect(MyClass)).toMatchSnapshot()
-            })
-
             it("Should able to define inline type definition on @type()", () => {
                 class User {
                     @type({ id: String, name: String })
@@ -655,6 +643,7 @@ describe("Decorator", () => {
                 expect(meta).toMatchSnapshot()
                 expect(reflect(methodReturn)).toMatchSnapshot()
             })
+            
             it("Should able to define inline array type definition on @type()", () => {
                 class User {
                     @type([{ id: String, name: String }])

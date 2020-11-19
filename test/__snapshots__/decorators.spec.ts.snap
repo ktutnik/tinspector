@@ -2264,49 +2264,6 @@ Object {
 }
 `;
 
-exports[`Decorator Type Override type Should able to mark generic type with @type() 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [
-    Object {
-      "kind": "GenericType",
-      "target": MyClass,
-      "types": Array [
-        Number,
-      ],
-      Symbol(tinspector:decoratorId): Symbol(genericType),
-      Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
-        "applyTo": Array [],
-        "inherit": false,
-        "removeApplied": true,
-      },
-    },
-  ],
-  "kind": "Class",
-  "methods": Array [],
-  "name": "MyClass",
-  "properties": Array [
-    Object {
-      "decorators": Array [],
-      "get": undefined,
-      "kind": "Property",
-      "name": "data",
-      "set": undefined,
-      "type": Number,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "super": MyOtherClass,
-  "type": MyClass,
-  "typeClassification": "Class",
-}
-`;
-
 exports[`Decorator Type Override type Should able to override array type with @type() 1`] = `
 Object {
   "ctor": Object {

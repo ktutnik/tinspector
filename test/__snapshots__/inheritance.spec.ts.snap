@@ -561,6 +561,53 @@ Object {
 }
 `;
 
+exports[`Inheritance Decorators Decorator on Method Should inherit decorator on non overridden method 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "applyTo": Array [],
+            "inherit": false,
+            "removeApplied": true,
+          },
+        },
+      ],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "a",
+          "type": String,
+          "typeClassification": "Primitive",
+        },
+      ],
+      "returnType": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "super": BaseClass,
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Inheritance Decorators Decorator on Method Should merge decorators by default 1`] = `
 Object {
   "ctor": Object {
@@ -639,43 +686,6 @@ Object {
           },
         },
       ],
-      "kind": "Method",
-      "name": "myMethod",
-      "parameters": Array [
-        Object {
-          "decorators": Array [],
-          "fields": Object {},
-          "index": 0,
-          "kind": "Parameter",
-          "name": "a",
-          "type": String,
-          "typeClassification": "Primitive",
-        },
-      ],
-      "returnType": String,
-      "typeClassification": "Primitive",
-    },
-  ],
-  "name": "ChildClass",
-  "properties": Array [],
-  "super": BaseClass,
-  "type": ChildClass,
-  "typeClassification": "Class",
-}
-`;
-
-exports[`Inheritance Decorators Decorator on Method Should not inherit decorator on non overridden method 1`] = `
-Object {
-  "ctor": Object {
-    "kind": "Constructor",
-    "name": "constructor",
-    "parameters": Array [],
-  },
-  "decorators": Array [],
-  "kind": "Class",
-  "methods": Array [
-    Object {
-      "decorators": Array [],
       "kind": "Method",
       "name": "myMethod",
       "parameters": Array [
@@ -895,7 +905,7 @@ Object {
 }
 `;
 
-exports[`Inheritance Decorators Decorator on property Should not inherit if specified 1`] = `
+exports[`Inheritance Decorators Decorator on property Should inherit on non overridden property 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -908,7 +918,17 @@ Object {
   "name": "ChildClass",
   "properties": Array [
     Object {
-      "decorators": Array [],
+      "decorators": Array [
+        Object {
+          "value": 1,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "applyTo": Array [],
+            "inherit": false,
+            "removeApplied": true,
+          },
+        },
+      ],
       "get": get parentProp,
       "kind": "Property",
       "name": "parentProp",
@@ -923,7 +943,7 @@ Object {
 }
 `;
 
-exports[`Inheritance Decorators Decorator on property Should not inherit on non overridden property 1`] = `
+exports[`Inheritance Decorators Decorator on property Should not inherit if specified 1`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",

@@ -1,7 +1,8 @@
 import { type } from "os"
 
-import { extendsMetadata, mergeDecorators } from "./extends"
+import { extendsMetadata } from "./extends"
 import { createClass, CustomTypeDefinition, metadata } from "./helpers"
+import { getMetadata, getOwnMetadata } from "./metadata"
 import { parseClass } from "./parser"
 import {
     Class,
@@ -55,18 +56,6 @@ interface WalkParentContext {
 // -------------------------- VISITOR HELPERS -------------------------- //
 // --------------------------------------------------------------------- //
 
-function getDecorators(targetClass: Class, targetType: DecoratorTargetType, target: string, index?: number) {
-    const natives: NativeDecorator[] = Reflect.getOwnMetadata(DECORATOR_KEY, targetClass) || []
-    const result = []
-    for (const { allowMultiple, inherit, applyTo, removeApplied, ...item } of natives) {
-        const par = item as NativeParameterDecorator
-        if (item.targetType === targetType && item.target === target && (index == undefined || par.targetIndex === index)) {
-            result.push({ ...item.value, [DecoratorOptionId]: <DecoratorOption>{ allowMultiple, inherit, applyTo, removeApplied } })
-        }
-    }
-    return result
-}
-
 function getTypeOverrideFromDecorator(decorators: any[]) {
     const getType = (type: string | Class | CustomTypeDefinition) => typeof type === "object" ? createClass({ definition: type }) : type
     const override = decorators.find((x: TypeDecorator): x is TypeDecorator => x.kind === "Override")
@@ -95,12 +84,12 @@ class GenericMap {
         return result
     }
     private getTemplates(target: Class) {
-        const decorator = getDecorators(target, "Class", target.name)
+        const decorator = getMetadata(target)
             .find((x: GenericTemplateDecorator): x is GenericTemplateDecorator => x.kind === "GenericTemplate")
         return decorator?.templates
     }
     private getTypes(target: Class) {
-        const decorator = getDecorators(target, "Class", target.name)
+        const decorator = getMetadata(target)
             .find((x: GenericTypeDecorator): x is GenericTypeDecorator => x.kind === "GenericType")
         return decorator?.types
     }
@@ -150,11 +139,18 @@ namespace memberVisitors {
     export function addsDecorators(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
         if (meta.kind === "Parameter" || metadata.isParameterProperties(meta)) {
             const targetName = meta.kind === "Parameter" ? ctx.parent.name : "constructor"
-            const decorators = getDecorators(ctx.target, "Parameter", targetName, meta.index)
+            // constructor metadata are not inheritable
+            const decorators = targetName === "constructor"
+                ? getOwnMetadata(ctx.target, targetName, meta.index)
+                : getMetadata(ctx.target, targetName, meta.index)
             return { ...meta, decorators: meta.decorators.concat(decorators) }
         }
-        else if (meta.kind === "Method" || meta.kind === "Property" || meta.kind === "Class") {
-            const decorators = getDecorators(ctx.target, meta.kind, meta.name)
+        if (meta.kind === "Method" || meta.kind === "Property") {
+            const decorators = getMetadata(ctx.target, meta.name)
+            return { ...meta, decorators: meta.decorators.concat(decorators) }
+        }
+        if (meta.kind === "Class") {
+            const decorators = getMetadata(ctx.target)
             return { ...meta, decorators: meta.decorators.concat(decorators) }
         }
         return meta
@@ -238,14 +234,14 @@ namespace parentVisitors {
         const result = []
         let merged = false;
         for (const member of members) {
-            if (member[DecoratorId] === copied[DecoratorId]){
+            if (member[DecoratorId] === copied[DecoratorId]) {
                 merged = true
                 result.push(copied)
             }
             else
                 result.push(member)
         }
-        if(!merged)
+        if (!merged)
             result.push(copied)
         return result
     }

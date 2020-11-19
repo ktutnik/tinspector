@@ -1,4 +1,5 @@
 import { Node, parse } from "acorn"
+import { getAllMetadata } from "./metadata"
 
 import {
     Class,
@@ -89,9 +90,9 @@ function getClassMembers(fun: Function) {
     const isFunction = (name: string) => typeof fun.prototype[name] === "function";
     const members = Object.getOwnPropertyNames(fun.prototype)
         .filter(name => isGetter(name) || isSetter(name) || isFunction(name))
-    const properties = (Reflect.getOwnMetadata(DECORATOR_KEY, fun) || [])
-        .filter((x: NativeDecorator) => x.targetType === "Property")
-        .map((x: NativeDecorator) => x.target)
+    const properties = (getAllMetadata(fun as Class) || [])
+        .filter(x => !!x.memberName && !x.parIndex)
+        .map(x => x.memberName as string)
     const names = members.concat(properties)
         .filter(name => name !== "constructor" && !~name.indexOf("__"))
     return [...new Set(names)]
