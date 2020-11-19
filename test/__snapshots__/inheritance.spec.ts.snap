@@ -787,8 +787,8 @@ Object {
       "kind": "Property",
       "name": "parentProp",
       "set": undefined,
-      "type": Object,
-      "typeClassification": "Primitive",
+      "type": undefined,
+      "typeClassification": undefined,
     },
   ],
   "super": BaseClass,
@@ -961,8 +961,8 @@ Object {
       "kind": "Property",
       "name": "parentProp",
       "set": undefined,
-      "type": Object,
-      "typeClassification": "Primitive",
+      "type": undefined,
+      "typeClassification": undefined,
     },
   ],
   "super": BaseClass,
@@ -1364,6 +1364,43 @@ Object {
 }
 `;
 
+exports[`Inheritance Should get proper overridden method parameters 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "par1",
+          "type": undefined,
+          "typeClassification": undefined,
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "super": BaseClass,
+  "type": ChildClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Inheritance Should inspect domain with inheritance using constructor property 1`] = `
 Object {
   "ctor": Object {
@@ -1640,6 +1677,52 @@ Object {
   ],
   "super": DomainBase,
   "type": Item,
+  "typeClassification": "Class",
+}
+`;
+
+exports[`Inheritance Should not inherit parameter 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [],
+  },
+  "decorators": Array [],
+  "kind": "Class",
+  "methods": Array [
+    Object {
+      "decorators": Array [],
+      "kind": "Method",
+      "name": "myMethod",
+      "parameters": Array [
+        Object {
+          "decorators": Array [],
+          "fields": Object {},
+          "index": 0,
+          "kind": "Parameter",
+          "name": "one",
+          "type": undefined,
+          "typeClassification": undefined,
+        },
+        Object {
+          "decorators": Array [],
+          "fields": Object {},
+          "index": 1,
+          "kind": "Parameter",
+          "name": "two",
+          "type": undefined,
+          "typeClassification": undefined,
+        },
+      ],
+      "returnType": undefined,
+      "typeClassification": undefined,
+    },
+  ],
+  "name": "ChildClass",
+  "properties": Array [],
+  "super": BaseClass,
+  "type": ChildClass,
   "typeClassification": "Class",
 }
 `;

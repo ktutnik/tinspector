@@ -80,6 +80,28 @@ describe("Inheritance", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should get proper overridden method parameters", () => {
+        class BaseClass {
+            myMethod(par1:number, par2:number, par3:number) { }
+        }
+        class ChildClass extends BaseClass { 
+            myMethod(par1:number) { }
+        }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should not inherit parameter", () => {
+        class BaseClass {
+            myMethod(par1:number, par2:number, par3:number) { }
+        }
+        class ChildClass extends BaseClass { 
+            myMethod(one:number, two:number) { }
+        }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should inspect domain with inheritance using constructor property", () => {
         @reflect.parameterProperties()
         class DomainBase {

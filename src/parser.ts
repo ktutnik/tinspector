@@ -5,6 +5,8 @@ import {
     Class,
     ClassReflection,
     ConstructorReflection,
+    DecoratorOption,
+    DecoratorOptionId,
     DECORATOR_KEY,
     FunctionReflection,
     MethodReflection,
@@ -92,6 +94,10 @@ function getClassMembers(fun: Function) {
         .filter(name => isGetter(name) || isSetter(name) || isFunction(name))
     const properties = (getAllMetadata(fun as Class) || [])
         .filter(x => !!x.memberName && !x.parIndex)
+        .filter(x => {
+            const opt:DecoratorOption = x.data[DecoratorOptionId]
+            return opt.applyTo?.length === 0
+        })
         .map(x => x.memberName as string)
     const names = members.concat(properties)
         .filter(name => name !== "constructor" && !~name.indexOf("__"))

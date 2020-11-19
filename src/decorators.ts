@@ -20,18 +20,6 @@ import {
 } from "./types"
 
 
-function getMetadataOption(opt?: DecoratorOption): Required<DecoratorOption> {
-    return { inherit: true, allowMultiple: true, applyTo: [], removeApplied: true, ...opt }
-}
-
-function throwIfNoId(target: any, meta: any) {
-    const opt = meta[DecoratorOptionId]
-    if (!opt.allowMultiple && !meta[DecoratorId]) {
-        const ctorName = metadata.isConstructor(target) ? target.name : target.constructor.name
-        throw new Error(`Reflect Error: Decorator with allowMultiple set to false must have DecoratorId property in ${ctorName}`)
-    }
-}
-
 export function decorateParameter(callback: ((target: Class, name: string, index: number) => any), option?: DecoratorOption): ParameterDecorator
 export function decorateParameter(data: any, option?: DecoratorOption): ParameterDecorator
 export function decorateParameter(data: any, option?: DecoratorOption): ParameterDecorator {
@@ -40,9 +28,7 @@ export function decorateParameter(data: any, option?: DecoratorOption): Paramete
         const targetClass = isCtorParam ? target : target.constructor
         const methodName = isCtorParam ? "constructor" : name
         const meta = typeof data === "function" ? data(targetClass, methodName, index) : data
-        meta[DecoratorOptionId] = getMetadataOption({ ...meta[DecoratorOptionId], ...option })
-        throwIfNoId(targetClass, meta)
-        setMetadata(meta, targetClass, methodName, index)
+        setMetadata({...meta, [DecoratorOptionId]: { ...meta[DecoratorOptionId], ...option }}, targetClass, methodName, index)
     }
 }
 
@@ -52,9 +38,7 @@ export function decorateMethod(data: any, option?: DecoratorOption) {
     return (target: any, name: string | symbol) => {
         const targetClass = target.constructor
         const meta = typeof data === "function" ? data(targetClass, name) : data
-        meta[DecoratorOptionId] = getMetadataOption({ ...meta[DecoratorOptionId], ...option })
-        throwIfNoId(targetClass, meta)
-        setMetadata(meta, targetClass, name)
+        setMetadata({...meta, [DecoratorOptionId]: { ...meta[DecoratorOptionId], ...option }}, targetClass, name)
     }
 }
 
@@ -74,9 +58,7 @@ export function decorateClass(data: any, option?: DecoratorOption): ClassDecorat
 export function decorateClass(data: any, option?: DecoratorOption) {
     return (target: any) => {
         const meta = typeof data === "function" ? data(target) : data
-        meta[DecoratorOptionId] = getMetadataOption({ ...meta[DecoratorOptionId], ...option })
-        throwIfNoId(target, meta)
-        setMetadata(meta, target)
+        setMetadata({...meta, [DecoratorOptionId]: { ...meta[DecoratorOptionId], ...option }}, target)
     }
 }
 

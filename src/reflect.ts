@@ -2,7 +2,7 @@ import { ignore, noop, parameterProperties, type } from "./decorators"
 import { createClass, metadata, useCache } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
-import { memberVisitors, parentVisitors, walkParents, WalkMemberVisitor } from "./walker"
+import { memberVisitors, walkMembersRecursive, walkReflection } from "./walker"
 
 interface TraverseContext {
     path: any[]
@@ -15,23 +15,27 @@ function pipe<Ref, Ctx, Ret>(visitors: Visitor<Ref, Ctx, Ret>[]): Visitor<Ref, C
 }
 
 function reflectClass(target: Class): ClassReflection {
-    const visitorOrder = [
-        memberVisitors.addsDesignTypes,
-        memberVisitors.addsDecorators,
-        memberVisitors.addsTypeOverridden,
-        memberVisitors.addsParameterProperties,
-        memberVisitors.addsGenericOverridden,
-        memberVisitors.addsTypeClassification,
-        memberVisitors.removeIgnored,
-    ]
-    const parentVisitorOrder = [
-        parentVisitors.processApplyTo
-    ]
-    return walkParents(target, {
-        target,
-        parentVisitor: pipe(parentVisitorOrder),
-        memberVisitor: pipe(visitorOrder),
+    const meta = walkMembersRecursive(target, {
+        target, memberVisitor: pipe([
+            memberVisitors.addsDesignTypes,
+            memberVisitors.addsDecorators,
+            memberVisitors.addsTypeOverridden,
+            memberVisitors.addsParameterProperties,
+            memberVisitors.addsGenericOverridden,
+            memberVisitors.addsTypeClassification,
+            memberVisitors.removeIgnored,
+        ]),
         classPath: []
+    })
+    return walkReflection(meta, {
+        target, classPath: [], parent: meta,
+        memberVisitor: pipe([
+            memberVisitors.addsApplyToDecorator,
+            memberVisitors.addsTypeOverridden,
+            memberVisitors.addsGenericOverridden,
+            memberVisitors.addsTypeClassification,
+            memberVisitors.removeIgnored,
+        ])
     })
 }
 

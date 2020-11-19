@@ -1,25 +1,19 @@
-import { type } from "os"
-
 import { extendsMetadata } from "./extends"
 import { createClass, CustomTypeDefinition, metadata } from "./helpers"
-import { getMetadata, getOwnMetadata } from "./metadata"
+import { getMetadata, getMetadataForApplyTo, getOwnMetadata, mergeMetadata } from "./metadata"
 import { parseClass } from "./parser"
 import {
     Class,
     ClassReflection,
     ConstructorReflection,
-    DECORATOR_KEY,
     DecoratorOption,
     DecoratorOptionId,
-    DecoratorTargetType,
     DESIGN_PARAMETER_TYPE,
     DESIGN_RETURN_TYPE,
     DESIGN_TYPE,
     GenericTemplateDecorator,
     GenericTypeDecorator,
     MethodReflection,
-    NativeDecorator,
-    NativeParameterDecorator,
     ParameterPropertiesDecorator,
     ParameterPropertyReflection,
     ParameterReflection,
@@ -27,7 +21,7 @@ import {
     PropertyReflection,
     Reflection,
     TypeDecorator,
-    TypeOverride, DecoratorId
+    TypeOverride,
 } from "./types"
 
 // --------------------------------------------------------------------- //
@@ -36,7 +30,6 @@ import {
 
 type TypedReflection = ClassReflection | MethodReflection | PropertyReflection | ParameterReflection | ConstructorReflection | ParameterPropertyReflection
 type WalkMemberVisitor = (value: TypedReflection, ctx: WalkMemberContext) => TypedReflection | undefined
-type WalkParentVisitor = (current: ClassReflection, ctx: WalkParentContext) => ClassReflection
 
 interface WalkMemberContext {
     target: Class
@@ -48,7 +41,6 @@ interface WalkMemberContext {
 interface WalkParentContext {
     target: Class
     memberVisitor: WalkMemberVisitor
-    parentVisitor: WalkParentVisitor
     classPath: Class[]
 }
 
@@ -137,12 +129,18 @@ namespace memberVisitors {
     }
 
     export function addsDecorators(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
-        if (meta.kind === "Parameter" || metadata.isParameterProperties(meta)) {
-            const targetName = meta.kind === "Parameter" ? ctx.parent.name : "constructor"
+        if (meta.kind === "Parameter") {
             // constructor metadata are not inheritable
-            const decorators = targetName === "constructor"
-                ? getOwnMetadata(ctx.target, targetName, meta.index)
-                : getMetadata(ctx.target, targetName, meta.index)
+            const decorators = ctx.parent.name === "constructor"
+                ? getOwnMetadata(ctx.target, ctx.parent.name, meta.index)
+                : getMetadata(ctx.target, ctx.parent.name, meta.index)
+            return { ...meta, decorators: meta.decorators.concat(decorators) }
+        }
+        if (metadata.isParameterProperties(meta)) {
+            // get copy own metadata of constructor 
+            const decorators = getOwnMetadata(ctx.target, "constructor", meta.index)
+                // and also a copy of metadata of the property (using applyTo)
+                .concat(...getMetadata(ctx.target, meta.name))
             return { ...meta, decorators: meta.decorators.concat(decorators) }
         }
         if (meta.kind === "Method" || meta.kind === "Property") {
@@ -150,8 +148,31 @@ namespace memberVisitors {
             return { ...meta, decorators: meta.decorators.concat(decorators) }
         }
         if (meta.kind === "Class") {
-            const decorators = getMetadata(ctx.target)
+            const decorators = getMetadata(meta.type)
             return { ...meta, decorators: meta.decorators.concat(decorators) }
+        }
+        return meta
+    }
+
+    export function addsApplyToDecorator(meta: TypedReflection, ctx: WalkMemberContext) {
+        if (meta.kind === "Method" || meta.kind === "Property") {
+            const decorators = getMetadataForApplyTo(ctx.target, meta.name)
+            return { ...meta, decorators: mergeMetadata(decorators, meta.decorators)  }
+        }
+        if (meta.kind === "Class") {
+            const rawDecorators = getMetadataForApplyTo(meta.type)
+            const removedDecorators = rawDecorators.filter(x => {
+                const option: Required<DecoratorOption> = x[DecoratorOptionId]
+                return option.removeApplied
+            })
+            const decorators = rawDecorators.filter(x => {
+                const option: Required<DecoratorOption> = x[DecoratorOptionId]
+                return !option.removeApplied
+            })
+            const result = { ...meta, decorators: meta.decorators.concat(decorators) }
+            if(removedDecorators.length > 0)
+                result.removedDecorators = removedDecorators
+            return result
         }
         return meta
     }
@@ -227,51 +248,6 @@ namespace memberVisitors {
     }
 }
 
-namespace parentVisitors {
-    function appendDecorators(members: any[], copied: any) {
-        const option: DecoratorOption = copied[DecoratorOptionId]
-        if (option.allowMultiple) return members.concat(copied)
-        const result = []
-        let merged = false;
-        for (const member of members) {
-            if (member[DecoratorId] === copied[DecoratorId]) {
-                merged = true
-                result.push(copied)
-            }
-            else
-                result.push(member)
-        }
-        if (!merged)
-            result.push(copied)
-        return result
-    }
-    export function processApplyTo(current: ClassReflection, ctx: WalkParentContext): ClassReflection {
-        if (current.type === ctx.target) {
-            const decorators = []
-            const removed = []
-            // loop through class decorators
-            for (const decorator of current.decorators) {
-                const option: DecoratorOption = decorator[DecoratorOptionId]
-                const applyTo = Array.isArray(option.applyTo) ? option.applyTo : [option.applyTo]
-                // copy decorator to member
-                for (const member of [...current.properties, ...current.methods]) {
-                    if (applyTo.some(x => x === member.name)) {
-                        member.decorators = appendDecorators(member.decorators, decorator)
-                    }
-                }
-                if (option.removeApplied && applyTo.length > 0)
-                    removed.push(decorator)
-                else
-                    decorators.push(decorator)
-            }
-            current.decorators = decorators
-            if (removed.length > 0)
-                current.removedDecorators = removed
-        }
-        return current
-    }
-}
-
 // --------------------------------------------------------------------- //
 // ------------------------------ WALKERS ------------------------------ //
 // --------------------------------------------------------------------- //
@@ -282,7 +258,7 @@ namespace parentVisitors {
  * @param meta type metadata
  * @param ctx traversal context
  */
-function walkMetadataMembers(meta: TypedReflection, ctx: WalkMemberContext) {
+function walkReflection(meta: TypedReflection, ctx: WalkMemberContext) {
     // apply visitor for each metadata traversed
     const result = ctx.memberVisitor(meta, ctx)
     for (const key in result) {
@@ -290,11 +266,11 @@ function walkMetadataMembers(meta: TypedReflection, ctx: WalkMemberContext) {
         if (["parameters", "properties", "methods", "ctor"].some(x => x === key)) {
             const item: TypedReflection | TypedReflection[] = (result as any)[key]
             if (Array.isArray(item)) {
-                const node = item.map((x, i) => walkMetadataMembers(x, { ...ctx, parent: result }));
+                const node = item.map((x, i) => walkReflection(x, { ...ctx, parent: result }));
                 (result as any)[key] = node.filter(x => !!x)
             }
             else {
-                const node = walkMetadataMembers(item, { ...ctx, parent: item });
+                const node = walkReflection(item, { ...ctx, parent: item });
                 (result as any)[key] = node
             }
         }
@@ -302,32 +278,30 @@ function walkMetadataMembers(meta: TypedReflection, ctx: WalkMemberContext) {
     return result as ClassReflection
 }
 
-function walkMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[]) {
+function walkMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[] = []) {
     const rawMeta = parseClass(type)
-    return walkMetadataMembers(rawMeta, { memberVisitor, parent: rawMeta, target: type, classPath })
+    return walkReflection(rawMeta, { memberVisitor, parent: rawMeta, target: type, classPath })
 }
 
 /**
- * Walk into type super class
+ * Walk into type super class. 
  * @param type type to reflect
  */
-function walkParents(type: Class, ctx: WalkParentContext): ClassReflection {
+function walkMembersRecursive(type: Class, ctx: WalkParentContext): ClassReflection {
     const defaultRef: ClassReflection = {
         super: Object,
         kind: "Class", type: Object, name: "Object",
         ctor: {} as ConstructorReflection,
         methods: [], properties: [], decorators: []
     }
-    // walk first into the parent members
     const parent: Class = Object.getPrototypeOf(type)
     // walk the super class member first
     const parentMeta = !!parent.prototype ?
-        walkParents(parent, { ...ctx, classPath: ctx.classPath.concat(type) }) : defaultRef
+        walkMembersRecursive(parent, { ...ctx, classPath: ctx.classPath.concat(type) }) : defaultRef
     // then walk the current type members
     const childMeta = walkMembers(type, ctx.memberVisitor, ctx.classPath)
     // merge current type and super class members
-    const merged = extendsMetadata(childMeta, parentMeta)
-    return ctx.parentVisitor(merged, ctx)
+    return extendsMetadata(childMeta, parentMeta)
 }
 
-export { walkParents, memberVisitors, parentVisitors, WalkMemberVisitor, GenericMap }
+export { walkMembersRecursive, walkReflection, memberVisitors, WalkMemberVisitor, GenericMap }
