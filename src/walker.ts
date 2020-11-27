@@ -157,7 +157,7 @@ namespace memberVisitors {
     export function addsApplyToDecorator(meta: TypedReflection, ctx: WalkMemberContext) {
         if (meta.kind === "Method" || meta.kind === "Property") {
             const decorators = getMetadataForApplyTo(ctx.target, meta.name)
-            return { ...meta, decorators: mergeMetadata(decorators, meta.decorators)  }
+            return { ...meta, decorators: mergeMetadata(decorators, meta.decorators, false)  }
         }
         if (meta.kind === "Class") {
             const rawDecorators = getMetadataForApplyTo(meta.type)
@@ -255,22 +255,22 @@ namespace memberVisitors {
 
 /**
  * Walk into type member metadata (properties, parameters, methods, ctor etc)
- * @param meta type metadata
+ * @param ref type metadata
  * @param ctx traversal context
  */
-function walkReflection(meta: TypedReflection, ctx: WalkMemberContext) {
+function walkReflectionMembers(ref: TypedReflection, ctx: WalkMemberContext) {
     // apply visitor for each metadata traversed
-    const result = ctx.memberVisitor(meta, ctx)
+    const result = ctx.memberVisitor(ref, ctx)
     for (const key in result) {
         // walk into type metadata members specified
         if (["parameters", "properties", "methods", "ctor"].some(x => x === key)) {
             const item: TypedReflection | TypedReflection[] = (result as any)[key]
             if (Array.isArray(item)) {
-                const node = item.map((x, i) => walkReflection(x, { ...ctx, parent: result }));
+                const node = item.map((x, i) => walkReflectionMembers(x, { ...ctx, parent: result }));
                 (result as any)[key] = node.filter(x => !!x)
             }
             else {
-                const node = walkReflection(item, { ...ctx, parent: item });
+                const node = walkReflectionMembers(item, { ...ctx, parent: item });
                 (result as any)[key] = node
             }
         }
@@ -278,16 +278,16 @@ function walkReflection(meta: TypedReflection, ctx: WalkMemberContext) {
     return result as ClassReflection
 }
 
-function walkMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[] = []) {
+function walkTypeMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[] = []) {
     const rawMeta = parseClass(type)
-    return walkReflection(rawMeta, { memberVisitor, parent: rawMeta, target: type, classPath })
+    return walkReflectionMembers(rawMeta, { memberVisitor, parent: rawMeta, target: type, classPath })
 }
 
 /**
  * Walk into type super class. 
  * @param type type to reflect
  */
-function walkMembersRecursive(type: Class, ctx: WalkParentContext): ClassReflection {
+function walkTypeMembersRecursive(type: Class, ctx: WalkParentContext): ClassReflection {
     const defaultRef: ClassReflection = {
         super: Object,
         kind: "Class", type: Object, name: "Object",
@@ -297,11 +297,11 @@ function walkMembersRecursive(type: Class, ctx: WalkParentContext): ClassReflect
     const parent: Class = Object.getPrototypeOf(type)
     // walk the super class member first
     const parentMeta = !!parent.prototype ?
-        walkMembersRecursive(parent, { ...ctx, classPath: ctx.classPath.concat(type) }) : defaultRef
+        walkTypeMembersRecursive(parent, { ...ctx, classPath: ctx.classPath.concat(type) }) : defaultRef
     // then walk the current type members
-    const childMeta = walkMembers(type, ctx.memberVisitor, ctx.classPath)
+    const childMeta = walkTypeMembers(type, ctx.memberVisitor, ctx.classPath)
     // merge current type and super class members
     return extendsMetadata(childMeta, parentMeta)
 }
 
-export { walkMembersRecursive, walkReflection, memberVisitors, WalkMemberVisitor, GenericMap }
+export { walkTypeMembersRecursive, walkReflectionMembers, memberVisitors, WalkMemberVisitor, GenericMap }

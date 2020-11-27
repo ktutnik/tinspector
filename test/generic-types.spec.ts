@@ -1,4 +1,4 @@
-import reflect, { generic, type, parameterProperties, metadata } from "../src"
+import reflect, { generic, type, parameterProperties, metadata, DecoratorOptionId, DecoratorId } from "../src"
 
 
 
@@ -95,7 +95,7 @@ describe("Generic", () => {
         expect(metadata.getMethods(meta)).toMatchSnapshot()
         expect(meta).toMatchSnapshot()
     })
-    it("Should able to inspect nested generic class with multiple template", () => {
+    it.only("Should able to inspect nested generic class with multiple template", () => {
         @generic.template("T", "U")
         class GrandSuperClass<T, U>{
             @type("T")
@@ -111,6 +111,7 @@ describe("Generic", () => {
         class MyClass extends SuperClass<number, Date>{ }
         const meta = reflect(MyClass)
         expect(metadata.getMethods(meta)).toMatchSnapshot()
+        expect(meta.decorators.map(({ [DecoratorOptionId]: _, [DecoratorId]: __, ...x }) => x)).toMatchSnapshot()
         expect(meta).toMatchSnapshot()
     })
 })

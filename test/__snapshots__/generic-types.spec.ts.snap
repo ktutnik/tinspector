@@ -858,9 +858,23 @@ Object {
       ],
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
+        "allowMultiple": true,
         "applyTo": Array [],
-        "inherit": false,
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericTemplate",
+      "target": SuperClass,
+      "templates": Array [
+        "T",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericTemplate),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
         "removeApplied": true,
       },
     },
@@ -886,8 +900,8 @@ Object {
       "kind": "Method",
       "name": "method",
       "parameters": Array [],
-      "returnType": String,
-      "typeClassification": "Primitive",
+      "returnType": "T",
+      "typeClassification": "Class",
     },
   ],
   "name": "MyClass",
@@ -1057,25 +1071,62 @@ Array [
     "pars": Array [
       Object {
         "name": "par",
-        "type": Number,
+        "type": "A",
       },
     ],
-    "type": Date,
+    "type": "B",
   },
   Object {
     "name": "grandSuper",
     "pars": Array [
       Object {
         "name": "par",
-        "type": Date,
+        "type": "U",
       },
     ],
-    "type": Number,
+    "type": "T",
   },
 ]
 `;
 
 exports[`Generic Should able to inspect nested generic class with multiple template 2`] = `
+Array [
+  Object {
+    "kind": "GenericType",
+    "target": MyClass,
+    "types": Array [
+      Number,
+      Date,
+    ],
+  },
+  Object {
+    "kind": "GenericType",
+    "target": SuperClass,
+    "types": Array [
+      "A",
+      "B",
+    ],
+  },
+  Object {
+    "kind": "GenericTemplate",
+    "target": SuperClass,
+    "templates": Array [
+      "A",
+      "B",
+    ],
+  },
+  Object {
+    "kind": "GenericTemplate",
+    "target": GrandSuperClass,
+    "templates": Array [
+      "T",
+      "U",
+    ],
+  },
+]
+`;
+
+exports[`Generic Should able to inspect nested generic class with multiple template 3`] = `
 Object {
   "ctor": Object {
     "kind": "Constructor",
@@ -1092,9 +1143,54 @@ Object {
       ],
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
+        "allowMultiple": true,
         "applyTo": Array [],
-        "inherit": false,
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericType",
+      "target": SuperClass,
+      "types": Array [
+        "A",
+        "B",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericTemplate",
+      "target": SuperClass,
+      "templates": Array [
+        "A",
+        "B",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericTemplate),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericTemplate",
+      "target": GrandSuperClass,
+      "templates": Array [
+        "T",
+        "U",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericTemplate),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
         "removeApplied": true,
       },
     },
@@ -1140,12 +1236,12 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "par",
-          "type": Number,
-          "typeClassification": "Primitive",
+          "type": "A",
+          "typeClassification": "Class",
         },
       ],
-      "returnType": Date,
-      "typeClassification": "Primitive",
+      "returnType": "B",
+      "typeClassification": "Class",
     },
     Object {
       "decorators": Array [
@@ -1186,12 +1282,12 @@ Object {
           "index": 0,
           "kind": "Parameter",
           "name": "par",
-          "type": Date,
-          "typeClassification": "Primitive",
+          "type": "U",
+          "typeClassification": "Class",
         },
       ],
-      "returnType": Number,
-      "typeClassification": "Primitive",
+      "returnType": "T",
+      "typeClassification": "Class",
     },
   ],
   "name": "MyClass",
@@ -1206,11 +1302,11 @@ exports[`Generic Should able to inspect properties on deep inheritance 1`] = `
 Array [
   Object {
     "name": "super",
-    "type": String,
+    "type": "B",
   },
   Object {
     "name": "grand",
-    "type": Number,
+    "type": "T",
   },
 ]
 `;
@@ -1231,9 +1327,51 @@ Object {
       ],
       Symbol(tinspector:decoratorId): Symbol(genericType),
       Symbol(tinspector:decoratorOption): Object {
-        "allowMultiple": false,
+        "allowMultiple": true,
         "applyTo": Array [],
-        "inherit": false,
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericType",
+      "target": Super,
+      "types": Array [
+        Number,
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericType),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericTemplate",
+      "target": Super,
+      "templates": Array [
+        "B",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericTemplate),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+    Object {
+      "kind": "GenericTemplate",
+      "target": Grand,
+      "templates": Array [
+        "T",
+      ],
+      Symbol(tinspector:decoratorId): Symbol(genericTemplate),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": true,
+        "applyTo": Array [],
+        "inherit": true,
         "removeApplied": true,
       },
     },
@@ -1262,8 +1400,8 @@ Object {
       "kind": "Property",
       "name": "super",
       "set": undefined,
-      "type": String,
-      "typeClassification": "Primitive",
+      "type": "B",
+      "typeClassification": "Class",
     },
     Object {
       "decorators": Array [
@@ -1285,8 +1423,8 @@ Object {
       "kind": "Property",
       "name": "grand",
       "set": undefined,
-      "type": Number,
-      "typeClassification": "Primitive",
+      "type": "T",
+      "typeClassification": "Class",
     },
   ],
   "super": Super,

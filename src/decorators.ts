@@ -121,10 +121,10 @@ export namespace generic {
     const symGenericType = Symbol("genericType")
     const symGenericTemplate = Symbol("genericTemplate")
     export function template(...templates: string[]) {
-        return decorateClass(target => <GenericTemplateDecorator>{ [DecoratorId]: symGenericTemplate, kind: "GenericTemplate", templates, target }, { inherit: false, allowMultiple: false })
+        return decorateClass(target => <GenericTemplateDecorator>{ [DecoratorId]: symGenericTemplate, kind: "GenericTemplate", templates, target })
     }
     export function type(...types: TypeOverride[]) {
-        return decorateClass(target => <GenericTypeDecorator>{ [DecoratorId]: symGenericType, kind: "GenericType", types, target }, { inherit: false, allowMultiple: false })
+        return decorateClass(target => <GenericTypeDecorator>{ [DecoratorId]: symGenericType, kind: "GenericType", types, target })
     }
     /**
      * Create generic class dynamically

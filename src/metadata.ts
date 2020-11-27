@@ -40,12 +40,12 @@ function getMetadataFromStorage(target: Class, memberName?: string, parIndex?: n
         .map(x => x.data)
 }
 
-export function mergeMetadata(childMeta: any[], parentMeta: any[]) {
+export function mergeMetadata(childMeta: any[], parentMeta: any[], useInherit = true) {
     const result = [...childMeta]
     for (const parent of parentMeta) {
         const copyExists = () => !!childMeta.find(x => x[DecoratorId] !== undefined && x[DecoratorId] === parent[DecoratorId])
         const option = parent[DecoratorOptionId]
-        if (!option.inherit) continue
+        if (useInherit && !option.inherit) continue
         if (!option.allowMultiple && copyExists()) continue
         result.push(parent)
     }

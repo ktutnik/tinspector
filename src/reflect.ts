@@ -2,7 +2,7 @@ import { ignore, noop, parameterProperties, type } from "./decorators"
 import { createClass, metadata, useCache } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
-import { memberVisitors, walkMembersRecursive, walkReflection } from "./walker"
+import { memberVisitors as v, walkTypeMembersRecursive, walkReflectionMembers } from "./walker"
 
 interface TraverseContext {
     path: any[]
@@ -15,27 +15,24 @@ function pipe<Ref, Ctx, Ret>(visitors: Visitor<Ref, Ctx, Ret>[]): Visitor<Ref, C
 }
 
 function reflectClass(target: Class): ClassReflection {
-    const meta = walkMembersRecursive(target, {
+    return walkTypeMembersRecursive(target, {
         target, memberVisitor: pipe([
-            memberVisitors.addsDesignTypes,
-            memberVisitors.addsDecorators,
-            memberVisitors.addsTypeOverridden,
-            memberVisitors.addsParameterProperties,
-            memberVisitors.addsGenericOverridden,
-            memberVisitors.addsTypeClassification,
-            memberVisitors.removeIgnored,
+            // add typescript design types information
+            v.addsDesignTypes,
+            // add metadata decorators
+            v.addsDecorators,
+            // add datatype info specified by @type decorator
+            v.addsTypeOverridden,
+            // add parameter properties
+            v.addsParameterProperties,
+            // add generic type information
+            v.addsGenericOverridden,
+            // add typeClassification information
+            v.addsTypeClassification,
+            // remove @ignore decorator
+            v.removeIgnored,
         ]),
         classPath: []
-    })
-    return walkReflection(meta, {
-        target, classPath: [], parent: meta,
-        memberVisitor: pipe([
-            memberVisitors.addsApplyToDecorator,
-            memberVisitors.addsTypeOverridden,
-            memberVisitors.addsGenericOverridden,
-            memberVisitors.addsTypeClassification,
-            memberVisitors.removeIgnored,
-        ])
     })
 }
 

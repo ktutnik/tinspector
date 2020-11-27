@@ -9,7 +9,7 @@ import {
     noop,
     type,
     generic,
-    parameterProperties, DecoratorId
+    parameterProperties, DecoratorId, TypeDecorator
 } from "../src"
 
 describe("Decorator", () => {
@@ -419,6 +419,15 @@ describe("Decorator", () => {
             const meta = reflect(ChildClass)
             expect(meta).toMatchSnapshot()
         })
+        it("Should able to apply type override for method", () => {
+            @decorateClass(target => <TypeDecorator>{ kind: "Override", type: String, target, genericParams: [] }, {applyTo: "myFunction"})
+            class DummyClass {
+                myFunction() { }
+                myOtherFunction() { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
     })
 
     describe("Error Handling", () => {
@@ -643,7 +652,7 @@ describe("Decorator", () => {
                 expect(meta).toMatchSnapshot()
                 expect(reflect(methodReturn)).toMatchSnapshot()
             })
-            
+
             it("Should able to define inline array type definition on @type()", () => {
                 class User {
                     @type([{ id: String, name: String }])
