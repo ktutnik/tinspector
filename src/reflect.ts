@@ -15,7 +15,7 @@ function pipe<Ref, Ctx, Ret>(visitors: Visitor<Ref, Ctx, Ret>[]): Visitor<Ref, C
 }
 
 function reflectClass(target: Class): ClassReflection {
-    return walkTypeMembersRecursive(target, {
+    const ref = walkTypeMembersRecursive(target, {
         target, memberVisitor: pipe([
             // add typescript design types information
             v.addsDesignTypes,
@@ -34,6 +34,10 @@ function reflectClass(target: Class): ClassReflection {
         ]),
         classPath: []
     })
+    return walkReflectionMembers(ref, {
+        classPath: [], target, parent:ref, memberVisitor: pipe([
+            v.addsApplyToDecorator
+        ])})
 }
 
 function traverseObject(fn: any, name: string, ctx: TraverseContext): Reflection | undefined {

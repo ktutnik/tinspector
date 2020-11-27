@@ -95,7 +95,7 @@ describe("Generic", () => {
         expect(metadata.getMethods(meta)).toMatchSnapshot()
         expect(meta).toMatchSnapshot()
     })
-    it.only("Should able to inspect nested generic class with multiple template", () => {
+    it("Should able to inspect nested generic class with multiple template", () => {
         @generic.template("T", "U")
         class GrandSuperClass<T, U>{
             @type("T")
@@ -111,7 +111,6 @@ describe("Generic", () => {
         class MyClass extends SuperClass<number, Date>{ }
         const meta = reflect(MyClass)
         expect(metadata.getMethods(meta)).toMatchSnapshot()
-        expect(meta.decorators.map(({ [DecoratorOptionId]: _, [DecoratorId]: __, ...x }) => x)).toMatchSnapshot()
         expect(meta).toMatchSnapshot()
     })
 })
