@@ -317,7 +317,7 @@ describe("Decorator", () => {
         expect(meta).toMatchSnapshot()
     })
 
-    describe.skip("ApplyTo", () => {
+    describe("ApplyTo", () => {
         it("Should able to apply decorator into method from class", () => {
             @decorateClass({ lorem: "ipsum" }, { applyTo: "myFunction" })
             class DummyClass {
@@ -419,11 +419,24 @@ describe("Decorator", () => {
             const meta = reflect(ChildClass)
             expect(meta).toMatchSnapshot()
         })
+        
         it("Should able to apply type override for method", () => {
             @decorateClass(target => <TypeDecorator>{ kind: "Override", type: String, target, genericParams: [] }, {applyTo: "myFunction"})
             class DummyClass {
                 myFunction() { }
                 myOtherFunction() { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
+
+        it("Should able to decorate parameter property", () => {
+            @parameterProperties()
+            class DummyClass {
+                constructor(
+                    @decorateProperty(target => <TypeDecorator>{ kind: "Override", type: String, target, genericParams: [] }, { applyTo: "myFunction"})
+                    public name:string
+                ){}
             }
             const meta = reflect(DummyClass)
             expect(meta).toMatchSnapshot()

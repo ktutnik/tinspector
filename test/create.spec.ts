@@ -27,7 +27,7 @@ describe("Create Class", () => {
         const meta = reflect(obj)
         expect(meta).toMatchSnapshot()
     })
-    describe.skip("Generic", () => {
+    describe("Generic", () => {
         it("Should able to create generic class implementation", () => {
             @generic.template("T")
             class SuperClass<T> {

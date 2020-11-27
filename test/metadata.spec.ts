@@ -154,24 +154,4 @@ describe("Metadata", () => {
             expect(metadata.getMetadata(Dog, "data", 0)).toMatchSnapshot()
         })
     })
-    describe.skip("ApplyTo", () => {
-        it("Should able to apply to method from class", () => {
-            class Animal {
-                get() { }
-                save() { }
-            }
-            metadata.setMetadata({ cache: 123, [DecoratorOptionId]: { applyTo: "get" } }, Animal)
-            expect(metadata.getMetadata(Animal, "get")).toMatchSnapshot()
-            expect(metadata.getMetadata(Animal, "save")).toMatchSnapshot()
-        })
-        it("Should able to apply to multiple methods from class", () => {
-            class Animal {
-                get() { }
-                save() { }
-            }
-            metadata.setMetadata({ cache: 123, [DecoratorOptionId]: { applyTo: ["get", "save"] } }, Animal)
-            expect(metadata.getMetadata(Animal, "get")).toMatchSnapshot()
-            expect(metadata.getMetadata(Animal, "save")).toMatchSnapshot()
-        })
-    })
 })

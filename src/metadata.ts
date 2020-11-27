@@ -25,7 +25,7 @@ export function setMetadata(data: any, targetClass: Class, memberName?: string |
         for (const apply of applyTo) {
             meta.push({ targetClass, memberName: apply, data })
         }
-        meta.push({ targetClass, data })
+        meta.push({ targetClass, memberName, parIndex, data })
     }
     storage.set(targetClass, meta)
 }
@@ -35,7 +35,7 @@ function getMetadataFromStorage(target: Class, memberName?: string, parIndex?: n
         .filter(x => x.memberName === memberName && x.parIndex === parIndex)
         .filter(x => {
             const opt: DecoratorOption = x.data[DecoratorOptionId]
-            return opt.applyTo?.length === 0
+            return opt.applyTo!.length === 0
         })
         .map(x => x.data)
 }
@@ -59,9 +59,9 @@ export function getMetadata(targetClass: Class, memberName?: string, parIndex?: 
     return mergeMetadata(childMeta, parentMeta)
 }
 
-export function getMetadataForApplyTo(targetClass: Class, memberName?: string) {
+export function getMetadataForApplyTo(targetClass: Class, memberName?: string, parIndex?:number) {
     return (storage.get(targetClass) ?? [])
-        .filter(x => x.memberName === memberName)
+        .filter(x => x.memberName === memberName && x.parIndex === parIndex)
         .filter(x => {
             const opt: DecoratorOption = x.data[DecoratorOptionId]
             return opt.applyTo!.length > 0

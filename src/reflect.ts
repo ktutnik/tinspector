@@ -36,7 +36,13 @@ function reflectClass(target: Class): ClassReflection {
     })
     return walkReflectionMembers(ref, {
         classPath: [], target, parent:ref, memberVisitor: pipe([
-            v.addsApplyToDecorator
+            v.addsApplyToDecorator,
+            // remove generic type overridden, because it may cause issue for addsTypeOverridden
+            v.removeGenericTypeOverridden,
+            // add datatype info specified by @type decorator
+            v.addsTypeOverridden,
+            // add typeClassification information
+            v.addsTypeClassification,
         ])})
 }
 

@@ -27,40 +27,12 @@ Object {
   "kind": "Class",
   "methods": Array [
     Object {
-      "decorators": Array [
-        Object {
-          "genericParams": Array [],
-          "kind": "Override",
-          "target": SuperClass,
-          "type": "T",
-          Symbol(tinspector:decoratorId): Symbol(override),
-          Symbol(tinspector:decoratorOption): Object {
-            "allowMultiple": false,
-            "applyTo": Array [],
-            "inherit": false,
-            "removeApplied": true,
-          },
-        },
-      ],
+      "decorators": Array [],
       "kind": "Method",
       "name": "method",
       "parameters": Array [
         Object {
-          "decorators": Array [
-            Object {
-              "genericParams": Array [],
-              "kind": "Override",
-              "target": SuperClass,
-              "type": "U",
-              Symbol(tinspector:decoratorId): Symbol(override),
-              Symbol(tinspector:decoratorOption): Object {
-                "allowMultiple": false,
-                "applyTo": Array [],
-                "inherit": false,
-                "removeApplied": true,
-              },
-            },
-          ],
+          "decorators": Array [],
           "fields": Object {},
           "index": 0,
           "kind": "Parameter",
@@ -140,7 +112,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -167,7 +139,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -194,7 +166,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -221,7 +193,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },

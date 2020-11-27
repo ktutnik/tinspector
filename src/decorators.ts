@@ -104,8 +104,7 @@ export function ignore() {
 }
 
 export function type(type: TypeOverride | ((x: any) => TypeOverride), ...genericParams: (string | string[])[]) {
-    // type is not inheritable because derived class can define their own type override
-    return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type, genericParams, target }, ["Parameter", "Method", "Property"], { inherit: false, allowMultiple: false })
+    return decorate((target: any) => <TypeDecorator>{ [DecoratorId]: symOverride, kind: "Override", type, genericParams: genericParams, target }, ["Parameter", "Method", "Property"], { inherit: true, allowMultiple: false })
 }
 
 export function noop() {

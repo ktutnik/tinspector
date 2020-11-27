@@ -461,6 +461,70 @@ Object {
 }
 `;
 
+exports[`Decorator ApplyTo Should able to decorate parameter property 1`] = `
+Object {
+  "ctor": Object {
+    "kind": "Constructor",
+    "name": "constructor",
+    "parameters": Array [
+      Object {
+        "decorators": Array [],
+        "fields": Object {},
+        "index": 0,
+        "kind": "Parameter",
+        "name": "name",
+        "type": String,
+        "typeClassification": "Primitive",
+      },
+    ],
+  },
+  "decorators": Array [
+    Object {
+      "type": "ParameterProperties",
+      Symbol(tinspector:decoratorId): Symbol(paramProp),
+      Symbol(tinspector:decoratorOption): Object {
+        "allowMultiple": false,
+        "applyTo": Array [],
+        "inherit": true,
+        "removeApplied": true,
+      },
+    },
+  ],
+  "kind": "Class",
+  "methods": Array [],
+  "name": "DummyClass",
+  "properties": Array [
+    Object {
+      "decorators": Array [
+        Object {
+          "genericParams": Array [],
+          "kind": "Override",
+          "target": DummyClass,
+          "type": String,
+          Symbol(tinspector:decoratorOption): Object {
+            "allowMultiple": true,
+            "applyTo": "myFunction",
+            "inherit": true,
+            "removeApplied": true,
+          },
+        },
+      ],
+      "get": undefined,
+      "index": 0,
+      "isParameter": true,
+      "kind": "Property",
+      "name": "name",
+      "set": undefined,
+      "type": String,
+      "typeClassification": "Primitive",
+    },
+  ],
+  "super": Object,
+  "type": DummyClass,
+  "typeClassification": "Class",
+}
+`;
+
 exports[`Decorator ApplyTo Should work when allowMultiple is false 1`] = `
 Object {
   "ctor": Object {
@@ -2104,7 +2168,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2211,7 +2275,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2234,7 +2298,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2277,7 +2341,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2382,7 +2446,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2405,7 +2469,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2447,7 +2511,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2489,7 +2553,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2530,7 +2594,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2571,7 +2635,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2612,7 +2676,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2653,7 +2717,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2694,7 +2758,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2735,7 +2799,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2776,7 +2840,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2819,7 +2883,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -2863,7 +2927,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },

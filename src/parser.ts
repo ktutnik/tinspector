@@ -96,7 +96,7 @@ function getClassMembers(fun: Function) {
         .filter(x => !!x.memberName && !x.parIndex)
         .filter(x => {
             const opt:DecoratorOption = x.data[DecoratorOptionId]
-            return opt.applyTo?.length === 0
+            return opt.applyTo!.length === 0
         })
         .map(x => x.memberName as string)
     const names = members.concat(properties)

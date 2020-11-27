@@ -155,9 +155,16 @@ namespace memberVisitors {
     }
 
     export function addsApplyToDecorator(meta: TypedReflection, ctx: WalkMemberContext) {
+        if (metadata.isParameterProperties(meta)) {
+            // get copy own metadata of constructor 
+            const decorators = getMetadataForApplyTo(ctx.target, "constructor", meta.index)
+                // and also a copy of metadata of the property (using applyTo)
+                .concat(...getMetadataForApplyTo(ctx.target, meta.name))
+            return { ...meta, decorators: meta.decorators.concat(decorators) }
+        }
         if (meta.kind === "Method" || meta.kind === "Property") {
             const decorators = getMetadataForApplyTo(ctx.target, meta.name)
-            return { ...meta, decorators: mergeMetadata(decorators, meta.decorators, false)  }
+            return { ...meta, decorators: mergeMetadata(decorators, meta.decorators, false) }
         }
         if (meta.kind === "Class") {
             const rawDecorators = getMetadataForApplyTo(meta.type)
@@ -170,11 +177,21 @@ namespace memberVisitors {
                 return !option.removeApplied
             })
             const result = { ...meta, decorators: meta.decorators.concat(decorators) }
-            if(removedDecorators.length > 0)
+            if (removedDecorators.length > 0)
                 result.removedDecorators = removedDecorators
             return result
         }
         return meta
+    }
+
+    export function removeGenericTypeOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
+        const isGeneric = (decorator: any): decorator is { type: TypeOverride[], genericParams: (string | string[])[] } => {
+            const singleType = Array.isArray(decorator.type) ? decorator.type[0] : decorator.type
+            return typeof singleType === "string" || decorator.genericParams.length > 0
+        }
+        if (meta.kind === "Constructor") return meta
+        const decorators = meta.decorators.filter((x: TypeDecorator) => x.kind !== "Override" || !isGeneric(x))
+        return { ...meta, decorators }
     }
 
     export function addsTypeOverridden(meta: TypedReflection, ctx: WalkMemberContext): TypedReflection {
@@ -207,6 +224,7 @@ namespace memberVisitors {
         if (!decorator || !decorator.type || !isGeneric(decorator)) return meta
         const map = new GenericMap(ctx.classPath)
         const type = isString(decorator) ? map.get(decorator.type as any) : getGenericType(map, decorator)
+
         // if current class has @generic.template() then process
         if (meta.kind === "Method") {
             // if type is not a generic template type then return immediately
@@ -278,7 +296,7 @@ function walkReflectionMembers(ref: TypedReflection, ctx: WalkMemberContext) {
     return result as ClassReflection
 }
 
-function walkTypeMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[] = []) {
+function walkTypeMembers(type: Class, memberVisitor: WalkMemberVisitor, classPath: Class[]) {
     const rawMeta = parseClass(type)
     return walkReflectionMembers(rawMeta, { memberVisitor, parent: rawMeta, target: type, classPath })
 }
