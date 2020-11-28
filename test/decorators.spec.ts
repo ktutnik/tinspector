@@ -9,7 +9,7 @@ import {
     noop,
     type,
     generic,
-    parameterProperties, DecoratorId
+    parameterProperties, DecoratorId, TypeDecorator
 } from "../src"
 
 describe("Decorator", () => {
@@ -419,6 +419,28 @@ describe("Decorator", () => {
             const meta = reflect(ChildClass)
             expect(meta).toMatchSnapshot()
         })
+        
+        it("Should able to apply type override for method", () => {
+            @decorateClass(target => <TypeDecorator>{ kind: "Override", type: String, target, genericParams: [] }, {applyTo: "myFunction"})
+            class DummyClass {
+                myFunction() { }
+                myOtherFunction() { }
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
+
+        it("Should able to decorate parameter property", () => {
+            @parameterProperties()
+            class DummyClass {
+                constructor(
+                    @decorateProperty(target => <TypeDecorator>{ kind: "Override", type: String, target, genericParams: [] }, { applyTo: "myFunction"})
+                    public name:string
+                ){}
+            }
+            const meta = reflect(DummyClass)
+            expect(meta).toMatchSnapshot()
+        })
     })
 
     describe("Error Handling", () => {
@@ -633,18 +655,6 @@ describe("Decorator", () => {
                 expect(reflect(OtherClass)).toMatchSnapshot()
             })
 
-            it("Should able to mark generic type with @type()", () => {
-                @generic.template("T")
-                class MyOtherClass<T> {
-                    @type(x => "T")
-                    data: T = {} as any
-                }
-
-                @generic.type(Number)
-                class MyClass extends MyOtherClass<Number> { }
-                expect(reflect(MyClass)).toMatchSnapshot()
-            })
-
             it("Should able to define inline type definition on @type()", () => {
                 class User {
                     @type({ id: String, name: String })
@@ -655,6 +665,7 @@ describe("Decorator", () => {
                 expect(meta).toMatchSnapshot()
                 expect(reflect(methodReturn)).toMatchSnapshot()
             })
+
             it("Should able to define inline array type definition on @type()", () => {
                 class User {
                     @type([{ id: String, name: String }])

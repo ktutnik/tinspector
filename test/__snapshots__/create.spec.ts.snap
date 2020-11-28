@@ -112,7 +112,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -139,7 +139,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -166,7 +166,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },
@@ -193,7 +193,7 @@ Object {
           Symbol(tinspector:decoratorOption): Object {
             "allowMultiple": false,
             "applyTo": Array [],
-            "inherit": false,
+            "inherit": true,
             "removeApplied": true,
           },
         },

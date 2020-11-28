@@ -1,4 +1,4 @@
-import reflect, { generic, type, parameterProperties, metadata } from "../src"
+import reflect, { generic, type, parameterProperties, metadata, DecoratorOptionId, DecoratorId } from "../src"
 
 
 
@@ -106,6 +106,23 @@ describe("Generic", () => {
         class SuperClass<A, B> extends GrandSuperClass<A, B>{
             @type("B")
             super(@type("A") par: A): B { return {} as any }
+        }
+        @generic.type(Number, Date)
+        class MyClass extends SuperClass<number, Date>{ }
+        const meta = reflect(MyClass)
+        expect(metadata.getMethods(meta)).toMatchSnapshot()
+        expect(meta).toMatchSnapshot()
+    })
+    it("Should inherit generic data type when overridden", () => {
+        @generic.template("T", "U")
+        class GrandSuperClass<T, U>{
+            @type("T")
+            grandSuper(@type("U") par: U): T { return {} as any }
+        }
+        @generic.template("T", "U")
+        @generic.type("T", "U")
+        class SuperClass<A, B> extends GrandSuperClass<A, B>{
+            grandSuper(pur:B):A { return {} as any }
         }
         @generic.type(Number, Date)
         class MyClass extends SuperClass<number, Date>{ }

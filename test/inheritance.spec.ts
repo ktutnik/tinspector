@@ -80,6 +80,28 @@ describe("Inheritance", () => {
         expect(meta).toMatchSnapshot()
     })
 
+    it("Should get proper overridden method parameters", () => {
+        class BaseClass {
+            myMethod(par1:number, par2:number, par3:number) { }
+        }
+        class ChildClass extends BaseClass { 
+            myMethod(par1:number) { }
+        }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
+    it("Should not inherit parameter", () => {
+        class BaseClass {
+            myMethod(par1:number, par2:number, par3:number) { }
+        }
+        class ChildClass extends BaseClass { 
+            myMethod(one:number, two:number) { }
+        }
+        const meta = reflect(ChildClass)
+        expect(meta).toMatchSnapshot()
+    })
+
     it("Should inspect domain with inheritance using constructor property", () => {
         @reflect.parameterProperties()
         class DomainBase {
@@ -315,7 +337,7 @@ describe("Inheritance", () => {
                 expect(meta).toMatchSnapshot()
             })
 
-            it("Should not inherit on non overridden property", () => {
+            it("Should inherit on non overridden property", () => {
                 class BaseClass {
                     @decorateProperty({ value: 1 }, { inherit: false })
                     get parentProp() { return 1 }
@@ -378,7 +400,7 @@ describe("Inheritance", () => {
                 expect(meta).toMatchSnapshot()
             })
 
-            it("Should not inherit decorator on non overridden method", () => {
+            it("Should inherit decorator on non overridden method", () => {
                 class BaseClass {
                     @decorateMethod({ value: 1 }, { inherit: false })
                     myMethod(a: string): string { return "" }

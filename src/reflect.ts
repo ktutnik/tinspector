@@ -2,7 +2,7 @@ import { ignore, noop, parameterProperties, type } from "./decorators"
 import { createClass, metadata, useCache } from "./helpers"
 import { parseFunction } from "./parser"
 import { Class, ClassReflection, ObjectReflection, Reflection } from "./types"
-import { memberVisitors, parentVisitors, walkParents, WalkMemberVisitor } from "./walker"
+import { memberVisitors as v, walkTypeMembersRecursive, walkReflectionMembers } from "./walker"
 
 interface TraverseContext {
     path: any[]
@@ -15,24 +15,35 @@ function pipe<Ref, Ctx, Ret>(visitors: Visitor<Ref, Ctx, Ret>[]): Visitor<Ref, C
 }
 
 function reflectClass(target: Class): ClassReflection {
-    const visitorOrder = [
-        memberVisitors.addsDesignTypes,
-        memberVisitors.addsDecorators,
-        memberVisitors.addsTypeOverridden,
-        memberVisitors.addsParameterProperties,
-        memberVisitors.addsGenericOverridden,
-        memberVisitors.addsTypeClassification,
-        memberVisitors.removeIgnored,
-    ]
-    const parentVisitorOrder = [
-        parentVisitors.processApplyTo
-    ]
-    return walkParents(target, {
-        target,
-        parentVisitor: pipe(parentVisitorOrder),
-        memberVisitor: pipe(visitorOrder),
+    const ref = walkTypeMembersRecursive(target, {
+        target, memberVisitor: pipe([
+            // add typescript design types information
+            v.addsDesignTypes,
+            // add metadata decorators
+            v.addsDecorators,
+            // add datatype info specified by @type decorator
+            v.addsTypeOverridden,
+            // add parameter properties
+            v.addsParameterProperties,
+            // add generic type information
+            v.addsGenericOverridden,
+            // add typeClassification information
+            v.addsTypeClassification,
+            // remove @ignore decorator
+            v.removeIgnored,
+        ]),
         classPath: []
     })
+    return walkReflectionMembers(ref, {
+        classPath: [], target, parent:ref, memberVisitor: pipe([
+            v.addsApplyToDecorator,
+            // remove generic type overridden, because it may cause issue for addsTypeOverridden
+            v.removeGenericTypeOverridden,
+            // add datatype info specified by @type decorator
+            v.addsTypeOverridden,
+            // add typeClassification information
+            v.addsTypeClassification,
+        ])})
 }
 
 function traverseObject(fn: any, name: string, ctx: TraverseContext): Reflection | undefined {
