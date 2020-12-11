@@ -1,5 +1,7 @@
 # tinspector
 
+This project renamed into `@plumier/reflect` https://github.com/plumier/plumier/tree/master/packages/reflect
+
 ![ubuntu](https://github.com/plumier/tinspector/workflows/ubuntu/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/plumier/tinspector/badge.svg?branch=master)](https://coveralls.io/github/plumier/tinspector?branch=master) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/plumier/tinspector.svg)](https://greenkeeper.io/)
